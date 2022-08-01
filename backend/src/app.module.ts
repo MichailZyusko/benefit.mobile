@@ -5,6 +5,7 @@ import { ProductsModule } from "./modules/products/products.module";
 import { PriceParserModule } from "./modules/price-parser/price-parser.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Product } from "./modules/products/entity/product.entity";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { Product } from "./modules/products/entity/product.entity";
       entities: [Product],
       synchronize: true,
     }),
+    ConfigModule.forRoot()
   ],
   controllers: [AppController],
   providers: [AppService],
