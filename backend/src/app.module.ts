@@ -11,6 +11,7 @@ import { ConfigModule } from "@nestjs/config";
   imports: [
     ProductsModule,
     PriceParserModule,
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
@@ -21,7 +22,6 @@ import { ConfigModule } from "@nestjs/config";
       entities: [Product],
       synchronize: true,
     }),
-    ConfigModule.forRoot()
   ],
   controllers: [AppController],
   providers: [AppService],
