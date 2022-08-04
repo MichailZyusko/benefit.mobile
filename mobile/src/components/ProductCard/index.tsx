@@ -9,11 +9,10 @@ import {
   Price,
   PriceContainer,
   ProductImage,
-  ShopImage,
 } from './Components';
 
-import {ImageHeart, ImagePlus, ImageGreenShop} from '../../../assets/icons';
 import {textTruncate} from '../../utils';
+import StoreLogo from './StoreLogo';
 
 type Props = {
   product: Product;
@@ -22,15 +21,15 @@ type Props = {
 export default function ProductCard({product}: Props) {
   return (
     <Card>
-      <Heart source={ImageHeart} />
+      <Heart.Component />
       <ProductImage source={{uri: product?.image}} />
       <NameContainer>
-        <Name>{textTruncate(product?.name, 50)}</Name>
-        <ShopImage source={ImageGreenShop} />
+        <Name>{textTruncate(product?.name, 40)}</Name>
+        <StoreLogo storeName={'Green'} />
       </NameContainer>
       <PriceContainer>
         <Price>{product?.price} Br</Price>
-        <Plus source={ImagePlus} />
+        <Plus.Component />
       </PriceContainer>
     </Card>
   );
