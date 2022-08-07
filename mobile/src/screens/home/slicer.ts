@@ -7,6 +7,7 @@ const initialState = {
   moreError: null,
   isListEnd: false,
   page: 0,
+  search: '',
   products: [],
 };
 
@@ -19,6 +20,10 @@ export const homeScreenSlice = createSlice({
         state.page += 1;
       }
     },
+    onSearch: (state, action) => {
+      state.search = action.payload;
+      state.page = 0;
+    },
     API_REQUEST: state => {
       console.log('API_REQUEST');
       state.loading = true;
@@ -28,7 +33,10 @@ export const homeScreenSlice = createSlice({
       console.log('API_SUCCESS');
       state.loading = false;
       state.error = null;
-      state.products = state.products.concat(action.payload);
+      state.products =
+        state.page === 0
+          ? action.payload
+          : (state.products = state.products.concat(action.payload));
     },
     API_FAILURE: (state, action) => {
       console.log('API_FAILURE');
@@ -44,6 +52,7 @@ export const homeScreenSlice = createSlice({
 
 export const {
   onEndReached,
+  onSearch,
   API_LIST_END,
   API_REQUEST,
   API_SUCCESS,
