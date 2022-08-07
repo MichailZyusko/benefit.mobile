@@ -6,16 +6,24 @@ import {
   API_SUCCESS,
 } from '../../screens/home/slicer';
 
-const URL = 'https://benefit-app.herokuapp.com/api/v1/products';
-const itemsPerPage = 50;
+const URL = 'https://api.infoprice.by/InfoPrice.Goods';
+const itemsPerPage = 44;
 
-export const getProducts = async (dispatch: Function, page: number) => {
+export const getProducts = async (
+  dispatch: Function,
+  page: number,
+  search = '',
+) => {
   try {
     dispatch(API_REQUEST());
-    const {data, status} = await axios.get(URL, {
-      params: {
-        limit: itemsPerPage,
-        skip: page * itemsPerPage,
+    const {data, status} = await axios.post(URL, {
+      Packet: {
+        Data: {
+          Page: (page + 1).toString(),
+          Search: search,
+          CompareСontractorId: 72631,
+          CatalogType: 1,
+        },
       },
     });
 
@@ -23,12 +31,14 @@ export const getProducts = async (dispatch: Function, page: number) => {
       throw new Error('Something went wrong');
     }
 
-    if (data.length < itemsPerPage) {
+    const products = data.Table[0].GoodsOffer;
+
+    if (products.length < itemsPerPage) {
       dispatch(API_LIST_END());
     }
 
-    dispatch(API_SUCCESS(data));
+    dispatch(API_SUCCESS(products));
   } catch (error) {
-    dispatch(API_FAILURE(error));
+    dispatch(API_FAILURE([]));
   }
 };

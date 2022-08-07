@@ -3,7 +3,7 @@ apply plugin: "com.android.application"
 import com.android.build.OutputFile
 
 project.ext.vectoricons = [
-    iconFontNames: [ 'FontAwesome.ttf' ] // Name of the font files you want to copy
+    iconFontNames: [ 'FontAwesome.ttf', 'AntDesign.ttf', 'Ionicons.ttf' ] // Name of the font files you want to copy
 ]
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
@@ -230,6 +230,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+              storeFile file('benefit.keystore')
+              storePassword '314159265'
+              keyAlias 'benefit'
+              keyPassword '314159265'
+        }
     }
     buildTypes {
         debug {
@@ -238,7 +244,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

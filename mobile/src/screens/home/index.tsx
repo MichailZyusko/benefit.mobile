@@ -4,18 +4,24 @@ import {useHomeScreenDispatch, useHomeScreenSelector} from '../../redux/hooks';
 import {selectHomeScreen} from './slicer';
 import {getProducts} from '../../services/products';
 import {onEndReached} from './slicer';
-import {FlatList} from './Components';
+import {ListHeaderComponent} from './Components';
 import {Product} from '../../types';
+import {FlatList, View} from 'react-native';
+
+import {styles} from './styles';
 
 export default function HomeScreen() {
-  const {page, products} = useHomeScreenSelector(selectHomeScreen);
+  const {page, products, search} =
+    useHomeScreenSelector(selectHomeScreen);
   const dispatch = useHomeScreenDispatch();
+
+  // console.log(1111111, page, products.length, loading, search);
 
   useEffect(() => {
     (async () => {
-      await getProducts(dispatch, page);
+      await getProducts(dispatch, page, search);
     })();
-  }, [dispatch, page]);
+  }, [dispatch, page, search]);
 
   const onEndReachedMemoized = useCallback(
     () => dispatch(onEndReached()),
@@ -33,16 +39,19 @@ export default function HomeScreen() {
   );
 
   return (
-    <FlatList
-      numColumns={2}
-      data={products}
-      ListHeaderComponent={null} // TODO: add header
-      ListFooterComponent={null} // TODO: add footer
-      ListEmptyComponent={null} // TODO: add empty state
-      renderItem={renderItem}
-      keyExtractor={keyExtractor}
-      onEndReached={onEndReachedMemoized}
-      onEndReachedThreshold={5}
-    />
+    <View style={styles.screenContainer}>
+      <FlatList
+        style={styles.flatList}
+        numColumns={2}
+        data={products}
+        ListHeaderComponent={<ListHeaderComponent />}
+        ListFooterComponent={null} // TODO: add footer
+        ListEmptyComponent={null} // TODO: add empty state
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        onEndReached={onEndReachedMemoized}
+        onEndReachedThreshold={5}
+      />
+    </View>
   );
 }

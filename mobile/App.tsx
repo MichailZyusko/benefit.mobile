@@ -2,11 +2,15 @@ import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from './src/screens/home';
-import SettingsScreen from './src/screens/SettingsScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
+import ProfileScreen from './src/screens/profile';
+import FavoriteScreen from './src/screens/favorite';
+import CategoriesScreen from './src/screens/categories';
+import CartScreen from './src/screens/cart';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,22 +22,63 @@ const App = () => {
         <NavigationContainer>
           <Tab.Navigator
             screenOptions={({route}) => ({
-              tabBarIcon: ({focused, color, size}) => {
-                let iconName = '';
-
-                if (route.name === 'Home') {
-                  iconName = focused ? 'home' : 'home';
-                } else if (route.name === 'Settings') {
-                  iconName = focused ? 'gears' : 'gears';
+              tabBarIcon: ({color, size}) => {
+                switch (route.name) {
+                  case 'Главная':
+                    return (
+                      <IoniconsIcon
+                        name={'home-outline'}
+                        size={30}
+                        color={color}
+                      />
+                    );
+                  case 'Категории':
+                    return (
+                      <IoniconsIcon
+                        name={'menu-outline'}
+                        size={45}
+                        color={color}
+                      />
+                    );
+                  case 'Корзина':
+                    return (
+                      <IoniconsIcon
+                        name={'cart-outline'}
+                        size={32}
+                        color={color}
+                      />
+                    );
+                  case 'Избранное':
+                    return (
+                      <AntDesignIcon name={'hearto'} size={30} color={color} />
+                    );
+                  case 'Профиль':
+                    return (
+                      <IoniconsIcon
+                        name={'person-circle-outline'}
+                        size={35}
+                        color={color}
+                      />
+                    );
+                  default:
+                    return (
+                      <AntDesignIcon
+                        name={'hearto'}
+                        size={size}
+                        color={color}
+                      />
+                    );
                 }
-
-                return <Icon name={iconName} size={size} color={color} />;
               },
-              tabBarActiveTintColor: '#ff0000',
+              tabBarActiveTintColor: '#D692FF',
               tabBarInactiveTintColor: '#000000',
+              tabBarShowLabel: false,
             })}>
-            <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Settings" component={SettingsScreen} />
+            <Tab.Screen name="Главная" component={HomeScreen} />
+            <Tab.Screen name="Категории" component={CategoriesScreen} />
+            <Tab.Screen name="Корзина" component={CartScreen} />
+            <Tab.Screen name="Избранное" component={FavoriteScreen} />
+            <Tab.Screen name="Профиль" component={ProfileScreen} />
           </Tab.Navigator>
         </NavigationContainer>
       </SafeAreaView>
@@ -44,7 +89,7 @@ const App = () => {
 const styles = StyleSheet.create({
   TabBar: {
     flex: 1,
-    backgroundColor: '#212121',
+    backgroundColor: '#E5E5E5',
   },
 });
 
