@@ -77,7 +77,10 @@ const App = () => {
               headerShown: false,
               tabBarHideOnKeyboard: true,
             })}>
-            <Tab.Screen name="Главная" component={HomeScreenStackNavigator} />
+            <Tab.Screen
+              name="HomeScreenStackNavigator"
+              component={HomeScreenStackNavigator}
+            />
             <Tab.Screen name="Категории" component={CategoriesScreen} />
             <Tab.Screen name="Корзина" component={CartScreen} />
             <Tab.Screen name="Избранное" component={FavoriteScreen} />
