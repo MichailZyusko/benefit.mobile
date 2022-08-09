@@ -1,7 +1,7 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import HomeScreen from './src/screens/home';
+// import HomeScreen from './src/screens/home';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
@@ -11,10 +11,8 @@ import ProfileScreen from './src/screens/profile';
 import FavoriteScreen from './src/screens/favorite';
 import CategoriesScreen from './src/screens/categories';
 import CartScreen from './src/screens/cart';
-import {createNativeStackNavigator} from 'react-native-screens/native-stack';
-import {ScanScreen} from './src/screens/scan';
+import {HomeScreenStackNavigator} from './src/screens/home';
 
-const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const App = () => {
@@ -76,17 +74,15 @@ const App = () => {
               tabBarActiveTintColor: '#D692FF',
               tabBarInactiveTintColor: '#000000',
               tabBarShowLabel: false,
+              headerShown: false,
               tabBarHideOnKeyboard: true,
             })}>
-            <Tab.Screen name="Главная" component={HomeScreen} />
+            <Tab.Screen name="Главная" component={HomeScreenStackNavigator} />
             <Tab.Screen name="Категории" component={CategoriesScreen} />
             <Tab.Screen name="Корзина" component={CartScreen} />
             <Tab.Screen name="Избранное" component={FavoriteScreen} />
             <Tab.Screen name="Профиль" component={ProfileScreen} />
           </Tab.Navigator>
-          <Stack.Navigator>
-            <Stack.Screen name="Scan" component={ScanScreen} />
-          </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
     </Provider>

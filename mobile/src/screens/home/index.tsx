@@ -11,9 +11,12 @@ import {
   useCollapsibleSubHeader,
   CollapsibleSubHeaderAnimator,
 } from 'react-navigation-collapsible';
-
 import {styles} from './styles';
 import {ProductCardLoader} from '../../components/ProductCard/Loader';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {ScanScreen} from '../scan';
+
+const Stack = createNativeStackNavigator();
 
 export default function HomeScreen({navigation}: {navigation: any}) {
   const {onScroll, containerPaddingTop, scrollIndicatorInsetTop, translateY} =
@@ -49,24 +52,35 @@ export default function HomeScreen({navigation}: {navigation: any}) {
   const renderLoader = useCallback(() => <ProductCardLoader />, []);
 
   return (
-    <View style={styles.screenContainer}>
-      <Animated.FlatList
-        onScroll={onScroll}
-        contentContainerStyle={{paddingTop: containerPaddingTop}}
-        scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
-        style={styles.flatList}
-        numColumns={2}
-        data={loading ? [1, 1, 1, 1] : products}
-        ListFooterComponent={null} // TODO: add footer
-        ListEmptyComponent={null} // TODO: add empty state
-        renderItem={loading ? renderLoader : renderItem}
-        keyExtractor={keyExtractor}
-        onEndReached={onEndReachedMemoized}
-        onEndReachedThreshold={5}
-      />
-      <CollapsibleSubHeaderAnimator translateY={translateY}>
-        <ListHeaderComponent navigation={navigation} />
-      </CollapsibleSubHeaderAnimator>
-    </View>
+    <>
+      <View style={styles.screenContainer}>
+        <Animated.FlatList
+          onScroll={onScroll}
+          contentContainerStyle={{paddingTop: containerPaddingTop}}
+          scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
+          style={styles.flatList}
+          numColumns={2}
+          data={loading ? [1, 1, 1, 1] : products}
+          ListFooterComponent={null} // TODO: add footer
+          ListEmptyComponent={null} // TODO: add empty state
+          renderItem={loading ? renderLoader : renderItem}
+          keyExtractor={keyExtractor}
+          onEndReached={onEndReachedMemoized}
+          onEndReachedThreshold={5}
+        />
+        <CollapsibleSubHeaderAnimator translateY={translateY}>
+          <ListHeaderComponent navigation={navigation} />
+        </CollapsibleSubHeaderAnimator>
+      </View>
+    </>
   );
 }
+
+export const HomeScreenStackNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Главная" component={HomeScreen} />
+      <Stack.Screen name="QR-code  сканнер" component={ScanScreen} />
+    </Stack.Navigator>
+  );
+};

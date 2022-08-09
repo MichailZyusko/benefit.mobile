@@ -38,7 +38,7 @@ const SearchTextInput = ({navigation}: {navigation: any}) => {
           name={'ios-scan-outline'}
           size={25}
           color={'#828282'}
-          onPress={() => navigation.navigate('Scan')}
+          onPress={() => navigation.navigate('QR-code  сканнер')}
         />
       </>
     </View>
