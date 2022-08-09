@@ -6,15 +6,13 @@ import {Image, Text, TextInput, View} from 'react-native';
 import {useHomeScreenDispatch} from '../../redux/hooks';
 import useDebounce from '../../hooks/useDebounce';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
-import {QrReader} from 'react-qr-reader';
 
-export const ListHeaderComponent = () => {
-  return <SearchTextInput />;
+export const ListHeaderComponent = ({navigation}: {navigation: any}) => {
+  return <SearchTextInput navigation={navigation} />;
 };
 
-const SearchTextInput = () => {
+const SearchTextInput = ({navigation}: {navigation: any}) => {
   const [search, setSearch] = useState('');
-  const [data, setData] = useState('No result');
   const dispatch = useHomeScreenDispatch();
 
   const handleChangeText = (text: string) => setSearch(text);
@@ -36,18 +34,11 @@ const SearchTextInput = () => {
       <>
         <Image source={ImageSearch} style={styles.searchImage} />
         <Text> | </Text>
-        <IoniconsIcon name={'ios-scan-outline'} size={25} color={'#828282'} />
-        <QrReader
-          onResult={(result, error) => {
-            if (result) {
-              setData(result?.text);
-            }
-
-            if (error) {
-              console.info(error);
-            }
-          }}
-          style={{width: '100%'}}
+        <IoniconsIcon
+          name={'ios-scan-outline'}
+          size={25}
+          color={'#828282'}
+          onPress={() => navigation.navigate('QR-code  сканнер')}
         />
       </>
     </View>

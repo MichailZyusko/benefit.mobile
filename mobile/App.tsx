@@ -1,7 +1,7 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import HomeScreen from './src/screens/home';
+// import HomeScreen from './src/screens/home';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
@@ -11,6 +11,7 @@ import ProfileScreen from './src/screens/profile';
 import FavoriteScreen from './src/screens/favorite';
 import CategoriesScreen from './src/screens/categories';
 import CartScreen from './src/screens/cart';
+import {HomeScreenStackNavigator} from './src/screens/home';
 
 const Tab = createBottomTabNavigator();
 
@@ -73,9 +74,13 @@ const App = () => {
               tabBarActiveTintColor: '#D692FF',
               tabBarInactiveTintColor: '#000000',
               tabBarShowLabel: false,
+              headerShown: false,
               tabBarHideOnKeyboard: true,
             })}>
-            <Tab.Screen name="Главная" component={HomeScreen} />
+            <Tab.Screen
+              name="HomeScreenStackNavigator"
+              component={HomeScreenStackNavigator}
+            />
             <Tab.Screen name="Категории" component={CategoriesScreen} />
             <Tab.Screen name="Корзина" component={CartScreen} />
             <Tab.Screen name="Избранное" component={FavoriteScreen} />
