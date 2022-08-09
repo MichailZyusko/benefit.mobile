@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
 
     width: '45%',
-    height: 310,
+    height: 305,
     margin: 4,
     padding: 10,
 
@@ -34,11 +34,9 @@ export const styles = StyleSheet.create({
     padding: 7,
   },
   productImage: {
-    width: '100%',
-    height: '60%',
+    width: 170,
+    height: 170,
     borderRadius: 15,
-    objectFit: 'scale-down',
-    objectPosition: 'center',
   },
   nameContainer: {
     flexDirection: 'column',

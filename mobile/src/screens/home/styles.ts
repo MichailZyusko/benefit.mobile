@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     color: '#828282',
 
-    width: '90%',
+    width: '80%',
     height: 45,
   },
   searchTextInputContainer: {
