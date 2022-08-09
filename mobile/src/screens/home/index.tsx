@@ -15,7 +15,7 @@ import {
 import {styles} from './styles';
 import {ProductCardLoader} from '../../components/ProductCard/Loader';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}: {navigation: any}) {
   const {onScroll, containerPaddingTop, scrollIndicatorInsetTop, translateY} =
     useCollapsibleSubHeader();
 
@@ -65,7 +65,7 @@ export default function HomeScreen() {
         onEndReachedThreshold={5}
       />
       <CollapsibleSubHeaderAnimator translateY={translateY}>
-        <ListHeaderComponent />
+        <ListHeaderComponent navigation={navigation} />
       </CollapsibleSubHeaderAnimator>
     </View>
   );

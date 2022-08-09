@@ -11,7 +11,10 @@ import ProfileScreen from './src/screens/profile';
 import FavoriteScreen from './src/screens/favorite';
 import CategoriesScreen from './src/screens/categories';
 import CartScreen from './src/screens/cart';
+import {createNativeStackNavigator} from 'react-native-screens/native-stack';
+import {ScanScreen} from './src/screens/scan';
 
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const App = () => {
@@ -81,6 +84,9 @@ const App = () => {
             <Tab.Screen name="Избранное" component={FavoriteScreen} />
             <Tab.Screen name="Профиль" component={ProfileScreen} />
           </Tab.Navigator>
+          <Stack.Navigator>
+            <Stack.Screen name="Scan" component={ScanScreen} />
+          </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
     </Provider>
