@@ -6,12 +6,20 @@ import {getProducts} from '../../services/products';
 import {onEndReached} from './slicer';
 import {ListHeaderComponent} from './Components';
 import {Product} from '../../types';
-import {FlatList, View} from 'react-native';
+import {View, Animated} from 'react-native';
+import {
+  useCollapsibleSubHeader,
+  CollapsibleSubHeaderAnimator,
+} from 'react-navigation-collapsible';
 
 import {styles} from './styles';
+import {ProductCardLoader} from '../../components/ProductCard/Loader';
 
 export default function HomeScreen() {
-  const {page, products, search} =
+  const {onScroll, containerPaddingTop, scrollIndicatorInsetTop, translateY} =
+    useCollapsibleSubHeader();
+
+  const {page, products, search, loading} =
     useHomeScreenSelector(selectHomeScreen);
   const dispatch = useHomeScreenDispatch();
 
@@ -38,20 +46,27 @@ export default function HomeScreen() {
     [],
   );
 
+  const renderLoader = useCallback(() => <ProductCardLoader />, []);
+
   return (
     <View style={styles.screenContainer}>
-      <FlatList
+      <Animated.FlatList
+        onScroll={onScroll}
+        contentContainerStyle={{paddingTop: containerPaddingTop}}
+        scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
         style={styles.flatList}
         numColumns={2}
-        data={products}
-        ListHeaderComponent={<ListHeaderComponent />}
+        data={loading ? [1, 1, 1, 1] : products}
         ListFooterComponent={null} // TODO: add footer
         ListEmptyComponent={null} // TODO: add empty state
-        renderItem={renderItem}
+        renderItem={loading ? renderLoader : renderItem}
         keyExtractor={keyExtractor}
         onEndReached={onEndReachedMemoized}
         onEndReachedThreshold={5}
       />
+      <CollapsibleSubHeaderAnimator translateY={translateY}>
+        <ListHeaderComponent />
+      </CollapsibleSubHeaderAnimator>
     </View>
   );
 }

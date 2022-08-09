@@ -26,17 +26,22 @@ export const homeScreenSlice = createSlice({
     },
     API_REQUEST: state => {
       console.log('API_REQUEST');
-      state.loading = true;
+      if (state.page === 0) {
+        state.loading = true;
+      }
+      state.moreLoading = true;
       state.error = null;
     },
     API_SUCCESS: (state, action) => {
       console.log('API_SUCCESS');
-      state.loading = false;
+      if (state.page === 0) {
+        state.products = action.payload;
+        state.loading = false;
+      } else {
+        state.products = state.products.concat(action.payload);
+        state.moreLoading = false;
+      }
       state.error = null;
-      state.products =
-        state.page === 0
-          ? action.payload
-          : (state.products = state.products.concat(action.payload));
     },
     API_FAILURE: (state, action) => {
       console.log('API_FAILURE');

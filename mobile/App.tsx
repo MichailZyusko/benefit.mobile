@@ -73,6 +73,7 @@ const App = () => {
               tabBarActiveTintColor: '#D692FF',
               tabBarInactiveTintColor: '#000000',
               tabBarShowLabel: false,
+              tabBarHideOnKeyboard: true,
             })}>
             <Tab.Screen name="Главная" component={HomeScreen} />
             <Tab.Screen name="Категории" component={CategoriesScreen} />
