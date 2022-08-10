@@ -22,6 +22,7 @@ export const homeScreenSlice = createSlice({
     },
     onSearch: (state, action) => {
       state.search = action.payload;
+      state.isListEnd = false;
       state.page = 0;
     },
     API_REQUEST: state => {
