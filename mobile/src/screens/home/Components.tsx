@@ -1,17 +1,71 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ImageSearch} from '../../../assets/icons';
-import {onSearch} from './slicer';
-import {styles} from './styles';
-import {Image, Text, TextInput, View} from 'react-native';
+import {onSearch, removeStoreFilter, setStoreFilter} from './slicer';
+import {storeStyles, styles} from './styles';
+import {
+  FlatList,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useHomeScreenDispatch} from '../../redux/hooks';
 import useDebounce from '../../hooks/useDebounce';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
+import {Store, stores} from './constants';
 
-export const ListHeaderComponent = ({navigation}: {navigation: any}) => {
-  return <SearchTextInput navigation={navigation} />;
+export const ListHeaderComponent = () => {
+  return <StoreCarousel />;
 };
 
-const SearchTextInput = ({navigation}: {navigation: any}) => {
+const StoreCard = ({store}: {store: Store}) => {
+  const dispatch = useHomeScreenDispatch();
+  const [isToggled, setToggle] = useState(false);
+
+  return (
+    <TouchableOpacity
+      style={storeStyles(isToggled).store}
+      onPress={() => {
+        console.log(12333);
+        setToggle(!isToggled);
+
+        isToggled
+          ? dispatch(removeStoreFilter(store.id))
+          : dispatch(setStoreFilter(store.id));
+      }}>
+      <Text>{store.name}</Text>
+    </TouchableOpacity>
+  );
+};
+
+const StoreCarousel = () => {
+  const keyExtractor = useCallback(
+    (item: any, index: number) => index.toString(),
+    [],
+  );
+
+  const renderItem = useCallback(
+    ({item}: {item: Store}) => <StoreCard store={item} />,
+    [],
+  );
+
+  return (
+    <>
+      <Text style={styles.storeText}>Магазины</Text>
+      <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.carousel}
+        data={stores}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+      />
+    </>
+  );
+};
+
+export const SearchTextInput = ({navigation}: {navigation: any}) => {
   const [search, setSearch] = useState('');
   const dispatch = useHomeScreenDispatch();
 

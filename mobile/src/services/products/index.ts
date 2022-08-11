@@ -13,6 +13,7 @@ export const getProducts = async (
   dispatch: Function,
   page: number,
   search = '',
+  storeIds = [],
 ) => {
   try {
     dispatch(API_REQUEST());
@@ -21,6 +22,7 @@ export const getProducts = async (
         Data: {
           Page: (page + 1).toString(),
           Search: search,
+          ContractorId: storeIds.join(','),
           CompareСontractorId: 72631,
           CatalogType: 1,
         },

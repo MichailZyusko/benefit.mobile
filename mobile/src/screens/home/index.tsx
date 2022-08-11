@@ -4,7 +4,7 @@ import {useHomeScreenDispatch, useHomeScreenSelector} from '../../redux/hooks';
 import {selectHomeScreen} from './slicer';
 import {getProducts} from '../../services/products';
 import {onEndReached} from './slicer';
-import {ListHeaderComponent} from './Components';
+import {ListHeaderComponent, SearchTextInput} from './Components';
 import {Product} from '../../types';
 import {View, Animated} from 'react-native';
 import {
@@ -22,17 +22,17 @@ export default function HomeScreen({navigation}: {navigation: any}) {
   const {onScroll, containerPaddingTop, scrollIndicatorInsetTop, translateY} =
     useCollapsibleSubHeader();
 
-  const {page, products, search, loading} =
+  const {page, products, search, loading, storeIds} =
     useHomeScreenSelector(selectHomeScreen);
   const dispatch = useHomeScreenDispatch();
 
-  // console.log(1111111, page, products.length, loading, search);
+  console.log(1111111, page, products.length, loading, search);
 
   useEffect(() => {
     (async () => {
-      await getProducts(dispatch, page, search);
+      await getProducts(dispatch, page, search, storeIds);
     })();
-  }, [dispatch, page, search]);
+  }, [dispatch, page, search, storeIds]);
 
   const onEndReachedMemoized = useCallback(
     () => dispatch(onEndReached()),
@@ -60,7 +60,8 @@ export default function HomeScreen({navigation}: {navigation: any}) {
           scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
           style={styles.flatList}
           numColumns={2}
-          data={loading ? [1, 1, 1, 1] : products}
+          data={loading ? new Array(15).fill(1) : products}
+          ListHeaderComponent={ListHeaderComponent}
           ListFooterComponent={null} // TODO: add footer
           ListEmptyComponent={null} // TODO: add empty state
           renderItem={loading ? renderLoader : renderItem}
@@ -69,7 +70,7 @@ export default function HomeScreen({navigation}: {navigation: any}) {
           onEndReachedThreshold={5}
         />
         <CollapsibleSubHeaderAnimator translateY={translateY}>
-          <ListHeaderComponent navigation={navigation} />
+          <SearchTextInput navigation={navigation} />
         </CollapsibleSubHeaderAnimator>
       </View>
     </>
