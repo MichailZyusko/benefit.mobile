@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ToastAndroid} from 'react-native';
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
 import {useHomeScreenDispatch} from '../../redux/hooks';
@@ -31,6 +31,8 @@ export const ScanScreen = ({navigation}: {navigation: any}) => {
 
   useEffect(() => {
     if (barcode) {
+      ToastAndroid.show(barcode, 3e3);
+
       navigation.navigate('Главная');
       dispatch(onSearch(barcode));
     }

@@ -33,4 +33,29 @@ export const styles = StyleSheet.create({
     margin: 25,
     maxHeight: 40,
   },
+  storeText: {
+    fontSize: 18,
+    fontFamily: 'Roboto-Medium',
+    color: '#000000',
+
+    marginLeft: 30,
+  },
+  carousel: {
+    marginVertical: 10,
+  },
 });
+
+export const storeStyles = (isToggled: boolean) =>
+  StyleSheet.create({
+    store: {
+      justifyContent: 'center',
+      alignItems: 'center',
+
+      marginHorizontal: 8,
+      width: 100,
+      height: 100,
+
+      backgroundColor: isToggled ? '#000000' : '#D9D9D9',
+      borderRadius: 10,
+    },
+  });

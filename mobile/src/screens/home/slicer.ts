@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   loading: false,
+  storeIds: [],
   moreLoading: false,
   error: null,
   moreError: null,
@@ -16,14 +17,30 @@ export const homeScreenSlice = createSlice({
   initialState,
   reducers: {
     onEndReached: state => {
-      if (!state.isListEnd) {
+      console.log('onEndReached');
+      if (!state.isListEnd && !state.error) {
         state.page += 1;
       }
     },
     onSearch: (state, action) => {
       state.search = action.payload;
       state.isListEnd = false;
+      state.products = [];
       state.page = 0;
+    },
+    setStoreFilter: (state, action) => {
+      state.storeIds = state.storeIds.concat(action.payload);
+      state.isListEnd = false;
+      state.products = [];
+      state.page = 0;
+      console.log(state.storeIds);
+    },
+    removeStoreFilter: (state, action) => {
+      state.storeIds = state.storeIds.filter(item => item !== action.payload);
+      state.isListEnd = false;
+      state.products = [];
+      state.page = 0;
+      console.log(state.storeIds);
     },
     API_REQUEST: state => {
       console.log('API_REQUEST');
@@ -37,11 +54,12 @@ export const homeScreenSlice = createSlice({
       console.log('API_SUCCESS');
       if (state.page === 0) {
         state.products = action.payload;
-        state.loading = false;
       } else {
         state.products = state.products.concat(action.payload);
         state.moreLoading = false;
       }
+
+      state.loading = false;
       state.error = null;
     },
     API_FAILURE: (state, action) => {
@@ -59,6 +77,8 @@ export const homeScreenSlice = createSlice({
 export const {
   onEndReached,
   onSearch,
+  setStoreFilter,
+  removeStoreFilter,
   API_LIST_END,
   API_REQUEST,
   API_SUCCESS,
