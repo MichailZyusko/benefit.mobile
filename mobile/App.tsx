@@ -24,7 +24,7 @@ const App = () => {
             screenOptions={({route}) => ({
               tabBarIcon: ({color, size}) => {
                 switch (route.name) {
-                  case 'Главная':
+                  case 'HomeScreenStackNavigator':
                     return (
                       <IoniconsIcon
                         name={'home-outline'}

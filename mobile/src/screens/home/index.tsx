@@ -45,7 +45,7 @@ export default function HomeScreen({navigation}: {navigation: any}) {
   );
 
   const renderItem = useCallback(
-    ({item}: {item: Product}) => <ProductCard product={item} />,
+    ({item}: {item: any}) => <ProductCard product={item} />,
     [],
   );
 
