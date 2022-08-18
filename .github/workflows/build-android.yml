@@ -83,7 +83,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install npm dependencies
         run: |
-          npm install
+          npm install --force
         working-directory: ${{env.working-directory}}
   build-android:
     needs: install-and-test
@@ -94,7 +94,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install npm dependencies
         run: |
-          npm install
+          npm install --force
         working-directory: ${{env.working-directory}}
       - name: Build Android Debug
         run: |
