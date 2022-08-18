@@ -100,7 +100,7 @@ jobs:
     steps:
       - name: Run lint
         run: |
-          echo {{ toJSON(github) }}
+          echo '${{ toJSON(github) }}'
 
       - name: Run tests
         run: |
