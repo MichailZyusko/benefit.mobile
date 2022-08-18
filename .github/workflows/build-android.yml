@@ -13,8 +13,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     defaults:
-     run:
-      working-directory: ./mobile
+      run:
+        working-directory: ./mobile
 
     steps:
       - name: Checkout
