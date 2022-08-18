@@ -115,24 +115,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-#
+
       - name: Install npm dependencies
         run: |
           npm install --force
-          
-#      - name: Cache-gradle-wrapper
-#        uses: actions/cache@v2
-#        with:
-#          path: ~/.gradle/wrapper
-#          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-#
-#      - name: Cache-gradle-dependencies
-#        uses: actions/cache@v2
-#        with:
-#          path: ~/.gradle/caches
-#          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-#          restore-keys: |
-#            ${{ runner.os }}-gradle-caches-
 
       - name: Make-gradlew-executable
         run: cd android && chmod +x ./gradlew
@@ -148,6 +134,10 @@ jobs:
           name: Benefit.apk
           path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
 
+      - name: Log
+        run: |
+          echo '${{ steps.upload-artifact.outputs.path }}'
+
       - name: Create-release
         id: create_release
         uses: actions/create-release@v1
@@ -156,6 +146,14 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
+#          artifacts: |
+#            - name: Benefit.apk
+#              path: ${{ steps.upload-artifact.outputs.path }}
+#              type: file
+#              action: upload
+#              headers:
+#                'Content-Type': 'application/vnd.android.package-archive'
+#              name: Benefit.apk
           body: |
             ## Release Notes
               {{ github.commit.message }}
@@ -172,6 +170,10 @@ jobs:
           asset_name: Benefit.apk
           asset_content_type: application/apk
 
+  notify-telegram:
+    needs: build-android
+    runs-on: ubuntu-latest
+    steps:
       - name: Send-telegram-message-on-new-app-build
         uses: appleboy/telegram-action@master
         with:
