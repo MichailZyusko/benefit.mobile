@@ -113,7 +113,8 @@ jobs:
       run:
         working-directory: ./mobile
     steps:
-#      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 #
 #      - name: Install npm dependencies
 #        run: |
