@@ -138,6 +138,13 @@ jobs:
         run: |
           echo '${{ steps.upload-artifact.outputs.path }}'
 
+  create-release:
+    needs: build-android
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./mobile
+    steps:
       - name: Create-release
         id: create_release
         uses: actions/create-release@v1
@@ -146,32 +153,32 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-#          artifacts: |
-#            - name: Benefit.apk
-#              path: ${{ steps.upload-artifact.outputs.path }}
-#              type: file
-#              action: upload
-#              headers:
-#                'Content-Type': 'application/vnd.android.package-archive'
-#              name: Benefit.apk
+          artifacts: |
+            - name: Benefit.apk
+              path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
+              type: file
+              action: upload
+              headers:
+                'Content-Type': 'application/vnd.android.package-archive'
+              name: Benefit.apk
           body: |
             ## Release Notes
-              {{ github.commit.message }}
-            draft: false
-            prerelease: false
+              `{{ github.event.head_commit.message }}`
+          draft: false
+          prerelease: false
 
-      - name: Upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
-          asset_name: Benefit.apk
-          asset_content_type: application/apk
+#      - name: Upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ github.token }}
+#        with:
+#          upload_url: ${{ steps.create_release.outputs.upload_url }}
+#          asset_path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
+#          asset_name: Benefit.apk
+#          asset_content_type: application/apk
 
   notify-telegram:
-    needs: build-android
+    needs: create-release
     runs-on: ubuntu-latest
     steps:
       - name: Send-telegram-message-on-new-app-build
@@ -181,7 +188,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            ## Finally!
-            ### A new version of the app.
-            Main changes: **{{ github.commit.message }}**
-            Download [here](https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk)!
+            *Finally!*
+            A new version of the app already available.
+            Main changes: `**{{ github.event.head_commit.message }}**`
+            Download for [android](https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk) and iOS!
