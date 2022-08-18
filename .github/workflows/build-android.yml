@@ -118,7 +118,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Benefit.apk
-          path: ./android/app/build/outputs/apk/debug/app-debug.apk
+          path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Send telegram message on new app build
         uses: appleboy/telegram-action@master
