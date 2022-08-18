@@ -101,23 +101,32 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install npm dependencies
-        run: |
-          npm install --force
+#      - name: Install npm dependencies
+#        run: |
+#          npm install --force
+#        working-directory: ${{env.working-directory}}
+#
+#      - name: Make Gradlew Executable
+#        run: cd android && chmod +x ./gradlew
+#        working-directory: ${{env.working-directory}}
+#
+#      - name: Build Android Debug
+#        run: |
+#          npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+#          cd android && ./gradlew assembleDebug
+#        working-directory: ${{env.working-directory}}
+
+      - name: CWD
+        run: pwd
         working-directory: ${{env.working-directory}}
 
-      - name: Make Gradlew Executable
-        run: cd android && chmod +x ./gradlew
+      - name: LS
+        run: ls -la
         working-directory: ${{env.working-directory}}
 
-      - name: Build Android Debug
-        run: |
-          npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
-          cd android && ./gradlew assembleDebug
-        working-directory: ${{env.working-directory}}
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: Benefit.apk
-          path: android/app/build/outputs/apk/debug/
+#      - name: Upload Artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: Benefit.apk
+#          path: android/app/build/outputs/apk/debug/
+#          working-directory: ${{env.working-directory}}
