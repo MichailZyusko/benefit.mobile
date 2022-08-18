@@ -81,10 +81,12 @@ jobs:
       working-directory: ./mobile
     steps:
       - uses: actions/checkout@v2
+
       - name: Install npm dependencies
         run: |
           npm install --force
         working-directory: ${{env.working-directory}}
+
   build-android:
     needs: install-and-test
     runs-on: ubuntu-latest
@@ -92,10 +94,12 @@ jobs:
       working-directory: ./mobile
     steps:
       - uses: actions/checkout@v2
-#      - name: Install npm dependencies
-#        run: |
-#          npm install --force
-#        working-directory: ${{env.working-directory}}
+
+      - name: Install npm dependencies
+        run: |
+          npm install --force
+        working-directory: ${{env.working-directory}}
+
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
         working-directory: ${{env.working-directory}}
