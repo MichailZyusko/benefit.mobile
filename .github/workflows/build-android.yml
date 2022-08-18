@@ -120,6 +120,31 @@ jobs:
           name: Benefit.apk
           path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
 
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            ## Release Notes
+            - [ ]
+            - [ ]
+            draft: false
+            prerelease: false
+
+      - name: Upload artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
+          asset_name: Benefit.apk
+          asset_content_type: application/apk
+
       - name: Send telegram message on new app build
         uses: appleboy/telegram-action@master
         with:
@@ -127,7 +152,4 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
-            Repository: ${{ github.repository }}
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-            Application: ${{ steps.upload-artifact.outputs.name }}
+            Application: https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/app-debug.apk
