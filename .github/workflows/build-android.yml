@@ -176,6 +176,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: html
           message: |
+            🔥🔥🔥️
             <b<Finally!</b>
             <p>Guys, a new version of the app is already available. Check this out.</p>
             <p>Main changes: 
