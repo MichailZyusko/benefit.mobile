@@ -81,7 +81,7 @@ on:
       - main
 
 jobs:
-  install-dependencies:
+  ci:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -94,10 +94,6 @@ jobs:
         run: |
           npm install --force
 
-  ci:
-    needs: install-dependencies
-    runs-on: ubuntu-latest
-    steps:
       - name: Run lint
         run: |
           echo '${{ toJSON(github) }}'
@@ -134,10 +130,6 @@ jobs:
           name: Benefit.apk
           path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
 
-      - name: Log
-        run: |
-          echo '${{ steps.upload-artifact.outputs.path }}'
-
   create-release:
     needs: build-android
     runs-on: ubuntu-latest
@@ -147,7 +139,7 @@ jobs:
     steps:
       - name: Create-release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
@@ -175,7 +167,7 @@ jobs:
 #          upload_url: ${{ steps.create_release.outputs.upload_url }}
 #          asset_path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
 #          asset_name: Benefit.apk
-#          asset_content_type: application/apk
+#          asset_content_type: application/vnd.android.package-archive
 
   notify-telegram:
     needs: create-release
@@ -186,9 +178,15 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          format: markdown
+          format: html
           message: |
-            *Finally!*
-            A new version of the app already available.
-            Main changes: `**{{ github.event.head_commit.message }}**`
-            Download for [android](https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk) and iOS!
+            <b<Finally!</b>
+            <p>A new version of the app already available.</p>
+            <p>Main changes: 
+              <code>{{ github.event.head_commit.message }}</code>
+            </p>
+            <p>Download for 
+              <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">android</a> 
+              and 
+              iOS!
+            </p>
