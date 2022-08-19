@@ -176,12 +176,13 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: html
           disable_web_page_preview: true
+          sticker: https://t.me/c/1701147908/22
           message: |
             <b>Finally!</b>
             Guys, a new version of the app is already available.
             Check this out!
             Main changes: 
-              <code>${{toJSON(github)}}</code>
+              <code>${{github.event.head_commit.message}}</code>
             Download for:
              - <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">android</a> 
              - <a href="https://http.cat/404">iOS</a>!
