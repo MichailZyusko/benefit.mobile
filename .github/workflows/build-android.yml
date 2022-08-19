@@ -176,7 +176,6 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: html
           message: |
-            <!DOCTYPE html>
             <html>
               <body>
                 <b<Finally!</b>
