@@ -177,13 +177,11 @@ jobs:
           format: html
           message: |
             <b>Finally!</b>
-            <p>Guys, a new version of the app is already available. Check this out.</p>
-            <p>Main changes: 
+            Guys, a new version of the app is already available. Check this out!
+            Main changes: 
               <code>${{github.event.head_commit.message}}</code>
-            </p>
-            <p>Download for 
+            Download for 
               <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">android</a> 
               and 
               <a href="https://http.cat/404">iOS</a> 
               !
-            </p>
