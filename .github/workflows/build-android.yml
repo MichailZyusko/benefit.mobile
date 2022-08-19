@@ -130,13 +130,6 @@ jobs:
 #          name: Benefit.apk
 #          path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
 
-#  create-release:
-#    needs: build-android
-#    runs-on: ubuntu-latest
-#    defaults:
-#      run:
-#        working-directory: ./mobile
-#    steps:
       - name: Create-release
         id: create_release
         uses: actions/create-release@v1
