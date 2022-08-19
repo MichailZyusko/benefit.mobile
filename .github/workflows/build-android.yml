@@ -76,9 +76,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   ci:
@@ -102,6 +99,10 @@ jobs:
         run: |
           echo 'Running tests...'
 
+      - name: Log commit message
+        run: |
+          echo '${{ toJSON(githubs) }}'
+
   build-android:
     needs: ci
     runs-on: ubuntu-latest
@@ -124,17 +125,11 @@ jobs:
           npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
           cd android && ./gradlew assembleDebug
 
-#      - name: Upload-artifact
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: Benefit.apk
-#          path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
-
       - name: Create-release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
