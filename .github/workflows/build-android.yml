@@ -124,19 +124,19 @@ jobs:
           npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
           cd android && ./gradlew assembleDebug
 
-      - name: Upload-artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: Benefit.apk
-          path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
+#      - name: Upload-artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: Benefit.apk
+#          path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
 
-  create-release:
-    needs: build-android
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./mobile
-    steps:
+#  create-release:
+#    needs: build-android
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        working-directory: ./mobile
+#    steps:
       - name: Create-release
         id: create_release
         uses: actions/create-release@v1
@@ -174,11 +174,12 @@ jobs:
           format: html
           message: |
             🎉🎉🎉 <b>Finally!</b> 🎉🎉🎉
-            Guys, a new version of the app is already available.
-            Check this out!
+            Guys, a new version of the app is already available.Check this out!
+            
             <b>Version:</b> ${{ github.ref }}
             <b>Main changes:</b> 
               <code>${{github.event.head_commit.message}}</code>
+            
             <b>Download for:</b>
              - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">Android</a> 
              - 📱 <a href="https://http.cat/404">iOS</a>!
