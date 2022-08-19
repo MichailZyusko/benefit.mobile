@@ -139,7 +139,7 @@ jobs:
     steps:
       - name: Create-release
         id: create_release
-        uses: actions/create-release@latest
+        uses: actions/create-release@v1.10
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
@@ -180,13 +180,18 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: html
           message: |
-            <b<Finally!</b>
-            <p>A new version of the app already available.</p>
-            <p>Main changes: 
-              <code>{{ github.event.head_commit.message }}</code>
-            </p>
-            <p>Download for 
-              <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">android</a> 
-              and 
-              iOS!
-            </p>
+            <!DOCTYPE html>
+            <html>
+              <body>
+                <b<Finally!</b>
+                <p>A new version of the app already available.</p>
+                <p>Main changes: 
+                  <code>{{ github.event.head_commit.message }}</code>
+                </p>
+                <p>Download for 
+                  <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">android</a> 
+                  and 
+                  iOS!
+                </p>
+              </body>
+            </html>
