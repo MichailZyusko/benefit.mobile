@@ -167,7 +167,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Log
-        run: echo " toJSON(github) "
+        run: echo " ${{github.ref}}"
 
       - name: Send-telegram-message-on-new-app-build
         uses: appleboy/telegram-action@master
@@ -176,13 +176,13 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: html
           disable_web_page_preview: true
-          sticker: https://t.me/c/1701147908/22
           message: |
-            <b>Finally!</b>
+            🎉🎉🎉 <b>Finally!</b> 🎉🎉🎉
             Guys, a new version of the app is already available.
             Check this out!
-            Main changes: 
+            <b>Version:</b> ${{ github.ref }}
+            <b>Main changes:</b> 
               <code>${{github.event.head_commit.message}}</code>
-            Download for:
-             - <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">android</a> 
-             - <a href="https://http.cat/404">iOS</a>!
+            <b>Download for:</b>
+             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">Android</a> 
+             - 📱 <a href="https://http.cat/404">iOS</a>!
