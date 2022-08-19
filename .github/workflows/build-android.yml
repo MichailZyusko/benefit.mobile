@@ -81,84 +81,77 @@ on:
       - main
 
 jobs:
-  ci:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./mobile
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install npm dependencies
-        run: |
-          npm install --force
-
-      - name: Run lint
-        run: |
-          echo '${{ toJSON(github) }}'
-
-      - name: Run tests
-        run: |
-          echo "Running tests..."
-
-  build-android:
-    needs: ci
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./mobile
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install npm dependencies
-        run: |
-          npm install --force
-
-      - name: Make-gradlew-executable
-        run: cd android && chmod +x ./gradlew
-
-      - name: Build-android-debug
-        run: |
-          npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
-          cd android && ./gradlew assembleDebug
-
-      - name: Upload-artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: Benefit.apk
-          path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
-
-  create-release:
-    needs: build-android
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./mobile
-    steps:
-      - name: Create-release
-        id: create_release
-        uses: actions/create-release@v1.10
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          artifacts: |
-            - name: Benefit.apk
-              path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
-              type: file
-              action: upload
-              headers:
-                'Content-Type': 'application/vnd.android.package-archive'
-              name: Benefit.apk
-          body: |
-            ## Release Notes
-              `{{ github.event.head_commit.message }}`
-          draft: false
-          prerelease: false
-
+#  ci:
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        working-directory: ./mobile
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#
+#      - name: Install npm dependencies
+#        run: |
+#          npm install --force
+#
+#      - name: Run lint
+#        run: |
+#          echo '${{ toJSON(github) }}'
+#
+#      - name: Run tests
+#        run: |
+#          echo "Running tests..."
+#
+#
+#  build-android:
+#    needs: ci
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        working-directory: ./mobile
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#
+#      - name: Install npm dependencies
+#        run: |
+#          npm install --force
+#
+#      - name: Make-gradlew-executable
+#        run: cd android && chmod +x ./gradlew
+#
+#      - name: Build-android-debug
+#        run: |
+#          npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+#          cd android && ./gradlew assembleDebug
+#
+#      - name: Upload-artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: Benefit.apk
+#          path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
+#
+#  create-release:
+#    needs: build-android
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        working-directory: ./mobile
+#    steps:
+#      - name: Create-release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+#        with:
+#          tag_name: ${{ github.ref }}
+#          release_name: Release ${{ github.ref }}
+#          draft: false
+#          prerelease: false
+#          body: |
+#            ## Release Notes
+#              `{{ github.event.head_commit.message }}`
+#
 #      - name: Upload-release-asset
 #        uses: actions/upload-release-asset@v1
 #        env:
@@ -173,6 +166,9 @@ jobs:
     needs: create-release
     runs-on: ubuntu-latest
     steps:
+      - name: Log
+        run: echo " toJSON(github) "
+
       - name: Send-telegram-message-on-new-app-build
         uses: appleboy/telegram-action@master
         with:
@@ -184,14 +180,15 @@ jobs:
             <html>
               <body>
                 <b<Finally!</b>
-                <p>A new version of the app already available.</p>
+                <p>Guys, a new version of the app is already available. Check this out.</p>
                 <p>Main changes: 
-                  <code>{{ github.event.head_commit.message }}</code>
+                  <code>{{ toJSON(github.event.head_commit.message) }}</code>
                 </p>
                 <p>Download for 
                   <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">android</a> 
                   and 
-                  iOS!
+                  <a href="https://http.cat/404">iOS</a> 
+                  !
                 </p>
               </body>
             </html>
