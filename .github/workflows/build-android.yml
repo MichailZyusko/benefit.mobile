@@ -101,7 +101,7 @@ jobs:
 
       - name: Log commit message
         run: |
-          echo '${{ toJSON(githubs) }}'
+          echo '${{ toJSON(github) }}'
 
   build-android:
     needs: ci
