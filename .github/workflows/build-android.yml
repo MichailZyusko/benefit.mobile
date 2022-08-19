@@ -175,9 +175,9 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: html
-          sticker: https://t.me/c/1701147908/22
+          disable_web_page_preview: true
           message: |
-            <b>Finally!</b>
+            🎉🎉🎉 <b>Finally!</b> 🎉🎉🎉
             Guys, a new version of the app is already available.
             Check this out!
             Main changes: 
