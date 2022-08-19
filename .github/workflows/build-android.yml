@@ -175,13 +175,11 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: html
+          sticker: https://t.me/c/1701147908/22
           message: |
             <b>Finally!</b>
-            Guys, a new version of the app is already available. Check this out!
+            Guys, a new version of the app is already available.
+            Check this out!
             Main changes: 
-              <code>${{github.event.head_commit.message}}</code>
-            Download for 
-              <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">android</a> 
-              and 
-              <a href="https://http.cat/404">iOS</a> 
-              !
+              <code>${{toJSON(github)}}</code>
+            Download for <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">android</a> and <a href="https://http.cat/404">iOS</a>!
