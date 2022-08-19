@@ -163,7 +163,7 @@ jobs:
 #          asset_content_type: application/vnd.android.package-archive
 
   notify-telegram:
-    needs: create-release
+#    needs: create-release
     runs-on: ubuntu-latest
     steps:
       - name: Log
