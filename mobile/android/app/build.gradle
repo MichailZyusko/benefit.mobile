@@ -233,8 +233,8 @@ android {
         release {
             storeFile file("keystore/benefit.keystore")
             storePassword System.getenv('KEYSTORE_PASSWORD')
-            keyAlias System.getenv('RELEASE_SIGN_KEY_ALIAS')
-            keyPassword System.getenv('RELEASE_SIGN_KEY_PASSWORD')
+            keyAlias System.getenv('SIGN_KEY_ALIAS')
+            keyPassword System.getenv('SIGN_KEY_PASSWORD')
         }
     }
     buildTypes {
