@@ -143,9 +143,10 @@
 #            <b>Download for:</b>
 #             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">Android</a>
 #             - 📱 <a href="https://http.cat/404">iOS</a>!
-
+#
 
 name: Build android-app && add create GitHub releases
+
 on:
   push:
     branches: [ main ]
@@ -199,7 +200,7 @@ jobs:
           path: androind/app/build/outputs/apk/release/app-release.apk
 
       - name: Get app version
-        run:  |
+        run: |
           readarray -t arr <<< "${{ github.event.head_commit.message }}"
   
           echo "${arr[0]}"
