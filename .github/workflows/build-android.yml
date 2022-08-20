@@ -196,13 +196,21 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Benefit.apk
-          path: app/build/outputs/apk/release/app-release.apk
+          path: androind/app/build/outputs/apk/release/app-release.apk
 
       - name: Get app version
         run:  |
-         chmod +x ../.github/workflows/scripts/get-app-version.sh &&
-         ../.github/workflows/scripts/get-app-version.sh
-        shell: bash
+          readarray -t arr <<< "${{ github.event.head_commit.message }}"
+  
+          echo "${arr[0]}"
+          echo "${arr[1]}"
+          
+          export APP_VERSION=$([ ! -z "$arr[0]" ] && arr[0] || $github.ref)
+          export COMMIT_MESSAGE=$([ ! -z "$arr[1]" ] && arr[1] || $github.event.head_commit.message)
+-
+#         chmod +x ../.github/workflows/scripts/get-app-version.sh &&
+#         ../.github/workflows/scripts/get-app-version.sh
+#        shell: bash
 
       - name: Create-release
         id: create_release
