@@ -152,6 +152,11 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+  SIGN_KEY_ALIAS: ${{ secrets.SIGN_KEY_ALIAS }}
+  SIGN_KEY_PASSWORD: ${{ secrets.SIGN_KEY_PASSWORD }}
+
 jobs:
   build-android-apk:
     runs-on: ubuntu-latest
@@ -162,82 +167,72 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Log
-        run: ls
-
-      - name: Setup Node JS
-        uses: actions/setup-node@master
-        with:
-          node-version: 16.13.1
-
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
           java-version: '11'
 
-      - name: Install npm dependencies
-        run: npm ci --force
-      
+      - name: Checkout keystore repo
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.KEYSTORE_GIT_REPOSITORY }}
+          token: ${{ secrets.KEYSTORE_ACCESS_TOKEN }}
+          path: app/keystore
+
       - name: Build release APK
         run: |
           cd android && chmod +x ./gradlew && ./gradlew assembleRelease
 
+      ### Is this needed?
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
           name: Benefit.apk
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
-#      - name: Make-gradlew-executable
-#        run: cd android && chmod +x ./gradlew
+          path: app/build/outputs/apk/release/app-release.apk
 
-#      - name: Build-android-debug
-#        run: |
-#          npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
-#          cd android && ./gradlew assembleDebug
+      - name: Create-release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+          body: |
+            ## Release Notes
+              `${{ github.event.head_commit.message }}`
 
-#      - name: Create-release
-#        id: create_release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ github.ref }}
-#          release_name: Release ${{ github.ref }}
-#          draft: false
-#          prerelease: false
-#          body: |
-#            ## Release Notes
-#              `${{ github.event.head_commit.message }}`
-#
-#      - name: Upload-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ github.token }}
-#        with:
-#          upload_url: ${{ steps.create_release.outputs.upload_url }}
-#          asset_path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
-#          asset_name: Benefit.apk
-#          asset_content_type: application/vnd.android.package-archive
+      - name: Upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/release/app-release.apk
+          asset_name: Benefit.apk
+          asset_content_type: application/vnd.android.package-archive
 
-#  notify-telegram:
-#    needs: build-android
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Send-telegram-message-on-new-app-build
-#        uses: appleboy/telegram-action@master
-#        with:
-#          to: ${{ secrets.TELEGRAM_TO }}
-#          token: ${{ secrets.TELEGRAM_TOKEN }}
-#          disable_web_page_preview: true
-#          format: html
-#          message: |
-#            🎉🎉🎉 <b>Finally!</b> 🎉🎉🎉
-#            Guys, a new version of the app is already available.Check this out!
-#
-#            <b>Version:</b> ${{ github.ref }}
-#            <b>Main changes:</b>
-#              <code>${{github.event.head_commit.message}}</code>
-#
-#            <b>Download for:</b>
-#             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">Android</a>
-#             - 📱 <a href="https://http.cat/404">iOS</a>!
+  notify-telegram:
+    needs: build-android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send-telegram-message-on-new-app-build
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          disable_web_page_preview: true
+          format: html
+          message: |
+            🎉🎉🎉 <b>Finally!</b> 🎉🎉🎉
+            Guys, a new version of the app is already available.Check this out!
+
+            <b>Version:</b> ${{ github.ref }}
+            <b>Main changes:</b>
+              <code>${{github.event.head_commit.message}}</code>
+
+            <b>Download for:</b>
+             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">Android</a>
+             - 📱 <a href="https://http.cat/404">iOS</a>!
