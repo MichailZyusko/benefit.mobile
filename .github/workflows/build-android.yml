@@ -199,7 +199,9 @@ jobs:
 #          path: app/build/outputs/apk/release/app-release.apk
 
       - name: Get app version
-        run:  ../.github/workflows/scripts/get-app-version.sh
+        run:  |
+         chmod +x ../.github/workflows/scripts/get-app-version.sh &&
+         ../.github/workflows/scripts/get-app-version.sh
         shell: bash
 
 #      - name: Create-release
