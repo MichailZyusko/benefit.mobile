@@ -172,11 +172,11 @@ jobs:
         with:
           repository: ${{ secrets.KEYSTORE_GIT_REPOSITORY }}
           token: ${{ secrets.KEYSTORE_ACCESS_TOKEN }}
-          path: app/keystore
+          path: android/app/keystore
 
       - name: Log
         run: |
-          echo ls -la
+          ls -la
           cd android && ls -la
           cd app && ls -la
           cd keystore && ls -la
