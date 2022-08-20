@@ -71,38 +71,12 @@
 #          name: Benefit
 #          path: ${{steps.sign_app.outputs.signedReleaseFile}}
 
-name: Build android-app && add to GitHub releases
+name: Build android-app && add create GitHub releases
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  ci:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./mobile
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install npm dependencies
-        run: |
-          npm install --force
-
-      - name: Run lint
-        run: |
-          echo 'Running linter...'
-
-      - name: Run tests
-        run: |
-          echo 'Running tests...'
-
-      - name: Log commit message
-        run: |
-          echo '${{ toJSON(github) }}'
-
   build-android:
     needs: ci
     runs-on: ubuntu-latest
@@ -114,8 +88,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install npm dependencies
-        run: |
-          npm install --force
+        run: npm ci --force
 
       - name: Make-gradlew-executable
         run: cd android && chmod +x ./gradlew
