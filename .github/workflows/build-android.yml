@@ -180,7 +180,7 @@ jobs:
 
       - name: Build release APK
         run: |
-          cd andoid && ./gradlew assembleRelease
+          cd android && ./gradlew assembleRelease
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
