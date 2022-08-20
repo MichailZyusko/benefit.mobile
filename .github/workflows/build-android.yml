@@ -1,81 +1,13 @@
-#name: Build android-app && add to GitHub artifacts
-#
-#on:
-#  push:
-#    branches:
-#      - main
-#  pull_request:
-#    branches:
-#      - main
-#
-#jobs:
-#  build:
-#    name: Build
-#    runs-on: ubuntu-latest
-#    defaults:
-#     run:
-#      working-directory: ./mobile
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v2
-#
-#      - name: Setup Node JS
-#        uses: actions/setup-node@master
-#
-#      # - name: set up JDK 1.8
-#      #   uses: actions/setup-java@v1
-#      #   with:
-#      #    java-version: 1.8
-#
-#      - name: Install dependencies
-#        run: npm install --force
-#
-#      # - name: Build android
-#      #   run: npm run cd android && ./gradlew assembleDebug
-#
-#      - name: Cache Gradle Wrapper
-#        uses: actions/cache@v2
-#        with:
-#          path: ~/.gradle/wrapper
-#          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-#
-#      - name: Cache Gradle Dependencies
-#        uses: actions/cache@v2
-#        with:
-#          path: ~/.gradle/caches
-#          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-#          restore-keys: |
-#            ${{ runner.os }}-gradle-caches-
-#
-#      - name: Make Gradlew Executable
-#        run: cd android && chmod +x ./gradlew
-#
-#      - name: Build Android App Bundle
-#        run: |
-#          cd android && ./gradlew bundleRelease --no-daemon
-#
-#      - name: Sign App Bundle
-#        id: sign_app
-#        uses: r0adkll/sign-android-release@v1
-#        with:
-#          releaseDirectory: android/app/build/outputs/bundle/release
-#          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
-#          alias: ${{ secrets.ANDROID_SIGNING_ALIAS }}
-#          keyStorePassword: ${{ secrets.ANDROID_SIGNING_STORE_PASSWORD }}
-#          keyPassword: ${{ secrets.ANDROID_SIGNING_KEY_PASSWORD }}
-#
-#      - name: Upload Artifact
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: Benefit
-#          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+name: Build android-apk && add create GitHub releases
 
-name: Build android-app && add to GitHub releases
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+
+env:
+  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+  SIGN_KEY_ALIAS: ${{ secrets.SIGN_KEY_ALIAS }}
+  SIGN_KEY_PASSWORD: ${{ secrets.SIGN_KEY_PASSWORD }}
 
 jobs:
   ci:
@@ -85,26 +17,19 @@ jobs:
         working-directory: ./mobile
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install npm dependencies
-        run: |
-          npm install --force
+        run: npm ci --force
 
-      - name: Run lint
-        run: |
-          echo 'Running linter...'
+      - name: Run linter
+        run: echo 'Running linter...'
 
-      - name: Run tests
-        run: |
-          echo 'Running tests...'
+      - name: Run unit tests
+        run: echo 'Running tests...'
 
-      - name: Log commit message
-        run: |
-          echo '${{ toJSON(github) }}'
-
-  build-android:
-    needs: ci
+  build-android-apk:
+    needs: [ci]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -113,17 +38,42 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Checkout keystore repo
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.KEYSTORE_GIT_REPOSITORY }}
+          token: ${{ secrets.KEYSTORE_ACCESS_TOKEN }}
+          path: mobile/android/app/keystore
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+
+      - name: Setup Node JS
+        uses: actions/setup-node@master
+        with:
+          node-version: '16'
+
       - name: Install npm dependencies
-        run: |
-          npm install --force
+        run: npm ci --force
 
-      - name: Make-gradlew-executable
-        run: cd android && chmod +x ./gradlew
-
-      - name: Build-android-debug
+      - name: Build release APK
         run: |
-          npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
-          cd android && ./gradlew assembleDebug
+          cd android && chmod +x ./gradlew && ./gradlew assembleRelease
+
+      ### Is this needed?
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: Benefit.apk
+          path: androind/app/build/outputs/apk/release/app-release.apk
+
+#      - name: Get app version
+#        run:
+#         chmod +x ../.github/workflows/scripts/get-app-version.sh &&
+#         ../.github/workflows/scripts/get-app-version.sh
+#        shell: bash
 
       - name: Create-release
         id: create_release
@@ -145,12 +95,12 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/debug/app-debug.apk
+          asset_path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/release/app-release.apk
           asset_name: Benefit.apk
           asset_content_type: application/vnd.android.package-archive
 
   notify-telegram:
-    needs: build-android
+    needs: build-android-apk
     runs-on: ubuntu-latest
     steps:
       - name: Send-telegram-message-on-new-app-build
@@ -162,12 +112,13 @@ jobs:
           format: html
           message: |
             🎉🎉🎉 <b>Finally!</b> 🎉🎉🎉
-            Guys, a new version of the app is already available.Check this out!
-            
+
+            Guys, a new version of the app is already available. Check this out!
+
             <b>Version:</b> ${{ github.ref }}
-            <b>Main changes:</b> 
-              <code>${{github.event.head_commit.message}}</code>
-            
+            <b>Main changes:</b>
+              <code>${{ github.event.head_commit.message }}</code>
+
             <b>Download for:</b>
-             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">Android</a> 
+             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ env.APP_VERSION }}/Benefit.apk">Android</a>
              - 📱 <a href="https://http.cat/404">iOS</a>!
