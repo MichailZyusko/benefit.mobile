@@ -162,6 +162,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Log
+        run: ls
+
       - name: Setup Node JS
         uses: actions/setup-node@master
         with:
@@ -175,7 +178,7 @@ jobs:
       - name: Install npm dependencies
         run: npm ci --force
 
-      - name: Build release APK and AAB after test
+      - name: Build release APK
         run: |
           cd andoid && ./gradlew assembleRelease
 
