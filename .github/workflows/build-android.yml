@@ -169,9 +169,8 @@ jobs:
 
       - name: Build release APK and AAB after test
         run: |
-#          ./gradlew test
            ./gradlew assembleRelease
-#          ./gradlew bundleRelease
+
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
