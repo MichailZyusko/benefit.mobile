@@ -1,4 +1,7 @@
-readarray -t arr <<< "v1.0.0 /n COMMIT_MESSAGE"
+text="this is line one
+this is line two
+this is line three"
+readarray -t arr <<< "$text"
 
 echo "${arr[0]}"
 echo "123123123"
