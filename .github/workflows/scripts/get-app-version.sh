@@ -1,8 +1,4 @@
-readarray -t arr <<< "
-v1.0.0
-
-COMMIT_MESSAGE
-"
+readarray -t arr <<< "v1.0.0 /n COMMIT_MESSAGE"
 
 echo ${arr[0]}
 echo ${arr[1]}
