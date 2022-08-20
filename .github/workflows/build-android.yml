@@ -67,7 +67,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Benefit.apk
-          path: androind/app/build/outputs/apk/release/app-release.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
 
 #      - name: Get app version
 #        run:
@@ -120,5 +120,5 @@ jobs:
               <code>${{ github.event.head_commit.message }}</code>
 
             <b>Download for:</b>
-             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ env.APP_VERSION }}/Benefit.apk">Android</a>
+             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">Android</a>
              - 📱 <a href="https://http.cat/404">iOS</a>!
