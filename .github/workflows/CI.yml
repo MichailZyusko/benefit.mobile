@@ -1,0 +1,24 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./mobile
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install npm dependencies
+        run: npm ci --force
+
+      - name: Run linter
+        run: echo 'Running linter...'
+
+      - name: Run unit tests
+        run:  echo 'Running tests...'
