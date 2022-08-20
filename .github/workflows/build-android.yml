@@ -215,7 +215,7 @@ jobs:
           asset_content_type: application/vnd.android.package-archive
 
   notify-telegram:
-    needs: build-android
+    needs: build-android-apk
     runs-on: ubuntu-latest
     steps:
       - name: Send-telegram-message-on-new-app-build
