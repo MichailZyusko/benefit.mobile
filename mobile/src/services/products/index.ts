@@ -5,6 +5,7 @@ import {
   API_REQUEST,
   API_SUCCESS,
 } from '../../screens/home/slicer';
+import ProductDto from '../../components/ProductCard/dto';
 
 const URL = 'https://api.infoprice.by/InfoPrice.Goods';
 const itemsPerPage = 44;
@@ -33,7 +34,9 @@ export const getProducts = async (
       throw new Error('Something went wrong');
     }
 
-    const products = data.Table[0].GoodsOffer;
+    const products = data.Table[0].GoodsOffer.map(
+      (item: any) => new ProductDto(item),
+    );
 
     if (products.length < itemsPerPage) {
       dispatch(API_LIST_END());

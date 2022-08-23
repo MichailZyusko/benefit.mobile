@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import {StoreBackgroundColor} from './constants';
 
 export const styles = StyleSheet.create({
   cardContainer: {
@@ -37,6 +36,8 @@ export const styles = StyleSheet.create({
     width: 170,
     height: 170,
     borderRadius: 15,
+
+    marginVertical: 8,
   },
   nameContainer: {
     flexDirection: 'column',
@@ -63,59 +64,31 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
   },
-  plusImage: {
-    width: 16,
-    height: 16,
+  editQuantityImage: {
+    width: 20,
+    height: 20,
   },
-  plusButton: {
+  addProductToCart: {
     justifyContent: 'center',
     alignItems: 'center',
 
     backgroundColor: '#e3e3e3',
-    borderRadius: 5,
+    borderRadius: 8,
 
-    width: 24,
-    height: 24,
+    width: '75%',
+    height: 30,
   },
-  plusContainer: {
+  storeLogoContainer: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 1,
+  },
+  quantityEditorWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
 
-    marginRight: -7,
-    padding: 7,
+    width: '100%',
+    marginVertical: 8,
   },
 });
-
-export const storeLogoStyles = (storeId: string) =>
-  StyleSheet.create({
-    storeNameText: {
-      fontFamily: 'Roboto-Medium',
-      fontSize: 12,
-      lineHeight: 14,
-      color: '#fff',
-    },
-    storeNameContainer: {
-      justifyContent: 'center',
-      alignItems: 'center',
-
-      elevation: 5,
-      shadowColor: 'rgb(97, 151, 99)',
-      backgroundColor: StoreBackgroundColor[storeId],
-
-      marginTop: 5,
-      paddingTop: 2,
-      paddingBottom: 2,
-      paddingLeft: 10,
-      paddingRight: 10,
-
-      borderRadius: 5,
-
-      // //shadow-offset: {
-      // //  width: '0px',
-      // //  height: '2px',
-      // //};
-      // //shadow-color: rgb(97, 151, 99);
-      // //shadow-opacity: 0.6;
-      // //box-shadow: 0px 2px 10px rgba(97, 151, 99, 0.6);
-    },
-  });
