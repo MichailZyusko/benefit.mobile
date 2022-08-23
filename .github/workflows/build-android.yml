@@ -72,7 +72,7 @@ jobs:
       - name: Log
         run: |
           sudo apt-get install tree
-          tree -c
+          tree /android
 
       ### Is this needed?
       - name: Upload APK
