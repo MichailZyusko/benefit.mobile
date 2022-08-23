@@ -6,4 +6,9 @@ export const useHomeScreenSelector: TypedUseSelectorHook<RootState> =
   useSelector;
 
 export const useCartScreenDispatch = () => useDispatch<AppDispatch>();
-export const useCartScreenSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useCartScreenSelector: TypedUseSelectorHook<RootState> =
+  useSelector;
+
+export const useProductCardDispatch = () => useDispatch<AppDispatch>();
+export const useProductCardSelector: TypedUseSelectorHook<RootState> =
+  useSelector;

@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, ToastAndroid} from 'react-native';
+import {Text, View, ToastAndroid, StyleSheet} from 'react-native';
 import {Camera, useCameraDevices} from 'react-native-vision-camera';
 import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
 import {useHomeScreenDispatch} from '../../redux/hooks';
 import {onSearch} from '../home/slicer';
+import {styles} from './styles';
+import {useNavigation} from '@react-navigation/native';
 
-export const ScanScreen = ({navigation}: {navigation: any}) => {
+export const ScanScreen = () => {
   const [hasPermissions, setPermissions] = useState(false);
-  const devices = useCameraDevices('wide-angle-camera');
-  const device = devices.back;
-
+  const {back: device} = useCameraDevices('wide-angle-camera');
+  const navigation = useNavigation();
   const dispatch = useHomeScreenDispatch();
 
   const [frameProcessor, barcodes] = useScanBarcodes(
@@ -33,6 +34,7 @@ export const ScanScreen = ({navigation}: {navigation: any}) => {
     if (barcode) {
       ToastAndroid.show(barcode, 3e3);
 
+      // @ts-ignore
       navigation.navigate('Главная');
       dispatch(onSearch(barcode));
     }
@@ -60,23 +62,3 @@ export const ScanScreen = ({navigation}: {navigation: any}) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  barcodeMask: {
-    position: 'absolute',
-    top: '40%',
-    left: '15%',
-    borderWidth: 3,
-    borderColor: 'yellow',
-    borderRadius: 10,
-    width: '70%',
-    height: 120,
-  },
-  instruction: {
-    position: 'relative',
-    top: -35,
-    left: '10%',
-    fontFamily: 'Roboto-Regular',
-    fontSize: 18,
-  },
-});

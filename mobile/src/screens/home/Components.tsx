@@ -14,6 +14,7 @@ import {useHomeScreenDispatch} from '../../redux/hooks';
 import useDebounce from '../../hooks/useDebounce';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import {Store, stores} from './constants';
+import {useNavigation} from '@react-navigation/native';
 
 export const ListHeaderComponent = () => {
   return <StoreCarousel />;
@@ -27,7 +28,6 @@ const StoreCard = ({store}: {store: Store}) => {
     <TouchableOpacity
       style={storeStyles(isToggled).store}
       onPress={() => {
-        console.log(12333);
         setToggle(!isToggled);
 
         isToggled
@@ -65,9 +65,10 @@ const StoreCarousel = () => {
   );
 };
 
-export const SearchTextInput = ({navigation}: {navigation: any}) => {
+export const SearchTextInput = () => {
   const [search, setSearch] = useState('');
   const dispatch = useHomeScreenDispatch();
+  const navigation = useNavigation();
 
   const handleChangeText = (text: string) => setSearch(text);
   const debouncedSearch = useDebounce<string>(search, 500);
