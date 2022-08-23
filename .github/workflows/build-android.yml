@@ -3,6 +3,8 @@ name: Build android-apk && add create GitHub releases
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 env:
   KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -62,6 +64,9 @@ jobs:
         run: |
           cd android && chmod +x ./gradlew && ./gradlew assembleRelease
 
+      - name: Log
+        run: cd app/build/outputs/apk/release/ && ls -la
+
       ### Is this needed?
       - name: Upload APK
         uses: actions/upload-artifact@v2
@@ -99,26 +104,26 @@ jobs:
           asset_name: Benefit.apk
           asset_content_type: application/vnd.android.package-archive
 
-  notify-telegram:
-    needs: build-android-apk
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send-telegram-message-on-new-app-build
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          disable_web_page_preview: true
-          format: html
-          message: |
-            🎉🎉🎉 <b>Finally!</b> 🎉🎉🎉
-
-            Guys, a new version of the app is already available. Check this out!
-
-            <b>Version:</b> ${{ github.ref }}
-            <b>Main changes:</b>
-              <code>${{ github.event.head_commit.message }}</code>
-
-            <b>Download for:</b>
-             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">Android</a>
-             - 📱 <a href="https://http.cat/404">iOS</a>!
+#  notify-telegram:
+#    needs: build-android-apk
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Send-telegram-message-on-new-app-build
+#        uses: appleboy/telegram-action@master
+#        with:
+#          to: ${{ secrets.TELEGRAM_TO }}
+#          token: ${{ secrets.TELEGRAM_TOKEN }}
+#          disable_web_page_preview: true
+#          format: html
+#          message: |
+#            🎉🎉🎉 <b>Finally!</b> 🎉🎉🎉
+#
+#            Guys, a new version of the app is already available. Check this out!
+#
+#            <b>Version:</b> ${{ github.ref }}
+#            <b>Main changes:</b>
+#              <code>${{ github.event.head_commit.message }}</code>
+#
+#            <b>Download for:</b>
+#             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">Android</a>
+#             - 📱 <a href="https://http.cat/404">iOS</a>!
