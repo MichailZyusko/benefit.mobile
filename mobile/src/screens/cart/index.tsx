@@ -5,6 +5,11 @@ import {selectCartScreen} from './slicer';
 import {styles} from './styles';
 import {Product} from '../../types';
 import CartCard from '../../components/CartCard';
+import {ScreenHeader} from './ScreenHeader';
+import {ScanScreen} from '../scan';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function CartScreen() {
   const {products} = useCartScreenSelector(selectCartScreen);
@@ -44,3 +49,16 @@ export default function CartScreen() {
     </View>
   );
 }
+
+export const CartScreenStackNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Корзина"
+        component={CartScreen}
+        options={{headerTitle: () => <ScreenHeader />}}
+      />
+      <Stack.Screen name="QR-code  сканнер" component={ScanScreen} />
+    </Stack.Navigator>
+  );
+};

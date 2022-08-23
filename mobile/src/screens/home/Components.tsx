@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import {useHomeScreenDispatch} from '../../redux/hooks';
 import useDebounce from '../../hooks/useDebounce';
-import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import {Store, stores} from './constants';
 import {useNavigation} from '@react-navigation/native';
 
@@ -68,7 +67,6 @@ const StoreCarousel = () => {
 export const SearchTextInput = () => {
   const [search, setSearch] = useState('');
   const dispatch = useHomeScreenDispatch();
-  const navigation = useNavigation();
 
   const handleChangeText = (text: string) => setSearch(text);
   const debouncedSearch = useDebounce<string>(search, 500);
@@ -88,13 +86,6 @@ export const SearchTextInput = () => {
       />
       <>
         <Image source={ImageSearch} style={styles.searchImage} />
-        <Text> | </Text>
-        <IoniconsIcon
-          name={'ios-scan-outline'}
-          size={25}
-          color={'#828282'}
-          onPress={() => navigation.navigate('QR-code  сканнер')}
-        />
       </>
     </View>
   );

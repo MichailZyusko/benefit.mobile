@@ -65,18 +65,18 @@ export const styles = StyleSheet.create({
     color: '#000',
   },
   editQuantityImage: {
-    width: 16,
-    height: 16,
+    width: 20,
+    height: 20,
   },
   addProductToCart: {
     justifyContent: 'center',
     alignItems: 'center',
 
     backgroundColor: '#e3e3e3',
-    borderRadius: 5,
+    borderRadius: 8,
 
     width: '75%',
-    height: 24,
+    height: 30,
   },
   storeLogoContainer: {
     position: 'absolute',

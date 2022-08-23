@@ -15,6 +15,7 @@ import {styles} from './styles';
 import {ProductCardLoader} from '../../components/ProductCard/Loader';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ScanScreen} from '../scan';
+import {ScreenHeader} from './ScreenHeader';
 
 const Stack = createNativeStackNavigator();
 
@@ -76,7 +77,11 @@ export default function HomeScreen() {
 export const HomeScreenStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Главная" component={HomeScreen} />
+      <Stack.Screen
+        name="Главная"
+        component={HomeScreen}
+        options={{headerTitle: () => <ScreenHeader />}}
+      />
       <Stack.Screen name="QR-code  сканнер" component={ScanScreen} />
     </Stack.Navigator>
   );

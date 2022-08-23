@@ -1,6 +1,5 @@
 import React from 'react';
 import {AddProductToCart, Heart} from './Components';
-import {textTruncate} from '../../utils';
 import {ImageBackground, Text, View} from 'react-native';
 import {styles} from './styles';
 import ProductDto from './dto';
@@ -30,7 +29,9 @@ export default function ProductCard({product}: Props) {
       />
       <View style={styles.nameContainer}>
         <Text style={styles.priceText}>{product.price} Br</Text>
-        <Text style={styles.nameText}>{textTruncate(product.name, 40)}</Text>
+        <Text style={styles.nameText} numberOfLines={2}>
+          {product.name}
+        </Text>
       </View>
       <View style={styles.priceContainer}>
         <View style={styles.quantityEditorWrapper}>

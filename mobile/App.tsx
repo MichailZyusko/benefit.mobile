@@ -9,7 +9,7 @@ import {store} from './src/redux/store';
 import ProfileScreen from './src/screens/profile';
 import FavoriteScreen from './src/screens/favorite';
 import CategoriesScreen from './src/screens/categories';
-import CartScreen from './src/screens/cart';
+import CartScreen, {CartScreenStackNavigator} from './src/screens/cart';
 import {HomeScreenStackNavigator} from './src/screens/home';
 
 const Tab = createBottomTabNavigator();
@@ -40,7 +40,7 @@ const App = () => {
                         color={color}
                       />
                     );
-                  case 'Корзина':
+                  case 'CartScreenStackNavigator':
                     return (
                       <IoniconsIcon
                         name={'cart-outline'}
@@ -81,7 +81,10 @@ const App = () => {
               component={HomeScreenStackNavigator}
             />
             <Tab.Screen name="Категории" component={CategoriesScreen} />
-            <Tab.Screen name="Корзина" component={CartScreen} />
+            <Tab.Screen
+              name="CartScreenStackNavigator"
+              component={CartScreenStackNavigator}
+            />
             <Tab.Screen name="Избранное" component={FavoriteScreen} />
             <Tab.Screen name="Профиль" component={ProfileScreen} />
           </Tab.Navigator>
