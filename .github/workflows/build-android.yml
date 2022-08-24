@@ -88,6 +88,9 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     steps:
+      - name: LOG
+        run: echo "${{ steps.create_release.outputs.html_url }}/Benefit.apk"
+
       - name: Send-telegram-message-on-new-app-build
         uses: appleboy/telegram-action@master
         with:
