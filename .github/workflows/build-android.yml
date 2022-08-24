@@ -88,6 +88,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Log
+        run: tree
+
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
