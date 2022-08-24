@@ -85,14 +85,18 @@ jobs:
         with:
           name: android-apk
 
+      - name: Get version
+        run: |
+          echo "RELEASE_VERSION=$(date +%s)" >> $GITHUB_ENV
+
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: Release ${{ env.RELEASE_VERSION }}
           body: |
             ## Release Notes
               ${{ github.event.head_commit.message }}
@@ -107,12 +111,8 @@ jobs:
           asset_name: Benefit.apk
           asset_content_type: application/vnd.android.package-archive
 
-      - name: Log
-        run:  echo "${{ steps.create_release.outputs.html_url }}"
-
-
 #  notify-telegram:
-#    needs: build-android-apk
+#    needs: release
 #    runs-on: ubuntu-latest
 #    steps:
 #      - name: Send-telegram-message-on-new-app-build
@@ -132,5 +132,5 @@ jobs:
 #              <code>${{ github.event.head_commit.message }}</code>
 #
 #            <b>Download for:</b>
-#             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ github.ref }}/Benefit.apk">Android</a>
+#             - 🤖 <a href="${{ steps.create_release.outputs.html_url }}/Benefit.apk">Android</a>
 #             - 📱 <a href="https://http.cat/404">iOS</a>!
