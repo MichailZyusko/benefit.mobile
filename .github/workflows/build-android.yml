@@ -52,6 +52,8 @@ jobs:
   release:
     needs: [build-android-apk]
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ env.RELEASE_VERSION }}
     steps:
       - name: Download APK from build
         uses: actions/download-artifact@v1
@@ -88,9 +90,6 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     steps:
-      - name: LOG
-        run: echo "${{ steps.create_release.outputs.html_url }}/Benefit.apk"
-
       - name: Send-telegram-message-on-new-app-build
         uses: appleboy/telegram-action@master
         with:
@@ -108,5 +107,5 @@ jobs:
               <code>${{ github.event.head_commit.message }}</code>
 
             <b>Download for:</b>
-             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ env.RELEASE_VERSION }}/Benefit.apk">Android</a>
+             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ needs.release.outputs.version }}/Benefit.apk">Android</a>
              - 📱 <a href="https://http.cat/404">iOS</a>!
