@@ -108,5 +108,5 @@ jobs:
               <code>${{ github.event.head_commit.message }}</code>
 
             <b>Download for:</b>
-             - 🤖 <a href="${{ steps.create_release.outputs.html_url }}/Benefit.apk">Android</a>
+             - 🤖 <a href="${{ release.create_release.outputs.html_url }}/Benefit.apk">Android</a>
              - 📱 <a href="https://http.cat/404">iOS</a>!
