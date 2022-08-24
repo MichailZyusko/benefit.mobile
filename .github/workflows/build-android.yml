@@ -85,12 +85,6 @@ jobs:
         with:
           name: android-apk
 
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Log
-        run: tree
-
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -99,10 +93,9 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          bodyFile: "release/release.md"
-#          body: |
-#            ## Release Notes
-#              ${{ github.event.head_commit.message }}
+          body: |
+            ## Release Notes
+              ${{ github.event.head_commit.message }}
 
       - name: Upload-release-asset
         uses: actions/upload-release-asset@v1
