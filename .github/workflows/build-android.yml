@@ -52,8 +52,6 @@ jobs:
   release:
     needs: [build-android-apk]
     runs-on: ubuntu-latest
-    outputs:
-      download_url: ${{ steps.create_release.outputs.html_url }}
     steps:
       - name: Download APK from build
         uses: actions/download-artifact@v1
@@ -105,10 +103,10 @@ jobs:
 
             Guys, a new version of the app is already available. Check this out!
 
-            <b>Version:</b> ${{ github.ref }}
+            <b>Version:</b> ${{ env.RELEASE_VERSION }}
             <b>Main changes:</b>
               <code>${{ github.event.head_commit.message }}</code>
 
             <b>Download for:</b>
-             - 🤖 <a href="${{ needs.release.outputs.download_url }}/Benefit.apk">Android</a>
+             - 🤖 <a href="https://github.com/MichailZyusko/Benefit/releases/download/${{ env.RELEASE_VERSION }}/Benefit.apk">Android</a>
              - 📱 <a href="https://http.cat/404">iOS</a>!
