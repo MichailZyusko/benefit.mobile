@@ -102,7 +102,7 @@ jobs:
 
             Guys, a new version of the app is already available. Check this out!
 
-            <b>Version:</b> ${{ env.RELEASE_VERSION }}
+            <b>Version:</b> ${{ needs.release.outputs.version }}
             <b>Main changes:</b>
               <code>${{ github.event.head_commit.message }}</code>
 
