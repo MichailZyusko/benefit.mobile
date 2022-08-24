@@ -12,26 +12,26 @@ env:
   SIGN_KEY_PASSWORD: ${{ secrets.SIGN_KEY_PASSWORD }}
 
 jobs:
-  ci:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./mobile
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install npm dependencies
-        run: npm ci --force
-
-      - name: Run linter
-        run: echo 'Running linter...'
-
-      - name: Run unit tests
-        run: echo 'Running tests...'
+#  ci:
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        working-directory: ./mobile
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#
+#      - name: Install npm dependencies
+#        run: npm ci --force
+#
+#      - name: Run linter
+#        run: echo 'Running linter...'
+#
+#      - name: Run unit tests
+#        run: echo 'Running tests...'
 
   build-android-apk:
-    needs: [ci]
+#    needs: [ci]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -64,13 +64,7 @@ jobs:
         run: |
           cd android && chmod +x ./gradlew && ./gradlew assembleRelease
 
-      - name: Log
-        run: |
-          ls -la
-          tree ./android
-
-      ### Is this needed?
-      - name: Upload APK
+      - name: Upload APK to artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Benefit.apk
@@ -82,7 +76,31 @@ jobs:
 #         ../.github/workflows/scripts/get-app-version.sh
 #        shell: bash
 
-      - name: Create-release
+  release:
+    needs: [build-android-apk]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download APK from build
+        uses: actions/download-artifact@v1
+        with:
+          name: apk
+
+      - name: Log
+        run: |
+          ls -la
+          tree       
+
+      - name: Unzip artifact folder
+        uses: montudor/action-zip@v1
+        with:
+          args: unzip -qq apk.zip -d apk
+
+      - name: Log
+        run: |
+          ls -la
+          tree   
+
+      - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -90,11 +108,9 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
           body: |
             ## Release Notes
-              `${{ github.event.head_commit.message }}`
+              ${{ github.event.head_commit.message }}
 
       - name: Upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -102,9 +118,13 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/Benefit/Benefit/mobile/android/app/build/outputs/apk/release/app-release.apk
+          asset_path: apk/Benefit.apk
           asset_name: Benefit.apk
           asset_content_type: application/vnd.android.package-archive
+
+      - name: Log
+        run:  echo "${{ steps.create_release.outputs.html_url }}"
+
 
 #  notify-telegram:
 #    needs: build-android-apk
