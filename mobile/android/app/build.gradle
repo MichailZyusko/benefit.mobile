@@ -231,10 +231,21 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file("keystore/benefit.keystore")
-            storePassword System.getenv('KEYSTORE_PASSWORD')
-            keyAlias System.getenv('SIGN_KEY_ALIAS')
-            keyPassword System.getenv('SIGN_KEY_PASSWORD')
+            def keystoreProperties = new Properties()
+            def keystorePropsFile = file("keystore/keystore_config")
+
+            if (keystorePropsFile.exists()) {
+                file("keystore/keystore_config").withInputStream { keystoreProperties.load(it) }
+                storeFile file("$keystoreProperties.storeFile")
+                storePassword "$keystoreProperties.storePassword"
+                keyAlias "$keystoreProperties.keyAlias"
+                keyPassword "$keystoreProperties.keyPassword"
+            } else {
+               storeFile file("keystore/benefit.keystore")
+               storePassword System.getenv('KEYSTORE_PASSWORD')
+               keyAlias System.getenv('SIGN_KEY_ALIAS')
+               keyPassword System.getenv('SIGN_KEY_PASSWORD')
+            }
         }
     }
     buildTypes {
