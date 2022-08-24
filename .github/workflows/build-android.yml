@@ -52,6 +52,8 @@ jobs:
   release:
     needs: [build-android-apk]
     runs-on: ubuntu-latest
+    outputs:
+      download_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
       - name: Download APK from build
         uses: actions/download-artifact@v1
@@ -105,5 +107,5 @@ jobs:
               <code>${{ github.event.head_commit.message }}</code>
 
             <b>Download for:</b>
-             - 🤖 <a href="${{ steps.create_release.outputs.html_url }}/Benefit.apk">Android</a>
+             - 🤖 <a href="${{ needs.release.outputs.download_url }}/Benefit.apk">Android</a>
              - 📱 <a href="https://http.cat/404">iOS</a>!
