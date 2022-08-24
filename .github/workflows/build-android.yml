@@ -3,8 +3,6 @@ name: Build android-apk && add create GitHub releases
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 env:
   KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -12,26 +10,7 @@ env:
   SIGN_KEY_PASSWORD: ${{ secrets.SIGN_KEY_PASSWORD }}
 
 jobs:
-#  ci:
-#    runs-on: ubuntu-latest
-#    defaults:
-#      run:
-#        working-directory: ./mobile
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#
-#      - name: Install npm dependencies
-#        run: npm ci --force
-#
-#      - name: Run linter
-#        run: echo 'Running linter...'
-#
-#      - name: Run unit tests
-#        run: echo 'Running tests...'
-
   build-android-apk:
-#    needs: [ci]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -70,12 +49,6 @@ jobs:
           name: android-apk
           path: mobile/android/app/build/outputs/apk/release/app-release.apk
 
-#      - name: Get app version
-#        run:
-#         chmod +x ../.github/workflows/scripts/get-app-version.sh &&
-#         ../.github/workflows/scripts/get-app-version.sh
-#        shell: bash
-
   release:
     needs: [build-android-apk]
     runs-on: ubuntu-latest
@@ -111,26 +84,26 @@ jobs:
           asset_name: Benefit.apk
           asset_content_type: application/vnd.android.package-archive
 
-#  notify-telegram:
-#    needs: release
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Send-telegram-message-on-new-app-build
-#        uses: appleboy/telegram-action@master
-#        with:
-#          to: ${{ secrets.TELEGRAM_TO }}
-#          token: ${{ secrets.TELEGRAM_TOKEN }}
-#          disable_web_page_preview: true
-#          format: html
-#          message: |
-#            🎉🎉🎉 <b>Finally!</b> 🎉🎉🎉
-#
-#            Guys, a new version of the app is already available. Check this out!
-#
-#            <b>Version:</b> ${{ github.ref }}
-#            <b>Main changes:</b>
-#              <code>${{ github.event.head_commit.message }}</code>
-#
-#            <b>Download for:</b>
-#             - 🤖 <a href="${{ steps.create_release.outputs.html_url }}/Benefit.apk">Android</a>
-#             - 📱 <a href="https://http.cat/404">iOS</a>!
+  notify-telegram:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send-telegram-message-on-new-app-build
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          disable_web_page_preview: true
+          format: html
+          message: |
+            🎉🎉🎉 <b>Finally!</b> 🎉🎉🎉
+
+            Guys, a new version of the app is already available. Check this out!
+
+            <b>Version:</b> ${{ github.ref }}
+            <b>Main changes:</b>
+              <code>${{ github.event.head_commit.message }}</code>
+
+            <b>Download for:</b>
+             - 🤖 <a href="${{ steps.create_release.outputs.html_url }}/Benefit.apk">Android</a>
+             - 📱 <a href="https://http.cat/404">iOS</a>!
