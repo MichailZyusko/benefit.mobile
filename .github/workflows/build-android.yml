@@ -85,21 +85,6 @@ jobs:
         with:
           name: android-apk
 
-      - name: Log
-        run: |
-          ls -la
-          tree       
-
-      - name: Unzip artifact folder
-        uses: montudor/action-zip@v1
-        with:
-          args: unzip -qq android-apk.zip -d apk
-
-      - name: Log
-        run: |
-          ls -la
-          tree
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -122,7 +107,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: apk/app-release.apk
+          asset_path: android-apk/app-release.apk
           asset_name: Benefit.apk
           asset_content_type: application/vnd.android.package-archive
 
