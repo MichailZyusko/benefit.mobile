@@ -67,7 +67,7 @@ jobs:
       - name: Upload APK to artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: Benefit.apk
+          name: android-apk
           path: mobile/android/app/build/outputs/apk/release/app-release.apk
 
 #      - name: Get app version
@@ -83,7 +83,7 @@ jobs:
       - name: Download APK from build
         uses: actions/download-artifact@v1
         with:
-          name: apk
+          name: android-apk
 
       - name: Log
         run: |
@@ -93,12 +93,15 @@ jobs:
       - name: Unzip artifact folder
         uses: montudor/action-zip@v1
         with:
-          args: unzip -qq apk.zip -d apk
+          args: unzip -qq android-apk.zip -d apk
 
       - name: Log
         run: |
           ls -la
-          tree   
+          tree
+
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Create release
         id: create_release
@@ -108,9 +111,10 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: |
-            ## Release Notes
-              ${{ github.event.head_commit.message }}
+          bodyFile: "release/release.md"
+#          body: |
+#            ## Release Notes
+#              ${{ github.event.head_commit.message }}
 
       - name: Upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -118,7 +122,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: apk/Benefit.apk
+          asset_path: apk/app-release.apk
           asset_name: Benefit.apk
           asset_content_type: application/vnd.android.package-archive
 
