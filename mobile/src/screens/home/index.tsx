@@ -23,15 +23,15 @@ export default function HomeScreen() {
   const {onScroll, containerPaddingTop, scrollIndicatorInsetTop, translateY} =
     useCollapsibleSubHeader();
 
-  const {page, products, search, loading, storeIds} =
+  const {page, products, search, loading, storeIds, categoryId} =
     useHomeScreenSelector(selectHomeScreen);
   const dispatch = useHomeScreenDispatch();
 
   useEffect(() => {
     (async () => {
-      await getProducts(dispatch, page, search, storeIds);
+      await getProducts(dispatch, page, search, storeIds, categoryId);
     })();
-  }, [dispatch, page, search, storeIds]);
+  }, [dispatch, page, search, storeIds, categoryId]);
 
   const onEndReachedMemoized = useCallback(
     () => dispatch(onEndReached()),

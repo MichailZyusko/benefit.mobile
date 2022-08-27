@@ -13,7 +13,6 @@ import {
 import {useHomeScreenDispatch} from '../../redux/hooks';
 import useDebounce from '../../hooks/useDebounce';
 import {Store, stores} from './constants';
-import {useNavigation} from '@react-navigation/native';
 
 export const ListHeaderComponent = () => {
   return <StoreCarousel />;
