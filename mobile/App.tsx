@@ -8,8 +8,8 @@ import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
 import ProfileScreen from './src/screens/profile';
 import FavoriteScreen from './src/screens/favorite';
-import CategoriesScreen from './src/screens/categories';
-import CartScreen, {CartScreenStackNavigator} from './src/screens/cart';
+import {CategoryScreenStackNavigator} from './src/screens/categories';
+import {CartScreenStackNavigator} from './src/screens/cart';
 import {HomeScreenStackNavigator} from './src/screens/home';
 
 const Tab = createBottomTabNavigator();
@@ -32,7 +32,7 @@ const App = () => {
                         color={color}
                       />
                     );
-                  case 'Категории':
+                  case 'CategoryScreenStackNavigator':
                     return (
                       <IoniconsIcon
                         name={'menu-outline'}
@@ -80,7 +80,10 @@ const App = () => {
               name="HomeScreenStackNavigator"
               component={HomeScreenStackNavigator}
             />
-            <Tab.Screen name="Категории" component={CategoriesScreen} />
+            <Tab.Screen
+              name="CategoryScreenStackNavigator"
+              component={CategoryScreenStackNavigator}
+            />
             <Tab.Screen
               name="CartScreenStackNavigator"
               component={CartScreenStackNavigator}

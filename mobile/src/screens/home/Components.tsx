@@ -12,11 +12,17 @@ import {
 } from 'react-native';
 import {useHomeScreenDispatch} from '../../redux/hooks';
 import useDebounce from '../../hooks/useDebounce';
-import {Store, stores} from './constants';
-import {useNavigation} from '@react-navigation/native';
+import {Store, stores} from '../../constants/stores';
 
 export const ListHeaderComponent = () => {
-  return <StoreCarousel />;
+  return (
+    <>
+      <SearchTextInput />
+      <Text style={styles.storeText}>Магазины</Text>
+      <StoreCarousel />
+      <Text style={styles.storeText}>Популярные товары</Text>
+    </>
+  );
 };
 
 const StoreCard = ({store}: {store: Store}) => {
@@ -50,21 +56,18 @@ const StoreCarousel = () => {
   );
 
   return (
-    <>
-      <Text style={styles.storeText}>Магазины</Text>
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.carousel}
-        data={stores}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-      />
-    </>
+    <FlatList
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={styles.carousel}
+      data={stores}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem}
+    />
   );
 };
 
-export const SearchTextInput = () => {
+const SearchTextInput = () => {
   const [search, setSearch] = useState('');
   const dispatch = useHomeScreenDispatch();
 
@@ -77,6 +80,7 @@ export const SearchTextInput = () => {
 
   return (
     <View style={styles.searchTextInputContainer}>
+      <Image source={ImageSearch} style={styles.searchImage} />
       <TextInput
         onChangeText={handleChangeText}
         value={search}
@@ -84,9 +88,6 @@ export const SearchTextInput = () => {
         placeholderTextColor={'#828282'}
         style={styles.searchTextInput}
       />
-      <>
-        <Image source={ImageSearch} style={styles.searchImage} />
-      </>
     </View>
   );
 };

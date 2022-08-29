@@ -18,8 +18,6 @@ export const styles = StyleSheet.create({
     shadowColor: 'rgba(160, 160, 160)',
   },
   imageContainer: {
-    height: '100%',
-
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -32,7 +30,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    height: '100%',
 
     marginHorizontal: 8,
   },
@@ -45,7 +42,6 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   priceContainer: {
-    height: '100%',
     justifyContent: 'flex-end',
   },
   priceText: {
@@ -58,7 +54,7 @@ export const styles = StyleSheet.create({
     height: 30,
 
     position: 'absolute',
-    top: 0,
+    top: -8,
     right: 0,
   },
 });

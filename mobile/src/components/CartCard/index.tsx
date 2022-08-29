@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {ImageBackground, Text, View} from 'react-native';
 import {styles} from './styles';
 import {Product} from '../../types';
@@ -23,7 +22,9 @@ export default function CartCard({product}: Props) {
       </View>
       <View style={styles.productInfoContainer}>
         <StoreLogo storeId={product.storeId} />
-        <Text style={styles.nameText}>{product.name}</Text>
+        <Text style={styles.nameText} numberOfLines={3}>
+          {product.name}
+        </Text>
         <QuantityEditor productId={product.id} />
       </View>
       <View style={styles.priceContainer}>
@@ -32,7 +33,9 @@ export default function CartCard({product}: Props) {
           style={styles.geoTagImage}
           resizeMode={'contain'}
         />
-        <Text style={styles.priceText}>{product.price} руб.</Text>
+        <Text style={styles.priceText}>
+          {+product.price * product.quantity} руб.
+        </Text>
       </View>
     </View>
   );

@@ -1,21 +1,49 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useCallback} from 'react';
+import {FlatList, View} from 'react-native';
+import {styles} from './styles';
+import {categories, Category_L1} from '../../constants/categories';
+import CategoryCard from '../../components/CategoryCard';
+import {ScanScreen} from '../scan';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {ScreenHeader} from '../../components/ScreenHeader';
+import {SubCategoryScreen} from './screens/subCategoryScreen';
 
-export default function CategoriesScreen() {
+const Stack = createNativeStackNavigator();
+
+function CategoriesScreen() {
+  const keyExtractor = useCallback(
+    (item: Category_L1, index: number) => index.toString(),
+    [],
+  );
+
+  const renderItem = useCallback(
+    ({item}: {item: Category_L1}) => <CategoryCard category={item} />,
+    [],
+  );
+
   return (
     <View style={styles.screenContainer}>
-      <Text style={styles.text}>Categories!</Text>
+      <FlatList
+        numColumns={3}
+        columnWrapperStyle={styles.row}
+        data={categories}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+      />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  screenContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    color: 'black',
-  },
-});
+export const CategoryScreenStackNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Категории"
+        component={CategoriesScreen}
+        options={{headerTitle: () => <ScreenHeader title="Категории" />}}
+      />
+      <Stack.Screen name="QR-code  сканнер" component={ScanScreen} />
+      <Stack.Screen name="Подктагории" component={SubCategoryScreen} />
+    </Stack.Navigator>
+  );
+};

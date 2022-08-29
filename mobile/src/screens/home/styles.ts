@@ -4,9 +4,7 @@ export const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-  },
-  flatList: {
-    margin: 4,
+    paddingHorizontal: 12,
   },
   searchImage: {
     width: 24,
@@ -17,31 +15,30 @@ export const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     color: '#828282',
 
-    width: '80%',
     height: 45,
+    paddingHorizontal: 16,
   },
   searchTextInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     backgroundColor: '#d9d9d9',
-    borderRadius: 20,
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    margin: 25,
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    marginHorizontal: 16,
+    marginVertical: 24,
     maxHeight: 40,
   },
   storeText: {
-    fontSize: 18,
+    fontSize: 22,
     fontFamily: 'Roboto-Medium',
     color: '#000000',
 
-    marginLeft: 30,
+    marginLeft: 16,
   },
   carousel: {
-    marginVertical: 10,
+    marginVertical: 8,
   },
 });
 

@@ -3,6 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
   loading: false,
   storeIds: [],
+  categoryId: '',
   moreLoading: false,
   error: null,
   moreError: null,
@@ -34,6 +35,12 @@ export const homeScreenSlice = createSlice({
       state.products = [];
       state.page = 0;
       console.log(state.storeIds);
+    },
+    setCategoryId: (state, action) => {
+      state.categoryId = action.payload;
+      state.isListEnd = false;
+      state.products = [];
+      state.page = 0;
     },
     removeStoreFilter: (state, action) => {
       state.storeIds = state.storeIds.filter(item => item !== action.payload);
@@ -79,6 +86,7 @@ export const {
   onSearch,
   setStoreFilter,
   removeStoreFilter,
+  setCategoryId,
   API_LIST_END,
   API_REQUEST,
   API_SUCCESS,

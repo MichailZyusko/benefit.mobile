@@ -15,6 +15,7 @@ export const getProducts = async (
   page: number,
   search = '',
   storeIds = [],
+  categoryId = '',
 ) => {
   try {
     dispatch(API_REQUEST());
@@ -26,6 +27,7 @@ export const getProducts = async (
           ContractorId: storeIds.join(','),
           CompareСontractorId: 72631,
           CatalogType: 1,
+          GoodsGroupId: categoryId,
         },
       },
     });

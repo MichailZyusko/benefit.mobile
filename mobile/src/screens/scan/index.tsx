@@ -32,7 +32,7 @@ export const ScanScreen = () => {
 
   useEffect(() => {
     if (barcode) {
-      ToastAndroid.show(barcode, 3e3);
+      ToastAndroid.show(barcode, 3e2);
 
       // @ts-ignore
       navigation.navigate('Главная');

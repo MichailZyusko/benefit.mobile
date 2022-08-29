@@ -5,9 +5,9 @@ import {selectCartScreen} from './slicer';
 import {styles} from './styles';
 import {Product} from '../../types';
 import CartCard from '../../components/CartCard';
-import {ScreenHeader} from './ScreenHeader';
 import {ScanScreen} from '../scan';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {ScreenHeader} from '../../components/ScreenHeader';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,7 +56,7 @@ export const CartScreenStackNavigator = () => {
       <Stack.Screen
         name="Корзина"
         component={CartScreen}
-        options={{headerTitle: () => <ScreenHeader />}}
+        options={{headerTitle: () => <ScreenHeader title="Корзина" />}}
       />
       <Stack.Screen name="QR-code  сканнер" component={ScanScreen} />
     </Stack.Navigator>
