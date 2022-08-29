@@ -13,8 +13,6 @@ export const styles = (storeId: string) =>
       justifyContent: 'center',
       alignItems: 'center',
 
-      elevation: 5,
-      shadowColor: stores[storeId]?.color,
       backgroundColor: stores[storeId]?.color,
 
       paddingVertical: 2,

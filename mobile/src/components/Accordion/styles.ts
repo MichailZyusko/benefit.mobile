@@ -3,14 +3,12 @@ import {StyleSheet} from 'react-native';
 export const styles = (expanded: boolean) =>
   StyleSheet.create({
     container: {
-      backgroundColor: expanded ? '#fff' : '#CF93FF',
-
       paddingHorizontal: 20,
       paddingVertical: 8,
-      borderRadius: 10,
-
       marginBottom: 8,
+      borderRadius: 12,
 
+      backgroundColor: expanded ? '#fff' : '#CF93FF',
       elevation: 5,
     },
     title: {

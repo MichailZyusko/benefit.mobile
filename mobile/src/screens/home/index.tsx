@@ -4,25 +4,18 @@ import {useHomeScreenDispatch, useHomeScreenSelector} from '../../redux/hooks';
 import {selectHomeScreen} from './slicer';
 import {getProducts} from '../../services/products';
 import {onEndReached} from './slicer';
-import {ListHeaderComponent, SearchTextInput} from './Components';
+import {ListHeaderComponent} from './Components';
 import {Product} from '../../types';
-import {View, Animated} from 'react-native';
-import {
-  useCollapsibleSubHeader,
-  CollapsibleSubHeaderAnimator,
-} from 'react-navigation-collapsible';
+import {View, FlatList} from 'react-native';
 import {styles} from './styles';
 import {ProductCardLoader} from '../../components/ProductCard/Loader';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ScanScreen} from '../scan';
-import {ScreenHeader} from './ScreenHeader';
+import {ScreenHeader} from '../../components/ScreenHeader';
 
 const Stack = createNativeStackNavigator();
 
-export default function HomeScreen() {
-  const {onScroll, containerPaddingTop, scrollIndicatorInsetTop, translateY} =
-    useCollapsibleSubHeader();
-
+function HomeScreen() {
   const {page, products, search, loading, storeIds, categoryId} =
     useHomeScreenSelector(selectHomeScreen);
   const dispatch = useHomeScreenDispatch();
@@ -52,11 +45,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.screenContainer}>
-      <Animated.FlatList
-        onScroll={onScroll}
-        contentContainerStyle={{paddingTop: containerPaddingTop}}
-        scrollIndicatorInsets={{top: scrollIndicatorInsetTop}}
-        style={styles.flatList}
+      <FlatList
         numColumns={2}
         data={loading ? new Array(15).fill(1) : products}
         ListHeaderComponent={ListHeaderComponent}
@@ -67,9 +56,6 @@ export default function HomeScreen() {
         onEndReached={onEndReachedMemoized}
         onEndReachedThreshold={5}
       />
-      <CollapsibleSubHeaderAnimator translateY={translateY}>
-        <SearchTextInput />
-      </CollapsibleSubHeaderAnimator>
     </View>
   );
 }
@@ -80,7 +66,7 @@ export const HomeScreenStackNavigator = () => {
       <Stack.Screen
         name="Главная"
         component={HomeScreen}
-        options={{headerTitle: () => <ScreenHeader />}}
+        options={{headerTitle: () => <ScreenHeader title="Главная" />}}
       />
       <Stack.Screen name="QR-code  сканнер" component={ScanScreen} />
     </Stack.Navigator>

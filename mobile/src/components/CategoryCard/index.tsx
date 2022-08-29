@@ -1,17 +1,18 @@
 import React from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {MainCategory} from '../../constants/categories';
+import {Category_L1} from '../../constants/categories';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
 
 type Props = {
-  category: MainCategory;
+  category: Category_L1;
 };
 
 export default function CategoryCard({category}: Props) {
   const navigation = useNavigation();
 
   const pressHandler = () => {
+    // @ts-ignore
     navigation.navigate('Подктагории', {
       title: category.name,
       id: category.id,

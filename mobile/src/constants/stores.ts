@@ -20,7 +20,6 @@ export const stores: Store[] = [
     name: 'Евроопт',
     imgSrc: null,
   },
-  ////
   {
     id: 72494,
     name: 'Соседи',
