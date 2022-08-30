@@ -26,7 +26,7 @@
 		AEA43C9852F8453E8D95DD67 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ADA8345AF68B421E95206D18 /* Roboto-Regular.ttf */; };
 		C6975C127FA644D98A4CEEAC /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 650A559F842E46E8A554CCA3 /* Roboto-Thin.ttf */; };
 		6DC19094B1534C89A49DA56F /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D30E39F3265748169E5F39C3 /* Roboto-ThinItalic.ttf */; };
-		2FC4DACEAF924E07BD7B3A54 /* Apache License.txt in Resources */ = {isa = PBXBuildFile; fileRef = D4A3EC87B8094A9CAB52BCFE /* Apache License.txt */; };
+		DF921F9A462C44E4BA9ACE35 /* Apache License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0A9F4F181E314F689421BEE2 /* Apache License.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,7 +69,7 @@
 		ADA8345AF68B421E95206D18 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		650A559F842E46E8A554CCA3 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; name = "Roboto-Thin.ttf"; path = "../assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		D30E39F3265748169E5F39C3 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-ThinItalic.ttf"; path = "../assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		D4A3EC87B8094A9CAB52BCFE /* Apache License.txt */ = {isa = PBXFileReference; name = "Apache License.txt"; path = "../assets/fonts/Apache License.txt"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0A9F4F181E314F689421BEE2 /* Apache License.txt */ = {isa = PBXFileReference; name = "Apache License.txt"; path = "../assets/fonts/Apache License.txt"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,7 +190,7 @@
 				ADA8345AF68B421E95206D18 /* Roboto-Regular.ttf */,
 				650A559F842E46E8A554CCA3 /* Roboto-Thin.ttf */,
 				D30E39F3265748169E5F39C3 /* Roboto-ThinItalic.ttf */,
-				D4A3EC87B8094A9CAB52BCFE /* Apache License.txt */,
+				0A9F4F181E314F689421BEE2 /* Apache License.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -304,7 +304,7 @@
 				AEA43C9852F8453E8D95DD67 /* Roboto-Regular.ttf in Resources */,
 				C6975C127FA644D98A4CEEAC /* Roboto-Thin.ttf in Resources */,
 				6DC19094B1534C89A49DA56F /* Roboto-ThinItalic.ttf in Resources */,
-				2FC4DACEAF924E07BD7B3A54 /* Apache License.txt in Resources */,
+				DF921F9A462C44E4BA9ACE35 /* Apache License.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

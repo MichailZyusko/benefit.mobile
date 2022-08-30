@@ -24,9 +24,7 @@
     "react-native-svg": "^12.4.3",
     "react-native-vector-icons": "^9.2.0",
     "react-native-vision-camera": "^2.14.0",
-    "react-navigation-collapsible": "^6.3.0",
     "react-redux": "^8.0.2",
-    "react-spinners": "^0.13.4",
     "redux": "^4.2.0",
     "vision-camera-code-scanner": "^0.2.0"
   },
