@@ -2,7 +2,7 @@ name: Build android-apk && add create GitHub releases
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 env:
   KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -11,6 +11,7 @@ env:
 
 jobs:
   build-android-apk:
+    if: startsWith(github.event.head_commit.message, "mobile/") == true
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -29,12 +30,12 @@ jobs:
       - name: Setup JDK 11
         uses: actions/setup-java@v1
         with:
-          java-version: '11'
+          java-version: "11"
 
       - name: Setup Node JS
         uses: actions/setup-node@master
         with:
-          node-version: '16'
+          node-version: "16"
 
       - name: Install npm dependencies
         run: npm ci --force
