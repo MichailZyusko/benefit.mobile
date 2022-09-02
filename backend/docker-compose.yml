@@ -1,0 +1,84 @@
+version: "3"
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - app-net
+
+  kafka:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: kafka
+    ports:
+    # To learn about configuring Kafka for access across networks see
+    # https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - app-net
+
+  # api-gateway:
+  #   image: michailzyusko2001/benefit.api-gateway:latest
+  #   container_name: benefit.api-gateway
+  #   command: 'yarn start:dev'
+  #   environment:
+  #     - PORT=3000
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - kafka
+  #     - zookeeper
+  #   networks:
+  #     - app-net
+
+  # product-svc:
+  #   image: michailzyusko2001/benefit.products-svc:latest
+  #   container_name: benefit.product-svc
+  #   command: 'yarn start:dev'
+  #   environment:
+  #     - DB_HOST=127.0.0.1
+  #     - DB_PORT=5432
+  #     - DB_USER=postgres
+  #     - DB_PASSWORD=!michail.zyusko_2001!
+  #     - DB_NAME=benefit
+  #   depends_on:
+  #     - kafka
+  #     - zookeeper
+  #     - api-gateway
+  #   networks:
+  #     - app-net
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - '5432:5432'
+    volumes:
+      - docker-nest-postgres:/var/lib/postgresql/data
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge
+
+
+volumes:
+  docker-nest-postgres:
