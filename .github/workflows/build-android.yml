@@ -12,9 +12,6 @@ env:
 jobs:
   build-android-apk:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./mobile
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -24,7 +21,7 @@ jobs:
         with:
           repository: ${{ secrets.KEYSTORE_GIT_REPOSITORY }}
           token: ${{ secrets.KEYSTORE_ACCESS_TOKEN }}
-          path: mobile/android/app/keystore
+          path: android/app/keystore
 
       - name: Setup JDK 11
         uses: actions/setup-java@v1
@@ -47,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: android-apk
-          path: mobile/android/app/build/outputs/apk/release/app-release.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
 
   release:
     needs: [build-android-apk]

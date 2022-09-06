@@ -6,6 +6,7 @@ export default class ProductDto {
   public price: number;
   public image: string;
   public storeId: string;
+  public quantity: number;
 
   constructor(product: any) {
     const offers = [...product.Offers];
@@ -18,6 +19,7 @@ export default class ProductDto {
     this.image = image;
     this.storeId = bestOffer.ContractorId;
     this.price = bestOffer.Price;
+    this.quantity = 0;
     this.id = ProductDto.id++;
   }
 }

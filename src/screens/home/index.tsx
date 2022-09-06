@@ -1,17 +1,19 @@
 import React, {useCallback, useEffect} from 'react';
 import ProductCard from '../../components/ProductCard';
+
 import {useHomeScreenDispatch, useHomeScreenSelector} from '../../redux/hooks';
 import {selectHomeScreen} from './slicer';
 import {getProducts} from '../../services/products';
 import {onEndReached} from './slicer';
 import {ListHeaderComponent} from './Components';
-import {Product} from '../../types';
 import {View, FlatList} from 'react-native';
 import {styles} from './styles';
 import {ProductCardLoader} from '../../components/ProductCard/Loader';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ScanScreen} from '../scan';
 import {ScreenHeader} from '../../components/ScreenHeader';
+import ModalProductInfo from '../../components/ModalWindow';
+import ProductDto from '../../components/ProductCard/dto';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,7 +34,7 @@ function HomeScreen() {
   );
 
   const keyExtractor = useCallback(
-    (item: Product, index: number) => index.toString(),
+    (_item: ProductDto, index: number) => index.toString(),
     [],
   );
 
@@ -56,6 +58,7 @@ function HomeScreen() {
         onEndReached={onEndReachedMemoized}
         onEndReachedThreshold={5}
       />
+      <ModalProductInfo />
     </View>
   );
 }
@@ -66,7 +69,17 @@ export const HomeScreenStackNavigator = () => {
       <Stack.Screen
         name="Главная"
         component={HomeScreen}
-        options={{headerTitle: () => <ScreenHeader title="Главная" />}}
+        options={{
+          headerTitle: () => (
+            <ScreenHeader
+              title="Главная"
+              iconProps={{
+                name: 'ios-scan-outline',
+                screenName: 'QR-code  сканнер',
+              }}
+            />
+          ),
+        }}
       />
       <Stack.Screen name="QR-code  сканнер" component={ScanScreen} />
     </Stack.Navigator>
