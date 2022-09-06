@@ -1,5 +1,9 @@
 import React from 'react';
-import {useCartScreenDispatch, useHomeScreenSelector} from '../../redux/hooks';
+import {
+  useCartScreenDispatch,
+  useHomeScreenDispatch,
+  useModalWindowDispatch,
+} from '../../redux/hooks';
 import {
   addProductToCart,
   removeProductFromCart,
@@ -8,7 +12,11 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {ImageMinus, ImagePlus} from '../../../assets/icons';
 import ProductDto from '../ProductCard/dto';
-import {selectHomeScreen} from '../../screens/home/slicer';
+import {decrementQuantity, incrementQuantity} from '../../screens/home/slicer';
+import {
+  decrementQuantityModal,
+  incrementQuantityModal,
+} from '../ModalWindow/slicer';
 
 type Props = {
   product: ProductDto;
@@ -16,11 +24,8 @@ type Props = {
 
 export const QuantityEditor = ({product}: Props) => {
   const cartScreenDispatch = useCartScreenDispatch();
-  // const {products} = useHomeScreenSelector(selectHomeScreen);
-
-  // const prdct = products.find(p => p.id === product.id);
-
-  // console.log(prdct);
+  const homeScreenDispatch = useHomeScreenDispatch();
+  const modalWindowDispatch = useModalWindowDispatch();
 
   return (
     <View style={styles.container}>
@@ -28,7 +33,8 @@ export const QuantityEditor = ({product}: Props) => {
         style={styles.button}
         onPress={() => {
           cartScreenDispatch(removeProductFromCart(product));
-          // product.quantity--;
+          homeScreenDispatch(decrementQuantity(product.id));
+          modalWindowDispatch(decrementQuantityModal());
         }}>
         <Image source={ImageMinus} style={styles.image} />
       </TouchableOpacity>
@@ -37,15 +43,11 @@ export const QuantityEditor = ({product}: Props) => {
         style={styles.button}
         onPress={() => {
           cartScreenDispatch(addProductToCart(product));
-          // product.quantity++;
+          homeScreenDispatch(incrementQuantity(product.id));
+          modalWindowDispatch(incrementQuantityModal());
         }}>
         <Image source={ImagePlus} style={styles.image} />
       </TouchableOpacity>
     </View>
   );
 };
-function useHomeScreeSelector(selectHomeScreen: (state: any) => any): {
-  products: any;
-} {
-  throw new Error('Function not implemented.');
-}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, ImageBackground, Pressable, Text, View} from 'react-native';
+import {ImageBackground, Pressable, Text, View} from 'react-native';
 import {styles} from './styles';
 import Modal from 'react-native-modal';
 import {QuantityEditor} from '../QuantityEditor';
@@ -47,6 +47,9 @@ export default function ModalProductInfo() {
               />
               <Text style={styles.nameText} numberOfLines={3}>
                 {product.name}
+              </Text>
+              <Text style={styles.nameText} numberOfLines={3}>
+                {product.price} Br
               </Text>
             </View>
             <View style={styles.buttonsContainer}>

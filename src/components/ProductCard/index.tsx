@@ -3,8 +3,7 @@ import {AddProductToCart, Heart} from './Components';
 import {ImageBackground, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import ProductDto from './dto';
-import {useCartScreenSelector, useModalWindowDispatch} from '../../redux/hooks';
-import {selectCartScreen} from '../../screens/cart/slicer';
+import {useModalWindowDispatch} from '../../redux/hooks';
 import {StoreLogo} from '../StoreLogo';
 import {QuantityEditor} from '../QuantityEditor';
 import {setProduct} from '../ModalWindow/slicer';
@@ -14,10 +13,7 @@ type Props = {
 };
 
 export default function ProductCard({product}: Props) {
-  // const {products} = useCartScreenSelector(selectCartScreen);
   const modalWindowDispatch = useModalWindowDispatch();
-  // const quantity =
-  //   products.find((p: Product) => p.id === product.id)?.quantity || 0;
 
   return (
     <TouchableOpacity

@@ -1,10 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {Product} from '../../types';
+import ProductDto from '../../components/ProductCard/dto';
 
 const initialState = {
   products: [],
 } as {
-  products: Product[];
+  products: ProductDto[];
 };
 
 export const cartScreenSlice = createSlice({
@@ -13,15 +13,12 @@ export const cartScreenSlice = createSlice({
   reducers: {
     addProductToCart: (state, action) => {
       const product = state.products.find(p => p.id === action.payload.id);
-      console.log(product, action.payload);
 
       if (product) {
         product.quantity++;
       } else {
         state.products.push({...action.payload, quantity: 1});
       }
-
-      console.log(state.products);
     },
     removeProductFromCart: (state, action) => {
       const product = state.products.find(p => p.id === action.payload.id);
