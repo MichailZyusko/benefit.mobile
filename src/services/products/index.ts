@@ -49,3 +49,24 @@ export const getProducts = async (
     dispatch(API_FAILURE([]));
   }
 };
+
+export const getProsuctsByBarcode = async (barcode: string) => {
+  console.log(barcode);
+
+  const {data} = await axios.post(URL, {
+    Packet: {
+      Data: {
+        Page: 1,
+        Search: barcode,
+        CompareСontractorId: 72631,
+        CatalogType: 1,
+      },
+    },
+  });
+
+  const [product] = data.Table[0].GoodsOffer.map(
+    (item: any) => new ProductDto(item),
+  );
+
+  return product;
+};

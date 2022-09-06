@@ -18,7 +18,7 @@ export const AddProductToCart = ({product}: PlusProps) => {
       style={styles.addProductToCart}
       onPress={() => {
         ToastAndroid.show('Товар в корзине!', ToastAndroid.SHORT);
-        cartScreenDispatch(addProductToCart({...product, quantity: 1}));
+        cartScreenDispatch(addProductToCart(product));
       }}>
       <Image source={ImagePlus} style={styles.editQuantityImage} />
     </TouchableOpacity>

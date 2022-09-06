@@ -31,6 +31,12 @@ export default function CartScreen() {
     return products.reduce(reducer, 0).toFixed(2);
   };
 
+  const calculateAmountQuantity = () => {
+    const reducer = (acc: number, curr: Product) => acc + curr.quantity;
+
+    return products.reduce(reducer, 0);
+  };
+
   return (
     <View style={styles.screenContainer}>
       <FlatList
@@ -42,7 +48,7 @@ export default function CartScreen() {
       />
       <View style={styles.summaryContainer}>
         <Text style={styles.summaryText}>
-          Всего {products.length} товаров в корзине
+          Всего {calculateAmountQuantity()} товаров в корзине
         </Text>
         <Text style={styles.summaryText}>{calculateAmountPrice()} руб.</Text>
       </View>

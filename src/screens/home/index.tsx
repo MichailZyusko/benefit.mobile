@@ -12,6 +12,7 @@ import {ProductCardLoader} from '../../components/ProductCard/Loader';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ScanScreen} from '../scan';
 import {ScreenHeader} from '../../components/ScreenHeader';
+import ModalProductInfo from '../../components/ModalWindow';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,6 +57,7 @@ function HomeScreen() {
         onEndReached={onEndReachedMemoized}
         onEndReachedThreshold={5}
       />
+      <ModalProductInfo />
     </View>
   );
 }
