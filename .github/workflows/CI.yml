@@ -2,14 +2,11 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: [ '**' ]
+    branches: ['**']
 
 jobs:
   ci:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./mobile
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -21,4 +18,4 @@ jobs:
         run: echo 'Running linter...'
 
       - name: Run unit tests
-        run:  echo 'Running tests...'
+        run: echo 'Running tests...'
