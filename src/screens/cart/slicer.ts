@@ -1,10 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {Product} from '../../types';
+import ProductDto from '../../components/ProductCard/dto';
 
 const initialState = {
   products: [],
 } as {
-  products: Product[];
+  products: ProductDto[];
 };
 
 export const cartScreenSlice = createSlice({
@@ -12,38 +12,28 @@ export const cartScreenSlice = createSlice({
   initialState,
   reducers: {
     addProductToCart: (state, action) => {
-      state.products.push(action.payload);
-    },
-    removeProductFromCart: (state, action) => {
-      state.products = state.products.filter(
-        product => product.id !== action.payload,
-      );
-    },
-    incrementProductQuantity: (state, action) => {
-      const product = state.products.find(p => p.id === action.payload);
+      const product = state.products.find(p => p.id === action.payload.id);
+
       if (product) {
-        product.quantity += 1;
+        product.quantity++;
+      } else {
+        state.products.push({...action.payload, quantity: 1});
       }
     },
-    decrementProductQuantity: (state, action) => {
-      const product = state.products.find(p => p.id === action.payload);
-      if (product) {
-        product.quantity -= 1;
+    removeProductFromCart: (state, action) => {
+      const product = state.products.find(p => p.id === action.payload.id);
 
-        if (product.quantity === 0) {
-          state.products = state.products.filter(p => p.id !== action.payload);
-        }
+      if (product && product.quantity > 1) {
+        product.quantity--;
+      } else {
+        state.products = state.products.filter(p => p.id !== action.payload.id);
       }
     },
   },
 });
 
-export const {
-  addProductToCart,
-  removeProductFromCart,
-  decrementProductQuantity,
-  incrementProductQuantity,
-} = cartScreenSlice.actions;
+export const {addProductToCart, removeProductFromCart} =
+  cartScreenSlice.actions;
 
 export const selectCartScreen = (state: any) => state.cartScreen;
 

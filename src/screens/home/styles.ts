@@ -40,6 +40,10 @@ export const styles = StyleSheet.create({
   carousel: {
     marginVertical: 8,
   },
+  scannerIcon: {
+    position: 'absolute',
+    right: 30,
+  },
 });
 
 export const storeStyles = (isToggled: boolean) =>

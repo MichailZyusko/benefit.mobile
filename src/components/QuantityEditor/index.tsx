@@ -1,36 +1,51 @@
 import React from 'react';
-import {useCartScreenDispatch, useCartScreenSelector} from '../../redux/hooks';
 import {
-  decrementProductQuantity,
-  incrementProductQuantity,
-  selectCartScreen,
+  useCartScreenDispatch,
+  useHomeScreenDispatch,
+  useModalWindowDispatch,
+} from '../../redux/hooks';
+import {
+  addProductToCart,
+  removeProductFromCart,
 } from '../../screens/cart/slicer';
-import {Product} from '../../types';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {ImageMinus, ImagePlus} from '../../../assets/icons';
+import ProductDto from '../ProductCard/dto';
+import {decrementQuantity, incrementQuantity} from '../../screens/home/slicer';
+import {
+  decrementQuantityModal,
+  incrementQuantityModal,
+} from '../ModalWindow/slicer';
 
 type Props = {
-  productId: number;
+  product: ProductDto;
 };
 
-export const QuantityEditor = ({productId}: Props) => {
+export const QuantityEditor = ({product}: Props) => {
   const cartScreenDispatch = useCartScreenDispatch();
-  const {products} = useCartScreenSelector(selectCartScreen);
-
-  const quantity = products.find((p: Product) => p.id === productId)?.quantity;
+  const homeScreenDispatch = useHomeScreenDispatch();
+  const modalWindowDispatch = useModalWindowDispatch();
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => cartScreenDispatch(decrementProductQuantity(productId))}>
+        onPress={() => {
+          cartScreenDispatch(removeProductFromCart(product));
+          homeScreenDispatch(decrementQuantity(product.id));
+          modalWindowDispatch(decrementQuantityModal());
+        }}>
         <Image source={ImageMinus} style={styles.image} />
       </TouchableOpacity>
-      <Text style={styles.text}>{quantity}</Text>
+      <Text style={styles.text}>{product?.quantity}</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => cartScreenDispatch(incrementProductQuantity(productId))}>
+        onPress={() => {
+          cartScreenDispatch(addProductToCart(product));
+          homeScreenDispatch(incrementQuantity(product.id));
+          modalWindowDispatch(incrementQuantityModal());
+        }}>
         <Image source={ImagePlus} style={styles.image} />
       </TouchableOpacity>
     </View>

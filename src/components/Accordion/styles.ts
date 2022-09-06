@@ -5,7 +5,7 @@ export const styles = (expanded: boolean) =>
     container: {
       paddingHorizontal: 20,
       paddingVertical: 8,
-      marginBottom: 8,
+      marginVertical: 4,
       borderRadius: 12,
 
       backgroundColor: expanded ? '#fff' : '#CF93FF',
@@ -18,7 +18,7 @@ export const styles = (expanded: boolean) =>
 
       color: expanded ? '#000' : '#fff',
 
-      marginBottom: expanded ? 16 : 0,
+      marginBottom: expanded ? 12 : 0,
     },
     categoryText: {
       fontFamily: 'Roboto-Regular',

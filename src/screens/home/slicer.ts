@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import ProductDto from '../../components/ProductCard/dto';
 
 const initialState = {
   loading: false,
@@ -10,13 +11,33 @@ const initialState = {
   isListEnd: false,
   page: 0,
   search: '',
-  products: [],
+  products: [] as Array<ProductDto>,
 };
 
 export const homeScreenSlice = createSlice({
   name: 'homeScreen',
   initialState,
   reducers: {
+    incrementQuantity: (state, action) => {
+      const productId = action.payload;
+
+      state.products = state.products.map(p => {
+        return {
+          ...p,
+          quantity: p.quantity + Number(p.id === productId),
+        };
+      });
+    },
+    decrementQuantity: (state, action) => {
+      const productId = action.payload;
+
+      state.products = state.products.map(p => {
+        return {
+          ...p,
+          quantity: p.quantity - Number(p.id === productId),
+        };
+      });
+    },
     onEndReached: state => {
       console.log('onEndReached');
       if (!state.isListEnd && !state.error) {
@@ -91,6 +112,8 @@ export const {
   API_REQUEST,
   API_SUCCESS,
   API_FAILURE,
+  decrementQuantity,
+  incrementQuantity,
 } = homeScreenSlice.actions;
 
 export const selectHomeScreen = (state: any) => state.homeScreen;

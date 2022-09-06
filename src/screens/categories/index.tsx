@@ -3,7 +3,6 @@ import {FlatList, View} from 'react-native';
 import {styles} from './styles';
 import {categories, Category_L1} from '../../constants/categories';
 import CategoryCard from '../../components/CategoryCard';
-import {ScanScreen} from '../scan';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ScreenHeader} from '../../components/ScreenHeader';
 import {SubCategoryScreen} from './screens/subCategoryScreen';
@@ -12,7 +11,7 @@ const Stack = createNativeStackNavigator();
 
 function CategoriesScreen() {
   const keyExtractor = useCallback(
-    (item: Category_L1, index: number) => index.toString(),
+    (_item: Category_L1, index: number) => index.toString(),
     [],
   );
 
@@ -40,9 +39,10 @@ export const CategoryScreenStackNavigator = () => {
       <Stack.Screen
         name="Категории"
         component={CategoriesScreen}
-        options={{headerTitle: () => <ScreenHeader title="Категории" />}}
+        options={{
+          headerTitle: () => <ScreenHeader title="Категории" />,
+        }}
       />
-      <Stack.Screen name="QR-code  сканнер" component={ScanScreen} />
       <Stack.Screen name="Подктагории" component={SubCategoryScreen} />
     </Stack.Navigator>
   );

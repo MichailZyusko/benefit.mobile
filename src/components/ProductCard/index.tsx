@@ -1,25 +1,24 @@
 import React from 'react';
 import {AddProductToCart, Heart} from './Components';
-import {ImageBackground, Text, View} from 'react-native';
+import {ImageBackground, Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import ProductDto from './dto';
-import {useCartScreenSelector} from '../../redux/hooks';
-import {selectCartScreen} from '../../screens/cart/slicer';
-import {Product} from '../../types';
+import {useModalWindowDispatch} from '../../redux/hooks';
 import {StoreLogo} from '../StoreLogo';
 import {QuantityEditor} from '../QuantityEditor';
+import {setProduct} from '../ModalWindow/slicer';
 
 type Props = {
   product: ProductDto;
 };
 
 export default function ProductCard({product}: Props) {
-  const {products} = useCartScreenSelector(selectCartScreen);
-  const quantity =
-    products.find((p: Product) => p.id === product.id)?.quantity || 0;
+  const modalWindowDispatch = useModalWindowDispatch();
 
   return (
-    <View style={styles.cardContainer}>
+    <TouchableOpacity
+      style={styles.cardContainer}
+      onPress={() => modalWindowDispatch(setProduct(product))}>
       <Heart />
       <StoreLogo storeId={product.storeId} style={styles.storeLogoContainer} />
       <ImageBackground
@@ -35,13 +34,13 @@ export default function ProductCard({product}: Props) {
       </View>
       <View style={styles.priceContainer}>
         <View style={styles.quantityEditorWrapper}>
-          {quantity ? (
-            <QuantityEditor productId={product.id} />
+          {product?.quantity ? (
+            <QuantityEditor product={product} />
           ) : (
             <AddProductToCart product={product} />
           )}
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

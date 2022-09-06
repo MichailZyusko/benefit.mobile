@@ -1,13 +1,14 @@
 import React from 'react';
 import {ImageBackground, Text, View} from 'react-native';
 import {styles} from './styles';
-import {Product} from '../../types';
 import {StoreLogo} from '../StoreLogo';
 import {QuantityEditor} from '../QuantityEditor';
-import {ImageGeoTag} from '../../../assets/icons';
+// import {ImageGeoTag} from '../../../assets/icons';
+import {round} from '../../utils/roundNumber';
+import ProductDto from '../ProductCard/dto';
 
 type Props = {
-  product: Product;
+  product: ProductDto;
 };
 
 export default function CartCard({product}: Props) {
@@ -25,16 +26,16 @@ export default function CartCard({product}: Props) {
         <Text style={styles.nameText} numberOfLines={3}>
           {product.name}
         </Text>
-        <QuantityEditor productId={product.id} />
+        <QuantityEditor product={product} />
       </View>
       <View style={styles.priceContainer}>
-        <ImageBackground
+        {/* <ImageBackground
           source={ImageGeoTag}
           style={styles.geoTagImage}
           resizeMode={'contain'}
-        />
+        /> */}
         <Text style={styles.priceText}>
-          {+product.price * product.quantity} руб.
+          {round(+product.price * product.quantity)} руб.
         </Text>
       </View>
     </View>

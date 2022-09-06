@@ -12,3 +12,7 @@ export const useCartScreenSelector: TypedUseSelectorHook<RootState> =
 export const useProductCardDispatch = () => useDispatch<AppDispatch>();
 export const useProductCardSelector: TypedUseSelectorHook<RootState> =
   useSelector;
+
+export const useModalWindowDispatch = () => useDispatch<AppDispatch>();
+export const useModalWindowSelector: TypedUseSelectorHook<RootState> =
+  useSelector;

@@ -29,14 +29,18 @@ export const SubCategoryScreen = ({route}: Props) => {
   );
 
   const keyExtractor = useCallback(
-    (item: Category_L2, index: number) => index.toString(),
+    (_item: Category_L2, index: number) => index.toString(),
     [],
   );
+
+  if (!category) {
+    return null;
+  }
 
   return (
     <View style={styles.screenContainer}>
       <FlatList
-        data={category?.subcategories}
+        data={category.subcategories}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
       />

@@ -4,10 +4,9 @@ export const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-    paddingHorizontal: 12,
-    paddingTop: 12,
+    paddingHorizontal: 8,
   },
   row: {
-    marginBottom: 8,
+    marginVertical: 4,
   },
 });
