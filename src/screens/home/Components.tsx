@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, useRef} from 'react';
 import {ImageSearch} from '../../../assets/icons';
 import {onSearch, removeStoreFilter, setStoreFilter} from './slicer';
 import {storeStyles, styles} from './styles';
@@ -13,6 +13,7 @@ import {
 import {useHomeScreenDispatch} from '../../redux/hooks';
 import useDebounce from '../../hooks/useDebounce';
 import {Store, stores} from '../../constants/stores';
+import { event } from 'react-native-reanimated';
 
 export const ListHeaderComponent = () => {
   return (
@@ -68,6 +69,7 @@ const StoreCarousel = () => {
 };
 
 const SearchTextInput = () => {
+  const inputRef = useRef<(HTMLDivElement | null)[]>([]);
   const [search, setSearch] = useState('');
   const dispatch = useHomeScreenDispatch();
 
@@ -79,15 +81,16 @@ const SearchTextInput = () => {
   }, [debouncedSearch, dispatch]);
 
   return (
-    <View style={styles.searchTextInputContainer}>
+    <TouchableOpacity style={styles.searchTextInputContainer} onPress={() => inputRef.current.focus()} >
       <Image source={ImageSearch} style={styles.searchImage} />
       <TextInput
+        ref={inputRef}
         onChangeText={handleChangeText}
         value={search}
         placeholder={'Поиск'}
         placeholderTextColor={'#828282'}
         style={styles.searchTextInput}
-      />
-    </View>
+        />  
+    </TouchableOpacity>
   );
 };
