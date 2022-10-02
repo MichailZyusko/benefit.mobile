@@ -2,7 +2,7 @@ name: Build android-apk && add create GitHub releases
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
 
 env:
   KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
