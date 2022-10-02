@@ -2,18 +2,10 @@ import React, {useCallback, useEffect, useState, useRef} from 'react';
 import {ImageSearch} from '../../../assets/icons';
 import {onSearch, removeStoreFilter, setStoreFilter} from './slicer';
 import {storeStyles, styles} from './styles';
-import {
-  FlatList,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {FlatList, Image, Text, TextInput, TouchableOpacity} from 'react-native';
 import {useHomeScreenDispatch} from '../../redux/hooks';
 import useDebounce from '../../hooks/useDebounce';
 import {Store, stores} from '../../constants/stores';
-import { event } from 'react-native-reanimated';
 
 export const ListHeaderComponent = () => {
   return (
@@ -69,7 +61,7 @@ const StoreCarousel = () => {
 };
 
 const SearchTextInput = () => {
-  const inputRef = useRef<(HTMLDivElement | null)[]>([]);
+  const inputRef = useRef<TextInput>(null);
   const [search, setSearch] = useState('');
   const dispatch = useHomeScreenDispatch();
 
@@ -81,7 +73,9 @@ const SearchTextInput = () => {
   }, [debouncedSearch, dispatch]);
 
   return (
-    <TouchableOpacity style={styles.searchTextInputContainer} onPress={() => inputRef.current.focus()} >
+    <TouchableOpacity
+      style={styles.searchTextInputContainer}
+      onPress={() => inputRef.current && inputRef.current.focus()}>
       <Image source={ImageSearch} style={styles.searchImage} />
       <TextInput
         ref={inputRef}
@@ -90,7 +84,7 @@ const SearchTextInput = () => {
         placeholder={'Поиск'}
         placeholderTextColor={'#828282'}
         style={styles.searchTextInput}
-        />  
+      />
     </TouchableOpacity>
   );
 };
