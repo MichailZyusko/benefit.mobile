@@ -7,12 +7,11 @@ import { StoreLogo } from '../StoreLogo';
 import { QuantityEditor } from '../QuantityEditor';
 import { setProduct } from '../ModalWindow/slicer';
 import ProductDto from '../../api/products/product.dto';
+import { nonImageURL } from '../../constants/general';
 
 type Props = {
   product: ProductDto;
 };
-
-const nonImageURL = 'https://blog.vverh.digital/wp-content/uploads/2020/06/oblojka-404.png';
 
 export default function ProductCard({ product }: Props) {
   const modalWindowDispatch = useModalWindowDispatch();
@@ -25,7 +24,7 @@ export default function ProductCard({ product }: Props) {
       <Heart />
       <StoreLogo storeFranchise={product?.bestOffer?.storeFranchise} style={styles.storeLogoContainer} />
       <ImageBackground
-        source={{ uri: product.image ?? nonImageURL}}
+        source={{ uri: product.image ?? nonImageURL }}
         // source={{ uri: nonImageURL}}
         style={styles.productImage}
         resizeMode={'contain'}
@@ -36,7 +35,7 @@ export default function ProductCard({ product }: Props) {
             ? `${product?.bestOffer.price} Br`
             : `Раскуплено`
           }
-         </Text>
+        </Text>
         <Text style={styles.nameText} numberOfLines={2}>
           {product.name}
         </Text>

@@ -25,17 +25,10 @@ const Stack = createNativeStackNavigator();
 function HomeScreen() {
   const { search } = useHomeScreenSelector(selectHomeScreen);
 
-
   const { isLoading, isError, data: products, error } = useQuery({
     queryKey: ['products', search],
     queryFn: () => getProducts({ search }),
   });
-
-  console.log({ isLoading, isError, search});
-  console.log('length', products?.length);
-  
-
-
 
   const dispatch = useHomeScreenDispatch();
 

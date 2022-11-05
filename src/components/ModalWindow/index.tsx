@@ -10,11 +10,13 @@ import {
   useModalWindowDispatch,
   useModalWindowSelector,
 } from '../../redux/hooks';
+import ProductDto from '../../api/products/product.dto';
+import { nonImageURL } from '../../constants/general';
 
 export default function ModalProductInfo() {
-  const { product } = useModalWindowSelector(selectModalWindow);
+  const { product } : { product : ProductDto} = useModalWindowSelector(selectModalWindow);
   const modalWindowDispatch = useModalWindowDispatch();
-
+  
   if (!product) {
     return null;
   }
@@ -23,7 +25,7 @@ export default function ModalProductInfo() {
     <View style={styles.modalContainer}>
       <Modal
         onBackButtonPress={() => modalWindowDispatch(removeProduct())}
-        // onBackdropPress={() => modalWindowDispatch(removeProduct())}
+        onBackdropPress={() => modalWindowDispatch(removeProduct())}
         onSwipeComplete={() => modalWindowDispatch(removeProduct())}
         propagateSwipe
         swipeDirection="down"
@@ -39,10 +41,10 @@ export default function ModalProductInfo() {
           <View style={styles.separator} />
           <View>
             <View style={styles.productContainer}>
-              <StoreLogo storeId={product.storeId} style={styles.storoLogo} />
+              <StoreLogo storeFranchise={product.bestOffer?.storeFranchise} style={styles.storoLogo} />
               <Heart />
               <ImageBackground
-                source={{ uri: product.image }}
+                source={{ uri: product.image ?? nonImageURL }}
                 style={styles.productImage}
                 resizeMode={'contain'}
               />
@@ -50,15 +52,18 @@ export default function ModalProductInfo() {
                 {product.name}
               </Text>
               <Text style={styles.nameText} numberOfLines={3}>
-                {product.price} Br
+                {product?.bestOffer
+                  ? `${product?.bestOffer.price} Br`
+                  : `Раскуплено`
+                }
               </Text>
             </View>
-            <View style={styles.buttonsContainer}>
+            {/* <View style={styles.buttonsContainer}>
               <Pressable style={styles.addButton}>
                 <Text style={styles.addText}>Добавить</Text>
               </Pressable>
               <QuantityEditor product={product} />
-            </View>
+            </View> */}
           </View>
         </>
       </Modal>
