@@ -6,6 +6,7 @@ import CategoryCard from '../../components/CategoryCard';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ScreenHeader} from '../../components/ScreenHeader';
 import {SubCategoryScreen} from './screens/subCategoryScreen';
+import {SearchBySubCategoryScreen} from './screens/searchBySubCategoryScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +45,10 @@ export const CategoryScreenStackNavigator = () => {
         }}
       />
       <Stack.Screen name="Подктагории" component={SubCategoryScreen} />
+      <Stack.Screen
+        name="Поиск категория"
+        component={SearchBySubCategoryScreen}
+      />
     </Stack.Navigator>
   );
 };
