@@ -14,10 +14,12 @@ export default class ProductDto {
   public name: string;
   public image: string | null;
   public category: string;
-  public bestOffer: BestOffer;
+  public bestOffer: BestOffer | null;
 
-  private mapOffers = (offers: any[]): BestOffer => {
-    const bestOffer = offers.sort()[0];
+  private mapOffers = (offers: any[]): BestOffer | null => {
+    if (!offers.length) return null;
+
+    const bestOffer = offers.sort((a, b) => (a.price / a.quantity) - (b.price / b.quantity))[0];
 
     return {
       id: bestOffer.id,

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { stores } from './constants';
 
-export const styles = (storeId: string) =>
+export const styles = (storeFranchise: string) =>
   StyleSheet.create({
     storeNameText: {
       fontFamily: 'Roboto-Medium',
@@ -13,7 +13,7 @@ export const styles = (storeId: string) =>
       justifyContent: 'center',
       alignItems: 'center',
 
-      backgroundColor: stores[storeId]?.color,
+      backgroundColor: stores[storeFranchise]?.color,
 
       paddingVertical: 2,
       paddingHorizontal: 10,

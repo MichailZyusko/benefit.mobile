@@ -23,18 +23,20 @@ import ProductDto from '../../api/products/product.dto';
 const Stack = createNativeStackNavigator();
 
 function HomeScreen() {
+  const { search } = useHomeScreenSelector(selectHomeScreen);
+
+
   const { isLoading, isError, data: products, error } = useQuery({
-    queryKey: ['products'],
-    queryFn: getProducts,
+    queryKey: ['products', search],
+    queryFn: () => getProducts({ search }),
   });
 
-  console.log({ isLoading, isError, });
-  console.log(JSON.stringify(products, null, 2));
+  console.log({ isLoading, isError, search});
+  console.log('length', products?.length);
   
 
 
-  // const { page, products, search, loading, storeIds, categoryId } =
-  //   useHomeScreenSelector(selectHomeScreen);
+
   const dispatch = useHomeScreenDispatch();
 
   // useEffect(() => {
@@ -55,7 +57,7 @@ function HomeScreen() {
     []
   );
 
-  const renderLoader = useCallback(() => <ProductCardLoader />, []);
+  // const renderLoader = useCallback(() => <ProductCardLoader />, []);
 
   return (
     <View style={styles.screenContainer}>

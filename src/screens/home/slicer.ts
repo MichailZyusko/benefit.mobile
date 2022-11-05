@@ -46,9 +46,9 @@ export const homeScreenSlice = createSlice({
     },
     onSearch: (state, action) => {
       state.search = action.payload;
-      state.isListEnd = false;
-      state.products = [];
-      state.page = 0;
+      // state.isListEnd = false;
+      // state.products = [];
+      // state.page = 0;
     },
     setStoreFilter: (state, action) => {
       state.storeIds = state.storeIds.concat(action.payload);

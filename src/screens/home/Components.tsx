@@ -17,8 +17,8 @@ export const ListHeaderComponent = () => {
   return (
     <>
       <SearchTextInput />
-      <Text style={styles.storeText}>Магазины</Text>
-      <StoreCarousel />
+      {/* <Text style={styles.storeText}>Магазины</Text>
+      <StoreCarousel /> */}
       <Text style={styles.storeText}>Популярные товары</Text>
     </>
   );
@@ -44,28 +44,28 @@ const StoreCard = ({ store }: { store: Store }) => {
   );
 };
 
-const StoreCarousel = () => {
-  const keyExtractor = useCallback(
-    (item: any, index: number) => index.toString(),
-    []
-  );
+// const StoreCarousel = () => {
+//   const keyExtractor = useCallback(
+//     (item: any, index: number) => index.toString(),
+//     []
+//   );
 
-  const renderItem = useCallback(
-    ({ item }: { item: Store }) => <StoreCard store={item} />,
-    []
-  );
+//   const renderItem = useCallback(
+//     ({ item }: { item: Store }) => <StoreCard store={item} />,
+//     []
+//   );
 
-  return (
-    <FlatList
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      style={styles.carousel}
-      data={stores}
-      keyExtractor={keyExtractor}
-      renderItem={renderItem}
-    />
-  );
-};
+//   return (
+//     <FlatList
+//       horizontal
+//       showsHorizontalScrollIndicator={false}
+//       style={styles.carousel}
+//       data={stores}
+//       keyExtractor={keyExtractor}
+//       renderItem={renderItem}
+//     />
+//   );
+// };
 
 const SearchTextInput = () => {
   const inputRef = useRef<TextInput>(null);
@@ -73,7 +73,7 @@ const SearchTextInput = () => {
   const dispatch = useHomeScreenDispatch();
 
   const handleChangeText = (text: string) => setSearch(text);
-  const debouncedSearch = useDebounce<string>(search, 500);
+  const debouncedSearch = useDebounce<string>(search, 300);
 
   useEffect(() => {
     dispatch(onSearch(debouncedSearch));

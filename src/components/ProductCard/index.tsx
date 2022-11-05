@@ -23,15 +23,20 @@ export default function ProductCard({ product }: Props) {
       onPress={() => modalWindowDispatch(setProduct(product))}
     >
       <Heart />
-      <StoreLogo storeFranchise={product.bestOffer.storeFranchise} style={styles.storeLogoContainer} />
+      <StoreLogo storeFranchise={product?.bestOffer?.storeFranchise} style={styles.storeLogoContainer} />
       <ImageBackground
-        // source={{ uri: product.image ?? nonImageURL}}
-        source={{ uri: nonImageURL}}
+        source={{ uri: product.image ?? nonImageURL}}
+        // source={{ uri: nonImageURL}}
         style={styles.productImage}
         resizeMode={'contain'}
       />
       <View style={styles.nameContainer}>
-        <Text style={styles.priceText}>{product.bestOffer.price} Br</Text>
+        <Text style={styles.priceText}>
+          {product?.bestOffer
+            ? `${product?.bestOffer.price} Br`
+            : `Раскуплено`
+          }
+         </Text>
         <Text style={styles.nameText} numberOfLines={2}>
           {product.name}
         </Text>
