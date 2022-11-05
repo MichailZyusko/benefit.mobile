@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function FavoriteScreen() {
   return (
     <View style={styles.screenContainer}>
-      <Text style={styles.text}>Favorite!</Text>
+      <Text style={styles.text}>Coming soon!</Text>
     </View>
   );
 }

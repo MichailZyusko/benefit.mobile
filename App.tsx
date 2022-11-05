@@ -8,8 +8,8 @@ import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
 import ProfileScreen from './src/screens/profile';
 import FavoriteScreen from './src/screens/favorite';
-import { CategoryScreenStackNavigator } from './src/screens/categories';
-import { CartScreenStackNavigator } from './src/screens/cart';
+import CategoryScreen from './src/screens/categories';
+import CartScreen from './src/screens/cart';
 import { HomeScreenStackNavigator } from './src/screens/home';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -35,7 +35,7 @@ const App = () => {
                           color={color}
                         />
                       );
-                    case 'CategoryScreenStackNavigator':
+                    case 'CategoryScreen':
                       return (
                         <IoniconsIcon
                           name={'menu-outline'}
@@ -43,7 +43,7 @@ const App = () => {
                           color={color}
                         />
                       );
-                    case 'CartScreenStackNavigator':
+                    case 'CartScreen':
                       return (
                         <IoniconsIcon
                           name={'cart-outline'}
@@ -85,12 +85,12 @@ const App = () => {
                 component={HomeScreenStackNavigator}
               />
               <Tab.Screen
-                name="CategoryScreenStackNavigator"
-                component={CategoryScreenStackNavigator}
+                name="CategoryScreen"
+                component={CategoryScreen}
               />
               <Tab.Screen
-                name="CartScreenStackNavigator"
-                component={CartScreenStackNavigator}
+                name="CartScreen"
+                component={CartScreen}
               />
               <Tab.Screen name="Избранное" component={FavoriteScreen} />
               <Tab.Screen name="Профиль" component={ProfileScreen} />

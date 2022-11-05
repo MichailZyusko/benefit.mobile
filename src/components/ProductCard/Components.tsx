@@ -7,8 +7,8 @@ import {
   useHomeScreenDispatch,
 } from '../../redux/hooks';
 import { addProductToCart } from '../../screens/cart/slicer';
-import ProductDto from './dto';
 import { incrementQuantity } from '../../screens/home/slicer';
+import ProductDto from '../../api/products/product.dto';
 
 type PlusProps = {
   product: ProductDto;
@@ -23,7 +23,10 @@ export const AddProductToCart = ({ product }: PlusProps) => {
       style={styles.addProductToCart}
       onPress={() => {
         ToastAndroid.show('Товар в корзине!', ToastAndroid.SHORT);
-        cartScreenDispatch(addProductToCart(product));
+        cartScreenDispatch(addProductToCart({
+          ...product,
+          cartQuantity: 1,
+        }));
         homeScreenDispatch(incrementQuantity(product.id));
       }}
     >

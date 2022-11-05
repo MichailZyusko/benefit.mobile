@@ -25,7 +25,6 @@ export default function ProductCard({ product }: Props) {
       <StoreLogo storeFranchise={product?.bestOffer?.storeFranchise} style={styles.storeLogoContainer} />
       <ImageBackground
         source={{ uri: product.image ?? nonImageURL }}
-        // source={{ uri: nonImageURL}}
         style={styles.productImage}
         resizeMode={'contain'}
       />
@@ -40,15 +39,24 @@ export default function ProductCard({ product }: Props) {
           {product.name}
         </Text>
       </View>
-      {/* <View style={styles.priceContainer}>
-        <View style={styles.quantityEditorWrapper}>
-          {product?.quantity ? (
-            <QuantityEditor product={product} />
-          ) : (
-            <AddProductToCart product={product} />
+      <View style={styles.priceContainer}>
+        {product?.bestOffer
+          ?
+            (
+              <View style={styles.quantityEditorWrapper}>
+              {product.cartQuantity ? (
+                <QuantityEditor product={product} />
+              ) : (
+                <AddProductToCart product={product} />
+              )}
+              </View>
+            )
+          : (
+            <Text style={styles.nameText}>
+              Не доступен для заказа
+            </Text>
           )}
-        </View>
-      </View> */}
+      </View>
     </TouchableOpacity>
   );
 }

@@ -15,6 +15,7 @@ export default class ProductDto {
   public image: string | null;
   public category: string;
   public bestOffer: BestOffer | null;
+  public cartQuantity = 0;
 
   private mapOffers = (offers: any[]): BestOffer | null => {
     if (!offers.length) return null;
@@ -23,7 +24,7 @@ export default class ProductDto {
 
     return {
       id: bestOffer.id,
-      price: +(bestOffer.price / bestOffer.quantity).toFixed(2),
+      price: +(bestOffer.price / bestOffer.quantity) / 100,
       quantity: bestOffer.quantity,
       storeFranchise: bestOffer.store.franchise,
       storeAddres: bestOffer.store.address,

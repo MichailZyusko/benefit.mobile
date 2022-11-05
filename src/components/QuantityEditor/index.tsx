@@ -11,15 +11,15 @@ import {
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import { ImageMinus, ImagePlus } from '../../../assets/icons';
-import ProductDto from '../ProductCard/dto';
 import {
   decrementQuantity,
   incrementQuantity,
 } from '../../screens/home/slicer';
-import {
-  decrementQuantityModal,
-  incrementQuantityModal,
-} from '../ModalWindow/slicer';
+import ProductDto from '../../api/products/product.dto';
+// import {
+//   decrementQuantityModal,
+//   incrementQuantityModal,
+// } from '../ModalWindow/slicer';
 
 type Props = {
   product: ProductDto;
