@@ -21,7 +21,7 @@ type GetProductByBarcodeProps = {
   barcode: string,
 }
 export const getProductByBarcode = async ({ barcode = '' }: GetProductByBarcodeProps) => {
-  const { data } = await apiClient.get<Product[]>(`/products/${barcode}`);
+  const { data } = await apiClient.get<Product>(`/products/${barcode}`);
 
-  return data.map((item: Product) => new ProductDto(item));
+  return new ProductDto(data);
 }

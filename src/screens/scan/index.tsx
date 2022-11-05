@@ -5,9 +5,9 @@ import { useScanBarcodes, BarcodeFormat } from 'vision-camera-code-scanner';
 import { useModalWindowDispatch } from '../../redux/hooks';
 import { styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
-import { getProsuctsByBarcode } from '../../services/products';
 import { setProduct } from '../../components/ModalWindow/slicer';
-import ProductDto from '../../components/ProductCard/dto';
+import { useQuery } from '@tanstack/react-query'
+import { getProductByBarcode } from '../../api/products';
 
 export const ScanScreen = () => {
   const [hasPermissions, setPermissions] = useState<boolean>(false);
@@ -21,7 +21,20 @@ export const ScanScreen = () => {
   );
 
   const barcode = barcodes[0]?.displayValue;
-  let product = useRef<ProductDto | null>(null);
+
+  const { isLoading, isError, data: product, error } = useQuery(
+    ['products', barcode],
+    () => getProductByBarcode({ barcode }),
+    { enabled: !!barcode }
+  );
+
+  if (product) {
+    ToastAndroid.show(`Товар успешно найден: ${barcode}`, ToastAndroid.SHORT);
+
+    // @ts-ignore
+    modalWindowDispatch(setProduct(product));
+    navigation.navigate('Главная');
+  }
 
   useEffect(() => {
     (async () => {
@@ -30,21 +43,6 @@ export const ScanScreen = () => {
       setPermissions(status === 'authorized');
     })();
   }, []);
-
-  useEffect(() => {
-    (async () => {
-      if (barcode) {
-        ToastAndroid.show(barcode, ToastAndroid.SHORT);
-        product.current = await getProsuctsByBarcode(barcode);
-
-        if (product) {
-          // @ts-ignore
-          navigation.navigate('Главная');
-          modalWindowDispatch(setProduct(product.current));
-        }
-      }
-    })();
-  }, [barcode, navigation, modalWindowDispatch]);
 
   if (!hasPermissions) {
     return <Text>Permission Denied</Text>;
@@ -60,7 +58,7 @@ export const ScanScreen = () => {
         frameProcessor={frameProcessor}
         style={StyleSheet.absoluteFill}
         device={device}
-        isActive={!product.current}
+        isActive
       />
       <View style={styles.barcodeMask}>
         <Text style={styles.instruction}>Поместите свой код здесь</Text>
