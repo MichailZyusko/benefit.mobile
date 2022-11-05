@@ -1,6 +1,6 @@
 import React from 'react';
-import ContentLoader, {Rect} from 'react-content-loader/native';
-import {styles} from './styles';
+import ContentLoader, { Rect } from 'react-content-loader/native';
+import { styles } from './styles';
 
 export const ProductCardLoader = () => (
   <ContentLoader
@@ -11,7 +11,8 @@ export const ProductCardLoader = () => (
     style={styles.cardContainer}
     // style={styles.cardContainer}
     backgroundColor="#f3f3f3"
-    foregroundColor="#ecebeb">
+    foregroundColor="#ecebeb"
+  >
     {/* Product image*/}
     <Rect x="10" y="10" rx="15" ry="15" width="170" height="170" />
     {/* Product name */}

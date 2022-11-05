@@ -1,22 +1,22 @@
 import React from 'react';
-import {ImageBackground, Text, View} from 'react-native';
-import {styles} from './styles';
-import {StoreLogo} from '../StoreLogo';
-import {QuantityEditor} from '../QuantityEditor';
+import { ImageBackground, Text, View } from 'react-native';
+import { styles } from './styles';
+import { StoreLogo } from '../StoreLogo';
+import { QuantityEditor } from '../QuantityEditor';
 // import {ImageGeoTag} from '../../../assets/icons';
-import {round} from '../../utils/roundNumber';
+import { round } from '../../utils/roundNumber';
 import ProductDto from '../ProductCard/dto';
 
 type Props = {
   product: ProductDto;
 };
 
-export default function CartCard({product}: Props) {
+export default function CartCard({ product }: Props) {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.imageContainer}>
         <ImageBackground
-          source={{uri: product.image}}
+          source={{ uri: product.image }}
           style={styles.productImage}
           resizeMode={'contain'}
         />

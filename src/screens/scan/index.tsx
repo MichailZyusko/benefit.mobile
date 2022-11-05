@@ -1,23 +1,23 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Text, View, ToastAndroid, StyleSheet} from 'react-native';
-import {Camera, useCameraDevices} from 'react-native-vision-camera';
-import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
-import {useModalWindowDispatch} from '../../redux/hooks';
-import {styles} from './styles';
-import {useNavigation} from '@react-navigation/native';
-import {getProsuctsByBarcode} from '../../services/products';
-import {setProduct} from '../../components/ModalWindow/slicer';
+import React, { useEffect, useRef, useState } from 'react';
+import { Text, View, ToastAndroid, StyleSheet } from 'react-native';
+import { Camera, useCameraDevices } from 'react-native-vision-camera';
+import { useScanBarcodes, BarcodeFormat } from 'vision-camera-code-scanner';
+import { useModalWindowDispatch } from '../../redux/hooks';
+import { styles } from './styles';
+import { useNavigation } from '@react-navigation/native';
+import { getProsuctsByBarcode } from '../../services/products';
+import { setProduct } from '../../components/ModalWindow/slicer';
 import ProductDto from '../../components/ProductCard/dto';
 
 export const ScanScreen = () => {
   const [hasPermissions, setPermissions] = useState<boolean>(false);
-  const {back: device} = useCameraDevices('wide-angle-camera');
+  const { back: device } = useCameraDevices('wide-angle-camera');
   const navigation = useNavigation();
   const modalWindowDispatch = useModalWindowDispatch();
 
   const [frameProcessor, barcodes] = useScanBarcodes(
     [BarcodeFormat.ALL_FORMATS],
-    {checkInverted: true},
+    { checkInverted: true }
   );
 
   const barcode = barcodes[0]?.displayValue;

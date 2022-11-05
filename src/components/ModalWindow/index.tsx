@@ -1,18 +1,18 @@
 import React from 'react';
-import {ImageBackground, Pressable, Text, View} from 'react-native';
-import {styles} from './styles';
+import { ImageBackground, Pressable, Text, View } from 'react-native';
+import { styles } from './styles';
 import Modal from 'react-native-modal';
-import {QuantityEditor} from '../QuantityEditor';
-import {StoreLogo} from '../StoreLogo';
-import {Heart} from '../ProductCard/Components';
-import {removeProduct, selectModalWindow} from './slicer';
+import { QuantityEditor } from '../QuantityEditor';
+import { StoreLogo } from '../StoreLogo';
+import { Heart } from '../ProductCard/Components';
+import { removeProduct, selectModalWindow } from './slicer';
 import {
   useModalWindowDispatch,
   useModalWindowSelector,
 } from '../../redux/hooks';
 
 export default function ModalProductInfo() {
-  const {product} = useModalWindowSelector(selectModalWindow);
+  const { product } = useModalWindowSelector(selectModalWindow);
   const modalWindowDispatch = useModalWindowDispatch();
 
   if (!product) {
@@ -33,7 +33,8 @@ export default function ModalProductInfo() {
         backdropTransitionInTiming={1000}
         animationOutTiming={750}
         backdropTransitionOutTiming={1000}
-        style={styles.modelWindow}>
+        style={styles.modelWindow}
+      >
         <>
           <View style={styles.separator} />
           <View>
@@ -41,7 +42,7 @@ export default function ModalProductInfo() {
               <StoreLogo storeId={product.storeId} style={styles.storoLogo} />
               <Heart />
               <ImageBackground
-                source={{uri: product.image}}
+                source={{ uri: product.image }}
                 style={styles.productImage}
                 resizeMode={'contain'}
               />

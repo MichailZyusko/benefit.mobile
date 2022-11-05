@@ -1,46 +1,58 @@
-import React, {useCallback, useEffect} from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ProductCard from '../../components/ProductCard';
 
-import {useHomeScreenDispatch, useHomeScreenSelector} from '../../redux/hooks';
-import {selectHomeScreen} from './slicer';
-import {getProducts} from '../../services/products';
-import {onEndReached} from './slicer';
-import {ListHeaderComponent} from './Components';
-import {View, FlatList} from 'react-native';
-import {styles} from './styles';
-import {ProductCardLoader} from '../../components/ProductCard/Loader';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ScanScreen} from '../scan';
-import {ScreenHeader} from '../../components/ScreenHeader';
+import {
+  useHomeScreenDispatch,
+  useHomeScreenSelector,
+} from '../../redux/hooks';
+import { selectHomeScreen } from './slicer';
+// import { getProducts } from '../../services/products';
+import { onEndReached } from './slicer';
+import { ListHeaderComponent } from './Components';
+import { View, FlatList } from 'react-native';
+import { styles } from './styles';
+import { ProductCardLoader } from '../../components/ProductCard/Loader';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ScanScreen } from '../scan';
+import { ScreenHeader } from '../../components/ScreenHeader';
 import ModalProductInfo from '../../components/ModalWindow';
-import ProductDto from '../../components/ProductCard/dto';
+import { getProducts } from '../../api/products';
+import { useQuery } from '@tanstack/react-query'
+import ProductDto from '../../api/products/product.dto';
 
 const Stack = createNativeStackNavigator();
 
 function HomeScreen() {
-  const {page, products, search, loading, storeIds, categoryId} =
-    useHomeScreenSelector(selectHomeScreen);
+  const { isLoading, isError, data: products, error } = useQuery({
+    queryKey: ['products'],
+    queryFn: getProducts,
+  });
+
+  console.log({ isLoading, isError, });
+  console.log(JSON.stringify(products, null, 2));
+  
+
+
+  // const { page, products, search, loading, storeIds, categoryId } =
+  //   useHomeScreenSelector(selectHomeScreen);
   const dispatch = useHomeScreenDispatch();
 
-  useEffect(() => {
-    (async () => {
-      await getProducts(dispatch, page, search, storeIds, categoryId);
-    })();
-  }, [dispatch, page, search, storeIds, categoryId]);
+  // useEffect(() => {
+  //   (async () => {
+  //     await getProducts(dispatch, page, search, storeIds, categoryId);
+  //   })();
+  // }, [dispatch, page, search, storeIds, categoryId]);
 
-  const onEndReachedMemoized = useCallback(
-    () => dispatch(onEndReached()),
-    [dispatch],
-  );
+  // const onEndReachedMemoized = useCallback(
+  //   () => dispatch(onEndReached()),
+  //   [dispatch]
+  // );
 
-  const keyExtractor = useCallback(
-    (_item: ProductDto, index: number) => index.toString(),
-    [],
-  );
+  const keyExtractor = useCallback((item: ProductDto) => item.id, []);
 
   const renderItem = useCallback(
-    ({item}: {item: any}) => <ProductCard product={item} />,
-    [],
+    ({ item }: { item: ProductDto }) => <ProductCard product={item} />,
+    []
   );
 
   const renderLoader = useCallback(() => <ProductCardLoader />, []);
@@ -49,13 +61,15 @@ function HomeScreen() {
     <View style={styles.screenContainer}>
       <FlatList
         numColumns={2}
-        data={loading ? new Array(15).fill(1) : products}
+        // data={isLoading ? new Array(15).fill(1) : products}
+        data={products}
         ListHeaderComponent={ListHeaderComponent}
         ListFooterComponent={null} // TODO: add footer
         ListEmptyComponent={null} // TODO: add empty state
-        renderItem={loading ? renderLoader : renderItem}
+        // renderItem={isLoading ? renderLoader : renderItem}
+        renderItem={renderItem}
         keyExtractor={keyExtractor}
-        onEndReached={onEndReachedMemoized}
+        // onEndReached={onEndReachedMemoized}
         onEndReachedThreshold={5}
       />
       <ModalProductInfo />

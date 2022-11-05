@@ -1,17 +1,17 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {styles} from './styles';
-import {stores} from './constants';
+import { Text, View } from 'react-native';
+import { styles } from './styles';
+import { stores } from './constants';
 
 type Props = {
-  storeId: string;
+  storeFranchise: string;
   style?: any;
 };
 
-export const StoreLogo = ({storeId, style}: Props) => {
+export const StoreLogo = ({ storeFranchise, style }: Props) => {
   return (
-    <View style={[styles(storeId).storeNameContainer, style]}>
-      <Text style={styles(storeId).storeNameText}>{stores[storeId]?.name}</Text>
+    <View style={[styles(storeFranchise).storeNameContainer, style]}>
+      <Text style={styles(storeFranchise).storeNameText}>{stores[storeFranchise]?.name}</Text>
     </View>
   );
 };

@@ -1,14 +1,14 @@
 import React from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {Category_L1} from '../../constants/categories';
-import {styles} from './styles';
-import {useNavigation} from '@react-navigation/native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Category_L1 } from '../../constants/categories';
+import { styles } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = {
   category: Category_L1;
 };
 
-export default function CategoryCard({category}: Props) {
+export default function CategoryCard({ category }: Props) {
   const navigation = useNavigation();
 
   const pressHandler = () => {
@@ -22,7 +22,8 @@ export default function CategoryCard({category}: Props) {
   return (
     <TouchableOpacity
       style={styles.categoryCardContainer}
-      onPress={pressHandler}>
+      onPress={pressHandler}
+    >
       <View style={styles.categoryImageContainer}>
         <Image
           source={category.img}

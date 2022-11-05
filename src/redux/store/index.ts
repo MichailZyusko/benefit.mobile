@@ -1,7 +1,7 @@
-import {configureStore} from '@reduxjs/toolkit';
-import {homeScreenReducer} from '../../screens/home/slicer';
-import {cartScreenReducer} from '../../screens/cart/slicer';
-import {modalWindowReducer} from '../../components/ModalWindow/slicer';
+import { configureStore } from '@reduxjs/toolkit';
+import { homeScreenReducer } from '../../screens/home/slicer';
+import { cartScreenReducer } from '../../screens/cart/slicer';
+import { modalWindowReducer } from '../../components/ModalWindow/slicer';
 
 export const store = configureStore({
   reducer: {
@@ -9,7 +9,7 @@ export const store = configureStore({
     cartScreen: cartScreenReducer,
     modalWindow: modalWindowReducer,
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),

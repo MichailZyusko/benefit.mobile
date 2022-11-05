@@ -1,28 +1,28 @@
-import React, {useCallback, useMemo} from 'react';
-import {FlatList, Text, View} from 'react-native';
-import {useCartScreenSelector} from '../../redux/hooks';
-import {selectCartScreen} from './slicer';
-import {styles} from './styles';
+import React, { useCallback, useMemo } from 'react';
+import { FlatList, Text, View } from 'react-native';
+import { useCartScreenSelector } from '../../redux/hooks';
+import { selectCartScreen } from './slicer';
+import { styles } from './styles';
 import CartCard from '../../components/CartCard';
-import {ScanScreen} from '../scan';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ScreenHeader} from '../../components/ScreenHeader';
+import { ScanScreen } from '../scan';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ScreenHeader } from '../../components/ScreenHeader';
 import ProductDto from '../../components/ProductCard/dto';
-import {round} from '../../utils/roundNumber';
+import { round } from '../../utils/roundNumber';
 
 const Stack = createNativeStackNavigator();
 
 export default function CartScreen() {
-  const {products} = useCartScreenSelector(selectCartScreen);
+  const { products } = useCartScreenSelector(selectCartScreen);
 
   const keyExtractor = useCallback(
     (_item: ProductDto, index: number) => index.toString(),
-    [],
+    []
   );
 
   const renderItem = useCallback(
-    ({item}: {item: ProductDto}) => <CartCard product={item} />,
-    [],
+    ({ item }: { item: ProductDto }) => <CartCard product={item} />,
+    []
   );
 
   const calculateAmountPrice = useMemo(() => {

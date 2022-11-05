@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import ProductDto from '../ProductCard/dto';
 
 const initialState = {
@@ -14,10 +14,10 @@ export const modalWindowSlice = createSlice({
     setProduct: (state, action) => {
       state.product = action.payload;
     },
-    removeProduct: state => {
+    removeProduct: (state) => {
       state.product = null;
     },
-    incrementQuantityModal: state => {
+    incrementQuantityModal: (state) => {
       if (state.product) {
         state.product = {
           ...state.product,
@@ -25,7 +25,7 @@ export const modalWindowSlice = createSlice({
         };
       }
     },
-    decrementQuantityModal: state => {
+    decrementQuantityModal: (state) => {
       if (state.product) {
         state.product = {
           ...state.product,

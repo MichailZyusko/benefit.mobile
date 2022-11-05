@@ -11,7 +11,7 @@ export default class ProductDto {
   constructor(product: any) {
     const offers = [...product.Offers];
     const image = `https://img.infoprice.by/256/${product.GoodsId.toString().slice(
-      -4,
+      -4
     )}/${product.GoodsPhoto.split('.')[0]}/norm/${product.GoodsPhoto}`;
     const bestOffer = offers.sort((a: any, b: any) => a.Price - b.Price)[0];
 

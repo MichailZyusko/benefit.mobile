@@ -1,11 +1,17 @@
-import React, {useCallback, useEffect, useState, useRef} from 'react';
-import {ImageSearch} from '../../../assets/icons';
-import {onSearch, removeStoreFilter, setStoreFilter} from './slicer';
-import {storeStyles, styles} from './styles';
-import {FlatList, Image, Text, TextInput, TouchableOpacity} from 'react-native';
-import {useHomeScreenDispatch} from '../../redux/hooks';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
+import { ImageSearch } from '../../../assets/icons';
+import { onSearch, removeStoreFilter, setStoreFilter } from './slicer';
+import { storeStyles, styles } from './styles';
+import {
+  FlatList,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
+import { useHomeScreenDispatch } from '../../redux/hooks';
 import useDebounce from '../../hooks/useDebounce';
-import {Store, stores} from '../../constants/stores';
+import { Store, stores } from '../../constants/stores';
 
 export const ListHeaderComponent = () => {
   return (
@@ -18,7 +24,7 @@ export const ListHeaderComponent = () => {
   );
 };
 
-const StoreCard = ({store}: {store: Store}) => {
+const StoreCard = ({ store }: { store: Store }) => {
   const dispatch = useHomeScreenDispatch();
   const [isToggled, setToggle] = useState(false);
 
@@ -31,7 +37,8 @@ const StoreCard = ({store}: {store: Store}) => {
         isToggled
           ? dispatch(removeStoreFilter(store.id))
           : dispatch(setStoreFilter(store.id));
-      }}>
+      }}
+    >
       <Text>{store.name}</Text>
     </TouchableOpacity>
   );
@@ -40,12 +47,12 @@ const StoreCard = ({store}: {store: Store}) => {
 const StoreCarousel = () => {
   const keyExtractor = useCallback(
     (item: any, index: number) => index.toString(),
-    [],
+    []
   );
 
   const renderItem = useCallback(
-    ({item}: {item: Store}) => <StoreCard store={item} />,
-    [],
+    ({ item }: { item: Store }) => <StoreCard store={item} />,
+    []
   );
 
   return (
@@ -75,7 +82,8 @@ const SearchTextInput = () => {
   return (
     <TouchableOpacity
       style={styles.searchTextInputContainer}
-      onPress={() => inputRef.current && inputRef.current.focus()}>
+      onPress={() => inputRef.current && inputRef.current.focus()}
+    >
       <Image source={ImageSearch} style={styles.searchImage} />
       <TextInput
         ref={inputRef}

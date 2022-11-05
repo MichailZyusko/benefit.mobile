@@ -1,3 +1,10 @@
-import { getProductsByCategory } from './getProductsByCategory';
+import { Product } from '../../types/product';
+import apiClient from '../apiClient';
+import ProductDto from './product.dto';
 
-export { getProductsByCategory };
+export const getProducts = async () => {
+  const { data } = await apiClient.get<Product[]>('/products');
+
+
+  return data.map((item: Product) => new ProductDto(item));
+};

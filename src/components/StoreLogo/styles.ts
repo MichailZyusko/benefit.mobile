@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {stores} from './constants';
+import { StyleSheet } from 'react-native';
+import { stores } from './constants';
 
 export const styles = (storeId: string) =>
   StyleSheet.create({
