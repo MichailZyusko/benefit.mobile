@@ -4,8 +4,10 @@ type BestOffer = {
   id: string,
   price: number,
   quantity: number,
-  storeFranchise: string,
-  storeAddres: string,
+  store: {
+    franchise: string,
+    address: string,
+  }
 }
 
 export default class ProductDto {
@@ -15,6 +17,7 @@ export default class ProductDto {
   public image: string | null;
   public category: string;
   public bestOffer: BestOffer | null;
+  public offers: any[];
   public cartQuantity = 0;
 
   private mapOffers = (offers: any[]): BestOffer | null => {
@@ -26,8 +29,10 @@ export default class ProductDto {
       id: bestOffer.id,
       price: +(bestOffer.price / bestOffer.quantity) / 100,
       quantity: bestOffer.quantity,
-      storeFranchise: bestOffer.store.franchise,
-      storeAddres: bestOffer.store.address,
+      store: {
+        franchise: bestOffer.store.franchise,
+        address: bestOffer.store.address,
+      }
     }
   }
 
@@ -37,6 +42,7 @@ export default class ProductDto {
     this.name = product.name;
     this.image = product.image;
     this.category = product.category;
+    this.offers = product.offers;
     this.bestOffer = this.mapOffers(product.offers);
   }
 }

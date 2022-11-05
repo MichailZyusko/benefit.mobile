@@ -22,7 +22,7 @@ export default function ProductCard({ product }: Props) {
       onPress={() => modalWindowDispatch(setProduct(product))}
     >
       <Heart />
-      <StoreLogo storeFranchise={product?.bestOffer?.storeFranchise} style={styles.storeLogoContainer} />
+      <StoreLogo product={product} style={styles.storeLogoContainer} />
       <ImageBackground
         source={{ uri: product.image ?? nonImageURL }}
         style={styles.productImage}

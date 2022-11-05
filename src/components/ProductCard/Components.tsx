@@ -21,14 +21,14 @@ export const AddProductToCart = ({ product }: PlusProps) => {
   return (
     <TouchableOpacity
       style={styles.addProductToCart}
-      onPress={() => {
-        ToastAndroid.show('Товар в корзине!', ToastAndroid.SHORT);
-        cartScreenDispatch(addProductToCart({
-          ...product,
-          cartQuantity: 1,
-        }));
-        homeScreenDispatch(incrementQuantity(product.id));
-      }}
+      // onPress={() => {
+      //   ToastAndroid.show('Товар в корзине!', ToastAndroid.SHORT);
+      //   cartScreenDispatch(addProductToCart({
+      //     ...product,
+      //     cartQuantity: 1,
+      //   }));
+      //   homeScreenDispatch(incrementQuantity(product.id));
+      // }}
     >
       <Image source={ImagePlus} style={styles.editQuantityImage} />
     </TouchableOpacity>
