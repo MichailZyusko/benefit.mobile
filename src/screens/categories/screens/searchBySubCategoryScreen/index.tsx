@@ -1,8 +1,8 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {View, FlatList} from 'react-native';
-import {styles} from './styles';
-import {getProductsByCategory} from '../../../../api/products';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { View, FlatList } from 'react-native';
+import { styles } from './styles';
+import { getProductsByCategory } from '../../../../api/products';
 import ModalProductInfo from '../../../../components/ModalWindow';
 import ProductCard from '../../../../components/ProductCard';
 import ProductDto from '../../../../components/ProductCard/dto';
@@ -11,11 +11,11 @@ type Props = {
   route: any;
 };
 
-export function SearchBySubCategoryScreen({route}: Props) {
+export function SearchBySubCategoryScreen({ route }: Props) {
   const [products, setProducts] = useState([]);
 
   const navigation = useNavigation();
-  const {title, categoryId} = route.params ?? {};
+  const { title, categoryId } = route.params ?? {};
 
   useEffect(() => {
     if (title) {
@@ -27,9 +27,9 @@ export function SearchBySubCategoryScreen({route}: Props) {
 
   useEffect(() => {
     (async () => {
-      console.log({categoryId});
+      console.log({ categoryId });
 
-      const productsByCategory = await getProductsByCategory({categoryId});
+      const productsByCategory = await getProductsByCategory({ categoryId });
 
       setProducts(productsByCategory);
     })();
@@ -37,12 +37,12 @@ export function SearchBySubCategoryScreen({route}: Props) {
 
   const keyExtractor = useCallback(
     (_item: ProductDto, index: number) => index.toString(),
-    [],
+    []
   );
 
   const renderItem = useCallback(
-    ({item}: {item: any}) => <ProductCard product={item} />,
-    [],
+    ({ item }: { item: any }) => <ProductCard product={item} />,
+    []
   );
 
   return (

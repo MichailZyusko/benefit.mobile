@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import ProductDto from '../../components/ProductCard/dto';
 
 const initialState = {
@@ -21,7 +21,7 @@ export const homeScreenSlice = createSlice({
     incrementQuantity: (state, action) => {
       const productId = action.payload;
 
-      state.products = state.products.map(p => {
+      state.products = state.products.map((p) => {
         return {
           ...p,
           quantity: p.quantity + Number(p.id === productId),
@@ -31,14 +31,14 @@ export const homeScreenSlice = createSlice({
     decrementQuantity: (state, action) => {
       const productId = action.payload;
 
-      state.products = state.products.map(p => {
+      state.products = state.products.map((p) => {
         return {
           ...p,
           quantity: p.quantity - Number(p.id === productId),
         };
       });
     },
-    onEndReached: state => {
+    onEndReached: (state) => {
       console.log('onEndReached');
       if (!state.isListEnd && !state.error) {
         state.page += 1;
@@ -46,9 +46,9 @@ export const homeScreenSlice = createSlice({
     },
     onSearch: (state, action) => {
       state.search = action.payload;
-      state.isListEnd = false;
-      state.products = [];
-      state.page = 0;
+      // state.isListEnd = false;
+      // state.products = [];
+      // state.page = 0;
     },
     setStoreFilter: (state, action) => {
       state.storeIds = state.storeIds.concat(action.payload);
@@ -64,13 +64,13 @@ export const homeScreenSlice = createSlice({
       state.page = 0;
     },
     removeStoreFilter: (state, action) => {
-      state.storeIds = state.storeIds.filter(item => item !== action.payload);
+      state.storeIds = state.storeIds.filter((item) => item !== action.payload);
       state.isListEnd = false;
       state.products = [];
       state.page = 0;
       console.log(state.storeIds);
     },
-    API_REQUEST: state => {
+    API_REQUEST: (state) => {
       console.log('API_REQUEST');
       if (state.page === 0) {
         state.loading = true;
@@ -95,7 +95,7 @@ export const homeScreenSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    API_LIST_END: state => {
+    API_LIST_END: (state) => {
       console.log('API_LIST_END');
       state.isListEnd = true;
     },

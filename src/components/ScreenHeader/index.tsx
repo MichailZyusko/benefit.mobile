@@ -1,6 +1,6 @@
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 import React from 'react';
-import {styles} from './styles';
+import { styles } from './styles';
 import HeaderIcon from '../HeaderIcon';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
   };
 };
 
-export const ScreenHeader = ({title, iconProps}: Props) => {
+export const ScreenHeader = ({ title, iconProps }: Props) => {
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.title}>{title}</Text>

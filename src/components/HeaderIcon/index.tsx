@@ -1,14 +1,14 @@
 import React from 'react';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
-import {StyleSheet} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = {
   name: string;
   screenName: string;
 };
 
-export default function HeaderIcon({name, screenName}: Props) {
+export default function HeaderIcon({ name, screenName }: Props) {
   const navigation = useNavigation();
 
   const onPressHandler = () => {

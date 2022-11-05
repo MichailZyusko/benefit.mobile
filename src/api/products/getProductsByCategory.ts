@@ -32,7 +32,7 @@ export const getProductsByCategory = async ({
 
     if (data.Table[0].GoodsOffer) {
       const products = data.Table[0].GoodsOffer.map(
-        (item: any) => new ProductDto(item),
+        (item: any) => new ProductDto(item)
       );
 
       return products;
