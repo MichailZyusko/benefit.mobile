@@ -5,11 +5,11 @@ import { styles } from './styles';
 
 type Props = {
   product: ProductDto;
-  setPrice: (price: number) => void;
+  setSelectedOffer: (offer: any) => void;
   style?: any;
 };
 
-export const StoreLogo = ({ product, setPrice, style }: Props) => {
+export const StoreLogo = ({ product, setSelectedOffer, style }: Props) => {
   const [isExpand, setIsExpand] = useState<boolean>(false);
   const [offer, setOffer] = useState<any>(product.bestOffer);
   if (!product?.bestOffer?.store.franchise) return null;
@@ -32,7 +32,12 @@ export const StoreLogo = ({ product, setPrice, style }: Props) => {
                     
                     setOffer(myOffer);
                     setIsExpand(false);
-                    setPrice((offer.price / offer.quantity) / 100);
+                    setSelectedOffer({
+                      price: (offer.price / offer.quantity) / 100,
+                      store: {
+                        address: offer.store.address
+                      } ,
+                    });
                   }}
                   style={styles(offer.store.franchise, isExpand).storeNameListItem}
                 >

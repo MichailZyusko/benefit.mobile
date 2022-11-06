@@ -13,6 +13,7 @@ type BestOffer = {
 export default class ProductDto {
   public id: string
   public barcode: string;
+  public description: string;
   public name: string;
   public image: string | null;
   public category: string;
@@ -39,6 +40,7 @@ export default class ProductDto {
   constructor(product: Product) {
     this.id = product.id;
     this.barcode = product.barcode;
+    this.description = product.description;
     this.name = product.name;
     this.image = product.image;
     this.category = product.category;
