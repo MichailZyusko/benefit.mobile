@@ -15,7 +15,7 @@ import { nonImageURL } from '../../constants/general';
 
 export default function ModalProductInfo() {
   const { product }: { product: ProductDto } = useModalWindowSelector(selectModalWindow);
-  const [price, setPrice] = useState(product?.bestOffer?.price);
+  const [selectedOffer, setSelectedOffer] = useState(product?.bestOffer);
   const modalWindowDispatch = useModalWindowDispatch();
 
   console.log("product", JSON.stringify(product, null, 2));
@@ -46,7 +46,7 @@ export default function ModalProductInfo() {
             <StoreLogo
               product={product}
               style={styles.storoLogo}
-              setPrice={setPrice}
+              setSelectedOffer={setSelectedOffer}
             />
             <Heart />
             <ImageBackground
@@ -59,8 +59,14 @@ export default function ModalProductInfo() {
             </Text>
             <Text style={styles.nameText} numberOfLines={3}>
               {product?.bestOffer
-                ? `${price || product?.bestOffer?.price} Br`
+                ? `${selectedOffer?.price || product?.bestOffer?.price} Br`
                 : `Раскуплено`
+              }
+            </Text>
+            <Text style={styles.nameText} numberOfLines={3}>
+              {product?.bestOffer
+                ? `Адрес: ${selectedOffer?.store.address || product?.bestOffer?.store.address}`
+                : ``
               }
             </Text>
           </View>
