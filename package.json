@@ -28,6 +28,7 @@
     "react-native-vision-camera": "^2.14.0",
     "react-redux": "^8.0.2",
     "redux": "^4.2.0",
+    "uuid": "^9.0.0",
     "vision-camera-code-scanner": "^0.2.0"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "@types/react-native-vector-icons": "^6.4.11",
     "@types/react-test-renderer": "^18.0.0",
     "@types/styled-components": "^5.1.25",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
     "babel-jest": "^26.6.3",

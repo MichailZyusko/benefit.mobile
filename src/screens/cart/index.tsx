@@ -10,8 +10,8 @@
 // import ProductDto from '../../components/ProductCard/dto';
 // import { round } from '../../utils/roundNumber';
 
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 // const Stack = createNativeStackNavigator();
 
@@ -81,7 +81,6 @@ import { StyleSheet, Text, View } from "react-native";
 //     </Stack.Navigator>
 //   );
 // };
-
 
 export default function CartScreen() {
   return (

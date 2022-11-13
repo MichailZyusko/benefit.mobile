@@ -6,7 +6,7 @@ import { useModalWindowDispatch } from '../../redux/hooks';
 import { styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { setProduct } from '../../components/ModalWindow/slicer';
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query';
 import { getProductByBarcode } from '../../api/products';
 
 export const ScanScreen = () => {
@@ -22,13 +22,16 @@ export const ScanScreen = () => {
 
   const barcode = barcodes[0]?.displayValue;
 
-  const { isLoading, isError, data: product, error } = useQuery(
-    ['products', barcode],
-    () => getProductByBarcode({ barcode }),
-    { enabled: !!barcode }
-  );
+  const {
+    isLoading,
+    isError,
+    data: product,
+    error,
+  } = useQuery(['products', barcode], () => getProductByBarcode({ barcode }), {
+    enabled: !!barcode,
+  });
 
-  if (product) {
+  if (product)
     ToastAndroid.show(`Товар успешно найден: ${barcode}`, ToastAndroid.SHORT);
 
     // @ts-ignore

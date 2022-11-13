@@ -8,8 +8,8 @@
 // import { SubCategoryScreen } from './screens/subCategoryScreen';
 // import { SearchBySubCategoryScreen } from './screens/searchBySubCategoryScreen';
 
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 // const Stack = createNativeStackNavigator();
 

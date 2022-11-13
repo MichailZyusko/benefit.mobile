@@ -13,7 +13,9 @@ type Props = {
 };
 
 export default function CartCard({ product }: Props) {
-  if (!product.bestOffer) return null;
+  if (!product.bestOffer) {
+    return null;
+  }
 
   return (
     <View style={styles.cardContainer}>
