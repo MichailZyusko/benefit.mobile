@@ -76,6 +76,12 @@ export default function ModalProductInfo() {
             <Text style={styles.nameText} numberOfLines={3}>
               {`${product.volume} ${product.measurementUnit}`}
             </Text>
+            <Text style={styles.nameText} numberOfLines={3}>
+              {product?.bestOffer
+                ? `Адрес: ${selectedOffer?.store.address || product?.bestOffer?.store.address}`
+                : ``
+              }
+            </Text>
           </View>
           {/* <View style={styles.buttonsContainer}>
               <Pressable style={styles.addButton}>
