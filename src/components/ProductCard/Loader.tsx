@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 import { FlatList } from 'react-native';
-import { ListHeaderComponent } from '../../screens/home/Components';
+// import { ListHeaderComponent } from '../../screens/home/Components';
 import { styles } from './styles';
 
 export const ProductCardLoader = () => (
@@ -39,7 +39,7 @@ export const ProductCardsLoaderList = () => {
     <FlatList
       numColumns={2}
       data={data}
-      ListHeaderComponent={ListHeaderComponent}
+      // ListHeaderComponent={ListHeaderComponent}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       onEndReachedThreshold={5}

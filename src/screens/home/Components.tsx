@@ -61,7 +61,7 @@ export const ListHeaderComponent = () => {
 //   );
 // };
 
-const SearchTextInput = () => {
+export const SearchTextInput = () => {
   const inputRef = useRef<TextInput>(null);
   const [search, setSearch] = useState<string>('');
   const dispatch = useHomeScreenDispatch();

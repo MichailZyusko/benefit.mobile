@@ -6,4 +6,6 @@ export type Product = {
   image: string;
   category: any;
   offers: any;
+  volume: number;
+  measurement_unit: any;
 };

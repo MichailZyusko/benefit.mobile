@@ -14,6 +14,8 @@ import ModalProductInfo from '../../components/ModalWindow';
 import { getProducts } from '../../api/products';
 import { useQuery } from '@tanstack/react-query';
 import ProductDto from '../../api/products/product.dto';
+import { NetworkError } from '../../errors';
+import ProductNotFound from '../../errors/PoductNotFound';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,15 +23,12 @@ function HomeScreen() {
   const { search } = useHomeScreenSelector(selectHomeScreen);
 
   const {
-    isLoading,
+    isFetching,
     isError,
     data: products,
-  } = useQuery({
-    queryKey: ['products', search],
-    queryFn: () => getProducts({ search }),
-  });
+  } = useQuery(['products', search], () => getProducts({ search }));
 
-  console.log([search, isLoading, isError, products?.length]);
+  console.log([search, isFetching, isError, products?.length]);
 
   const keyExtractor = useCallback((item: ProductDto) => item.id, []);
   const renderItem = useCallback(
@@ -37,27 +36,40 @@ function HomeScreen() {
     []
   );
 
-  if (isLoading) {
+  if (isError) {
+    return <NetworkError />;
+  }
+
+  console.log(products?.length === 0);
+
+  if (products?.length === 0) {
     return (
       <View style={styles.screenContainer}>
-        <ProductCardsLoaderList />
+        {/* <SearchTextInput /> */}
+        <ProductNotFound />
       </View>
     );
   }
 
   return (
     <View style={styles.screenContainer}>
-      <FlatList
-        numColumns={2}
-        data={products}
-        ListHeaderComponent={ListHeaderComponent}
-        ListFooterComponent={null} // TODO: add footer
-        ListEmptyComponent={null} // TODO: add empty state
-        renderItem={renderItem}
-        keyExtractor={keyExtractor}
-        // onEndReached={onEndReachedMemoized}
-        onEndReachedThreshold={5}
-      />
+      <ListHeaderComponent />
+      {products?.length === 0 && <ProductNotFound />}
+      {isFetching ? (
+        <ProductCardsLoaderList />
+      ) : (
+        <FlatList
+          numColumns={2}
+          data={products}
+          // ListHeaderComponent={ListHeaderComponent}
+          ListFooterComponent={null} // TODO: add footer
+          ListEmptyComponent={null} // TODO: add empty state
+          renderItem={renderItem}
+          keyExtractor={keyExtractor}
+          // onEndReached={onEndReachedMemoized}
+          onEndReachedThreshold={5}
+        />
+      )}
       <ModalProductInfo />
     </View>
   );
@@ -75,7 +87,7 @@ export const HomeScreenStackNavigator = () => {
               title="Главная"
               iconProps={{
                 name: 'ios-scan-outline',
-                screenName: 'QR-code  сканнер',
+                screenName: 'QR-code сканнер',
               }}
             />
           ),

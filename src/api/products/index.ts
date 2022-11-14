@@ -12,6 +12,8 @@ export const getProducts = async ({ search = '' }: GetProductsProps) => {
     },
   });
 
+  console.log(123);
+
   return data.map((item: Product) => new ProductDto(item));
 };
 

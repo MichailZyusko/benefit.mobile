@@ -20,6 +20,8 @@ export default class ProductDto {
   public bestOffer: BestOffer | null;
   public offers: any[];
   public cartQuantity = 0;
+  public measurementUnit: any;
+  public volume: number;
 
   private mapOffers = (offers: any[]): BestOffer | null => {
     if (!offers.length) {
@@ -50,5 +52,7 @@ export default class ProductDto {
     this.category = product.category;
     this.offers = product.offers;
     this.bestOffer = this.mapOffers(product.offers);
+    this.measurementUnit = product.measurement_unit;
+    this.volume = product.volume;
   }
 }

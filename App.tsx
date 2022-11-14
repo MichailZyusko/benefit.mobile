@@ -6,15 +6,21 @@ import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
-// import ProfileScreen from './src/screens/profile';
-// import FavoriteScreen from './src/screens/favorite';
+import ProfileScreen from './src/screens/profile';
+import FavoriteScreen from './src/screens/favorite';
 import CategoryScreen from './src/screens/categories';
-// import CartScreen from './src/screens/cart';
+import CartScreen from './src/screens/cart';
 import { HomeScreenStackNavigator } from './src/screens/home';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const Tab = createBottomTabNavigator();
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0,
+    },
+  },
+});
 
 const App = () => {
   return (
@@ -43,26 +49,30 @@ const App = () => {
                           color={color}
                         />
                       );
-                    // case 'CartScreen':
-                    //   return (
-                    //     <IoniconsIcon
-                    //       name={'cart-outline'}
-                    //       size={32}
-                    //       color={color}
-                    //     />
-                    //   );
-                    // case 'Избранное':
-                    //   return (
-                    //     <AntDesignIcon name={'hearto'} size={30} color={color} />
-                    //   );
-                    // case 'Профиль':
-                    //   return (
-                    //     <IoniconsIcon
-                    //       name={'person-circle-outline'}
-                    //       size={35}
-                    //       color={color}
-                    //     />
-                    //   );
+                    case 'CartScreen':
+                      return (
+                        <IoniconsIcon
+                          name={'cart-outline'}
+                          size={32}
+                          color={color}
+                        />
+                      );
+                    case 'Избранное':
+                      return (
+                        <AntDesignIcon
+                          name={'hearto'}
+                          size={30}
+                          color={color}
+                        />
+                      );
+                    case 'Профиль':
+                      return (
+                        <IoniconsIcon
+                          name={'person-circle-outline'}
+                          size={35}
+                          color={color}
+                        />
+                      );
                     default:
                       return (
                         <AntDesignIcon
@@ -85,12 +95,9 @@ const App = () => {
                 component={HomeScreenStackNavigator}
               />
               <Tab.Screen name="CategoryScreen" component={CategoryScreen} />
-              {/* <Tab.Screen
-                name="CartScreen"
-                component={CartScreen}
-              />
+              <Tab.Screen name="CartScreen" component={CartScreen} />
               <Tab.Screen name="Избранное" component={FavoriteScreen} />
-              <Tab.Screen name="Профиль" component={ProfileScreen} /> */}
+              <Tab.Screen name="Профиль" component={ProfileScreen} />
             </Tab.Navigator>
           </NavigationContainer>
         </SafeAreaView>

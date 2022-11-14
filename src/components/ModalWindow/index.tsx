@@ -70,6 +70,12 @@ export default function ModalProductInfo() {
                   }`
                 : ''}
             </Text>
+            <Text style={styles.nameText} numberOfLines={3}>
+              {product.description}
+            </Text>
+            <Text style={styles.nameText} numberOfLines={3}>
+              {`${product.volume} ${product.measurementUnit}`}
+            </Text>
           </View>
           {/* <View style={styles.buttonsContainer}>
               <Pressable style={styles.addButton}>
