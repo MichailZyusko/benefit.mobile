@@ -1,17 +1,11 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { ImageSearch } from '../../../assets/icons';
-import { onSearch, removeStoreFilter, setStoreFilter } from './slicer';
-import { storeStyles, styles } from './styles';
-import {
-  FlatList,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import { onSearch } from './slicer';
+import { styles } from './styles';
+import { Image, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useHomeScreenDispatch } from '../../redux/hooks';
 import useDebounce from '../../hooks/useDebounce';
-import { Store, stores } from '../../constants/stores';
+// import { Store, stores } from '../../constants/stores';
 
 export const ListHeaderComponent = () => {
   return (
@@ -24,25 +18,25 @@ export const ListHeaderComponent = () => {
   );
 };
 
-const StoreCard = ({ store }: { store: Store }) => {
-  const dispatch = useHomeScreenDispatch();
-  const [isToggled, setToggle] = useState(false);
+// const StoreCard = ({ store }: { store: Store }) => {
+//   const dispatch = useHomeScreenDispatch();
+//   const [isToggled, setToggle] = useState(false);
 
-  return (
-    <TouchableOpacity
-      style={storeStyles(isToggled).store}
-      onPress={() => {
-        setToggle(!isToggled);
+//   return (
+//     <TouchableOpacity
+//       style={storeStyles(isToggled).store}
+//       onPress={() => {
+//         setToggle(!isToggled);
 
-        isToggled
-          ? dispatch(removeStoreFilter(store.id))
-          : dispatch(setStoreFilter(store.id));
-      }}
-    >
-      <Text>{store.name}</Text>
-    </TouchableOpacity>
-  );
-};
+//         isToggled
+//           ? dispatch(removeStoreFilter(store.id))
+//           : dispatch(setStoreFilter(store.id));
+//       }}
+//     >
+//       <Text>{store.name}</Text>
+//     </TouchableOpacity>
+//   );
+// };
 
 // const StoreCarousel = () => {
 //   const keyExtractor = useCallback(
@@ -67,9 +61,9 @@ const StoreCard = ({ store }: { store: Store }) => {
 //   );
 // };
 
-const SearchTextInput = () => {
+export const SearchTextInput = () => {
   const inputRef = useRef<TextInput>(null);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState<string>('');
   const dispatch = useHomeScreenDispatch();
 
   const handleChangeText = (text: string) => setSearch(text);

@@ -1,21 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { InDevelopmentError } from '../../errors';
 
 export default function ProfileScreen() {
-  return (
-    <View style={styles.screenContainer}>
-      <Text style={styles.text}>Coming soon!</Text>
-    </View>
-  );
+  return <InDevelopmentError />;
 }
-
-const styles = StyleSheet.create({
-  screenContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    color: 'black',
-  },
-});

@@ -37,5 +37,5 @@ export const styles = (storeFranchise: string, isExpand: boolean) =>
 
       paddingVertical: 3,
       paddingHorizontal: 10,
-    }
+    },
   });

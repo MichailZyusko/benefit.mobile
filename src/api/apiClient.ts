@@ -1,10 +1,10 @@
-import axios from "axios";
+import axios from 'axios';
 
-const baseURL = 'http://34.118.65.231:3000/api/v1';
+const baseURL = 'http://161.35.196.53/api/v1';
 
 export default axios.create({
   baseURL,
   headers: {
-    "Content-type": "application/json",
+    'Content-type': 'application/json',
   },
 });

@@ -1,17 +1,17 @@
-import { Product } from "../../types/product";
+import { Product } from '../../types/product';
 
 type BestOffer = {
-  id: string,
-  price: number,
-  quantity: number,
+  id: string;
+  price: number;
+  quantity: number;
   store: {
-    franchise: string,
-    address: string,
-  }
-}
+    franchise: string;
+    address: string;
+  };
+};
 
 export default class ProductDto {
-  public id: string
+  public id: string;
   public barcode: string;
   public description: string;
   public name: string;
@@ -20,11 +20,17 @@ export default class ProductDto {
   public bestOffer: BestOffer | null;
   public offers: any[];
   public cartQuantity = 0;
+  public measurementUnit: any;
+  public volume: number;
 
   private mapOffers = (offers: any[]): BestOffer | null => {
-    if (!offers.length) return null;
+    if (!offers.length) {
+      return null;
+    }
 
-    const bestOffer = offers.sort((a, b) => (a.price / a.quantity) - (b.price / b.quantity))[0];
+    const bestOffer = offers.sort(
+      (a, b) => a.price / a.quantity - b.price / b.quantity
+    )[0];
 
     return {
       id: bestOffer.id,
@@ -33,9 +39,9 @@ export default class ProductDto {
       store: {
         franchise: bestOffer.store.franchise,
         address: bestOffer.store.address,
-      }
-    }
-  }
+      },
+    };
+  };
 
   constructor(product: Product) {
     this.id = product.id;
@@ -46,5 +52,7 @@ export default class ProductDto {
     this.category = product.category;
     this.offers = product.offers;
     this.bestOffer = this.mapOffers(product.offers);
+    this.measurementUnit = product.measurement_unit;
+    this.volume = product.volume;
   }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import { AddProductToCart, Heart } from './Components';
+import { Heart } from './Components';
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './styles';
 import { useModalWindowDispatch } from '../../redux/hooks';
 import { StoreLogo } from '../StoreLogo';
-import { QuantityEditor } from '../QuantityEditor';
+// import { QuantityEditor } from '../QuantityEditor';
 import { setProduct } from '../ModalWindow/slicer';
 import ProductDto from '../../api/products/product.dto';
 import { nonImageURL } from '../../constants/general';
@@ -30,33 +30,31 @@ export default function ProductCard({ product }: Props) {
       />
       <View style={styles.nameContainer}>
         <Text style={styles.priceText}>
-          {product?.bestOffer
-            ? `${product?.bestOffer.price} Br`
-            : `Раскуплено`
-          }
+          {product?.bestOffer ? `${product?.bestOffer.price} Br` : 'Раскуплено'}
         </Text>
         <Text style={styles.nameText} numberOfLines={2}>
           {product.name}
         </Text>
       </View>
-      <View style={styles.priceContainer}>
-        {product?.bestOffer
-          ?
+      {/* <View style={styles.priceContainer}>
+        {!product?.bestOffer &&
+          // ?
+            // (
+            //   <View style={styles.quantityEditorWrapper}>
+            //   {product.cartQuantity ? (
+            //     <QuantityEditor product={product} />
+            //   ) : (
+            //     <AddProductToCart product={product} />
+            //   )}
+            //   </View>
+            // )
+          // :
             (
-              <View style={styles.quantityEditorWrapper}>
-              {product.cartQuantity ? (
-                <QuantityEditor product={product} />
-              ) : (
-                <AddProductToCart product={product} />
-              )}
-              </View>
-            )
-          : (
             <Text style={styles.nameText}>
               Не доступен для заказа
             </Text>
           )}
-      </View>
+      </View> */}
     </TouchableOpacity>
   );
 }

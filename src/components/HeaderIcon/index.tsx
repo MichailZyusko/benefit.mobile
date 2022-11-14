@@ -12,7 +12,6 @@ export default function HeaderIcon({ name, screenName }: Props) {
   const navigation = useNavigation();
 
   const onPressHandler = () => {
-    // @ts-ignore
     navigation.navigate(screenName);
   };
 

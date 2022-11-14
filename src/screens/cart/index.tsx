@@ -10,8 +10,8 @@
 // import ProductDto from '../../components/ProductCard/dto';
 // import { round } from '../../utils/roundNumber';
 
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from 'react';
+import { InDevelopmentError } from '../../errors';
 
 // const Stack = createNativeStackNavigator();
 
@@ -82,22 +82,6 @@ import { StyleSheet, Text, View } from "react-native";
 //   );
 // };
 
-
 export default function CartScreen() {
-  return (
-    <View style={styles.screenContainer}>
-      <Text style={styles.text}>Coming soon!</Text>
-    </View>
-  );
+  return <InDevelopmentError />;
 }
-
-const styles = StyleSheet.create({
-  screenContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    color: 'black',
-  },
-});

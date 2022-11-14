@@ -14,7 +14,13 @@ import { HomeScreenStackNavigator } from './src/screens/home';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const Tab = createBottomTabNavigator();
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0,
+    },
+  },
+});
 
 const App = () => {
   return (
@@ -31,7 +37,7 @@ const App = () => {
                       return (
                         <IoniconsIcon
                           name={'home-outline'}
-                          size={30}
+                          size={25}
                           color={color}
                         />
                       );
@@ -39,7 +45,7 @@ const App = () => {
                       return (
                         <IoniconsIcon
                           name={'menu-outline'}
-                          size={45}
+                          size={35}
                           color={color}
                         />
                       );
@@ -53,7 +59,11 @@ const App = () => {
                       );
                     case 'Избранное':
                       return (
-                        <AntDesignIcon name={'hearto'} size={30} color={color} />
+                        <AntDesignIcon
+                          name={'hearto'}
+                          size={30}
+                          color={color}
+                        />
                       );
                     case 'Профиль':
                       return (
@@ -84,14 +94,8 @@ const App = () => {
                 name="HomeScreenStackNavigator"
                 component={HomeScreenStackNavigator}
               />
-              <Tab.Screen
-                name="CategoryScreen"
-                component={CategoryScreen}
-              />
-              <Tab.Screen
-                name="CartScreen"
-                component={CartScreen}
-              />
+              <Tab.Screen name="CategoryScreen" component={CategoryScreen} />
+              <Tab.Screen name="CartScreen" component={CartScreen} />
               <Tab.Screen name="Избранное" component={FavoriteScreen} />
               <Tab.Screen name="Профиль" component={ProfileScreen} />
             </Tab.Navigator>

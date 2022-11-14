@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { ImageBackground, Pressable, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { ImageBackground, Text, View } from 'react-native';
 import { styles } from './styles';
 import Modal from 'react-native-modal';
-import { QuantityEditor } from '../QuantityEditor';
 import { StoreLogo } from '../StoreLogo';
 import { Heart } from '../ProductCard/Components';
 import { removeProduct, selectModalWindow } from './slicer';
@@ -14,12 +13,13 @@ import ProductDto from '../../api/products/product.dto';
 import { nonImageURL } from '../../constants/general';
 
 export default function ModalProductInfo() {
-  const { product }: { product: ProductDto } = useModalWindowSelector(selectModalWindow);
+  const { product }: { product: ProductDto } =
+    useModalWindowSelector(selectModalWindow);
   const [selectedOffer, setSelectedOffer] = useState(product?.bestOffer);
   const modalWindowDispatch = useModalWindowDispatch();
 
-  console.log("product", JSON.stringify(product, null, 2));
-  
+  console.log('product', JSON.stringify(product, null, 2));
+
   if (!product) {
     return null;
   }
@@ -60,8 +60,21 @@ export default function ModalProductInfo() {
             <Text style={styles.nameText} numberOfLines={3}>
               {product?.bestOffer
                 ? `${selectedOffer?.price || product?.bestOffer?.price} Br`
-                : `Раскуплено`
-              }
+                : 'Раскуплено'}
+            </Text>
+            <Text style={styles.nameText} numberOfLines={3}>
+              {product?.bestOffer
+                ? `Адрес: ${
+                    selectedOffer?.store.address ||
+                    product?.bestOffer?.store.address
+                  }`
+                : ''}
+            </Text>
+            <Text style={styles.nameText} numberOfLines={3}>
+              {product.description}
+            </Text>
+            <Text style={styles.nameText} numberOfLines={3}>
+              {`${product.volume} ${product.measurementUnit}`}
             </Text>
             <Text style={styles.nameText} numberOfLines={3}>
               {product?.bestOffer
@@ -70,7 +83,7 @@ export default function ModalProductInfo() {
               }
             </Text>
           </View>
-            {/* <View style={styles.buttonsContainer}>
+          {/* <View style={styles.buttonsContainer}>
               <Pressable style={styles.addButton}>
                 <Text style={styles.addText}>Добавить</Text>
               </Pressable>

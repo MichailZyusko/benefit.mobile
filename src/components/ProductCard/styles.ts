@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
 
     width: '45%',
-    height: 305,
+    height: 270,
     margin: 4,
     padding: 10,
 
