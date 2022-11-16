@@ -8,7 +8,8 @@
     "start": "npx react-native start",
     "tsc": "tsc",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.3.2",
