@@ -19,3 +19,6 @@ jobs:
 
       - name: Run unit tests
         run: echo 'Running tests...'
+
+      - name: Run TS Check
+        run: yarn tsc
