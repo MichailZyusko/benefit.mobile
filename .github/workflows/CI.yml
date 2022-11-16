@@ -15,7 +15,10 @@ jobs:
         run: npm ci --force
 
       - name: Run linter
-        run: echo 'Running linter...'
+        run: npm run lint
 
       - name: Run unit tests
         run: echo 'Running tests...'
+
+      - name: Run TS Check
+        run: npm run tsc
