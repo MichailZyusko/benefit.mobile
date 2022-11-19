@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   barcodeMask: {
@@ -17,5 +17,10 @@ export const styles = StyleSheet.create({
     left: '10%',
     fontFamily: 'Roboto-Regular',
     fontSize: 18,
+  },
+  spinner: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

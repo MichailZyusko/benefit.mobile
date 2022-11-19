@@ -1,14 +1,7 @@
-import {configureStore, Middleware} from '@reduxjs/toolkit';
-import {homeScreenReducer} from '../../screens/home/slicer';
-import {cartScreenReducer} from '../../screens/cart/slicer';
-import {modalWindowReducer} from '../../components/ModalWindow/slicer';
-
-const middlewares: Middleware[] = [];
-
-if (__DEV__) {
-  const createDebugger = require('redux-flipper').default;
-  middlewares.push(createDebugger());
-}
+import { configureStore } from '@reduxjs/toolkit';
+import { homeScreenReducer } from '../../screens/home/slicer';
+import { cartScreenReducer } from '../../screens/cart/slicer';
+import { modalWindowReducer } from '../../components/ModalWindow/slicer';
 
 export const store = configureStore({
   reducer: {
@@ -16,7 +9,7 @@ export const store = configureStore({
     cartScreen: cartScreenReducer,
     modalWindow: modalWindowReducer,
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }).concat(middlewares),

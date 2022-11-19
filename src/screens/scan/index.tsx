@@ -1,27 +1,50 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Text, View, ToastAndroid, StyleSheet} from 'react-native';
-import {Camera, useCameraDevices} from 'react-native-vision-camera';
-import {useScanBarcodes, BarcodeFormat} from 'vision-camera-code-scanner';
-import {useModalWindowDispatch} from '../../redux/hooks';
-import {styles} from './styles';
-import {useNavigation} from '@react-navigation/native';
-import {getProsuctsByBarcode} from '../../services/products';
-import {setProduct} from '../../components/ModalWindow/slicer';
-import ProductDto from '../../components/ProductCard/dto';
+import React, { useEffect, useState } from 'react';
+import {
+  Text,
+  View,
+  ToastAndroid,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
+import { Camera, useCameraDevices } from 'react-native-vision-camera';
+import { useScanBarcodes, BarcodeFormat } from 'vision-camera-code-scanner';
+import { useModalWindowDispatch } from '../../redux/hooks';
+import { styles } from './styles';
+import { useNavigation } from '@react-navigation/native';
+import { setProduct } from '../../components/ModalWindow/slicer';
+import { useQuery } from '@tanstack/react-query';
+import { getProductByBarcode } from '../../api/products';
+import ProductNotFound from '../../errors/PoductNotFound';
+import useThrottleValue from '../../hooks/useThrottle';
 
 export const ScanScreen = () => {
   const [hasPermissions, setPermissions] = useState<boolean>(false);
-  const {back: device} = useCameraDevices('wide-angle-camera');
+  const { back: device } = useCameraDevices('wide-angle-camera');
   const navigation = useNavigation();
   const modalWindowDispatch = useModalWindowDispatch();
 
   const [frameProcessor, barcodes] = useScanBarcodes(
-    [BarcodeFormat.ALL_FORMATS],
-    {checkInverted: true},
+    [BarcodeFormat.EAN_13, BarcodeFormat.EAN_8],
+    {
+      checkInverted: true,
+    }
   );
 
-  const barcode = barcodes[0]?.displayValue;
-  let product = useRef<ProductDto | null>(null);
+  const barcode = barcodes[0]?.displayValue ?? '';
+  const throtledBarcode = useThrottleValue<string>(barcode, 1000);
+
+  const {
+    isError,
+    isFetching,
+    data: product,
+    error,
+  } = useQuery(
+    ['products', 'barcode', throtledBarcode],
+    () => getProductByBarcode({ barcode: throtledBarcode }),
+    {
+      enabled: !!throtledBarcode,
+    }
+  );
 
   useEffect(() => {
     (async () => {
@@ -31,20 +54,28 @@ export const ScanScreen = () => {
     })();
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      if (barcode) {
-        ToastAndroid.show(barcode, ToastAndroid.SHORT);
-        product.current = await getProsuctsByBarcode(barcode);
+  if (isFetching) {
+    return (
+      <View style={styles.spinner}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
-        if (product) {
-          // @ts-ignore
-          navigation.navigate('Главная');
-          modalWindowDispatch(setProduct(product.current));
-        }
-      }
-    })();
-  }, [barcode, navigation, modalWindowDispatch]);
+  if (isError) {
+    return <ProductNotFound />;
+  }
+
+  throtledBarcode &&
+    console.log([throtledBarcode, isFetching, isError, product, error]);
+
+  if (product) {
+    ToastAndroid.show(`Товар успешно найден: ${barcode}`, ToastAndroid.SHORT);
+
+    // @ts-ignore
+    modalWindowDispatch(setProduct(product));
+    navigation.navigate('Главная');
+  }
 
   if (!hasPermissions) {
     return <Text>Permission Denied</Text>;
@@ -60,7 +91,7 @@ export const ScanScreen = () => {
         frameProcessor={frameProcessor}
         style={StyleSheet.absoluteFill}
         device={device}
-        isActive={!product.current}
+        isActive={!isFetching}
       />
       <View style={styles.barcodeMask}>
         <Text style={styles.instruction}>Поместите свой код здесь</Text>

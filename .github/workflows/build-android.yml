@@ -2,7 +2,7 @@ name: Build android-apk && add create GitHub releases
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
 
 env:
   KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -35,6 +35,10 @@ jobs:
 
       - name: Install npm dependencies
         run: npm ci --force
+
+      - name: Create bundle
+        run: |
+          npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res  
 
       - name: Build release APK
         run: |

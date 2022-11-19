@@ -8,21 +8,24 @@ import {
   addProductToCart,
   removeProductFromCart,
 } from '../../screens/cart/slicer';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {styles} from './styles';
-import {ImageMinus, ImagePlus} from '../../../assets/icons';
-import ProductDto from '../ProductCard/dto';
-import {decrementQuantity, incrementQuantity} from '../../screens/home/slicer';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { styles } from './styles';
+import { ImageMinus, ImagePlus } from '../../../assets/icons';
 import {
-  decrementQuantityModal,
-  incrementQuantityModal,
-} from '../ModalWindow/slicer';
+  decrementQuantity,
+  incrementQuantity,
+} from '../../screens/home/slicer';
+import ProductDto from '../../api/products/product.dto';
+// import {
+//   decrementQuantityModal,
+//   incrementQuantityModal,
+// } from '../ModalWindow/slicer';
 
 type Props = {
   product: ProductDto;
 };
 
-export const QuantityEditor = ({product}: Props) => {
+export const QuantityEditor = ({ product }: Props) => {
   const cartScreenDispatch = useCartScreenDispatch();
   const homeScreenDispatch = useHomeScreenDispatch();
   const modalWindowDispatch = useModalWindowDispatch();
@@ -35,7 +38,8 @@ export const QuantityEditor = ({product}: Props) => {
           cartScreenDispatch(removeProductFromCart(product));
           homeScreenDispatch(decrementQuantity(product.id));
           modalWindowDispatch(decrementQuantityModal());
-        }}>
+        }}
+      >
         <Image source={ImageMinus} style={styles.image} />
       </TouchableOpacity>
       <Text style={styles.text}>{product?.quantity}</Text>
@@ -45,7 +49,8 @@ export const QuantityEditor = ({product}: Props) => {
           cartScreenDispatch(addProductToCart(product));
           homeScreenDispatch(incrementQuantity(product.id));
           modalWindowDispatch(incrementQuantityModal());
-        }}>
+        }}
+      >
         <Image source={ImagePlus} style={styles.image} />
       </TouchableOpacity>
     </View>

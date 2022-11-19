@@ -15,11 +15,11 @@ export const getProducts = async (
   page: number,
   search = '',
   storeIds = [],
-  categoryId = '',
+  categoryId = ''
 ) => {
   try {
     dispatch(API_REQUEST());
-    const {data, status} = await axios.post(URL, {
+    const { data, status } = await axios.post(URL, {
       Packet: {
         Data: {
           Page: (page + 1).toString(),
@@ -36,41 +36,16 @@ export const getProducts = async (
       throw new Error('Something went wrong');
     }
 
-    if (data.Table[0].GoodsOffer) {
-      const products = data.Table[0].GoodsOffer.map(
-        (item: any) => new ProductDto(item),
-      );
+    const products = data.Table[0].GoodsOffer.map(
+      (item: any) => new ProductDto(item)
+    );
 
-      if (products.length < itemsPerPage) {
-        dispatch(API_LIST_END());
-      }
-
-      dispatch(API_SUCCESS(products));
+    if (products.length < itemsPerPage) {
+      dispatch(API_LIST_END());
     }
+
+    dispatch(API_SUCCESS(products));
   } catch (error) {
     dispatch(API_FAILURE([]));
   }
-};
-
-export const getProsuctsByBarcode = async (barcode: string) => {
-  const {data} = await axios.post(URL, {
-    Packet: {
-      Data: {
-        Page: 1,
-        Search: barcode,
-        CompareСontractorId: 72631,
-        CatalogType: 1,
-      },
-    },
-  });
-
-  if (data.Table[0].GoodsOffer) {
-    const [product] = data.Table[0].GoodsOffer.map(
-      (item: any) => new ProductDto(item),
-    );
-
-    return product;
-  }
-
-  return null;
 };

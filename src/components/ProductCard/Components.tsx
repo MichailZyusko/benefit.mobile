@@ -1,32 +1,39 @@
 import React from 'react';
-import {ImageHeart, ImagePlus} from '../../../assets/icons';
-import {styles} from './styles';
-import {Image, ToastAndroid, TouchableOpacity, View} from 'react-native';
-import {useCartScreenDispatch, useHomeScreenDispatch} from '../../redux/hooks';
-import {addProductToCart} from '../../screens/cart/slicer';
-import ProductDto from './dto';
-import {incrementQuantity} from '../../screens/home/slicer';
+import { ImageHeart } from '../../../assets/icons';
+import { styles } from './styles';
+import { Image, View } from 'react-native';
+// import {
+//   useCartScreenDispatch,
+//   useHomeScreenDispatch,
+// } from '../../redux/hooks';
+// import { addProductToCart } from '../../screens/cart/slicer';
+// import { incrementQuantity } from '../../screens/home/slicer';
+// import ProductDto from '../../api/products/product.dto';
 
-type PlusProps = {
-  product: ProductDto;
-};
+// type PlusProps = {
+//   product: ProductDto;
+// };
 
-export const AddProductToCart = ({product}: PlusProps) => {
-  const cartScreenDispatch = useCartScreenDispatch();
-  const homeScreenDispatch = useHomeScreenDispatch();
+// export const AddProductToCart = ({ product }: PlusProps) => {
+//   // const cartScreenDispatch = useCartScreenDispatch();
+//   // const homeScreenDispatch = useHomeScreenDispatch();
 
-  return (
-    <TouchableOpacity
-      style={styles.addProductToCart}
-      onPress={() => {
-        ToastAndroid.show('Товар в корзине!', ToastAndroid.SHORT);
-        cartScreenDispatch(addProductToCart(product));
-        homeScreenDispatch(incrementQuantity(product.id));
-      }}>
-      <Image source={ImagePlus} style={styles.editQuantityImage} />
-    </TouchableOpacity>
-  );
-};
+//   return (
+//     <TouchableOpacity
+//       style={styles.addProductToCart}
+//       // onPress={() => {
+//       //   ToastAndroid.show('Товар в корзине!', ToastAndroid.SHORT);
+//       //   cartScreenDispatch(addProductToCart({
+//       //     ...product,
+//       //     cartQuantity: 1,
+//       //   }));
+//       //   homeScreenDispatch(incrementQuantity(product.id));
+//       // }}
+//     >
+//       <Image source={ImagePlus} style={styles.editQuantityImage} />
+//     </TouchableOpacity>
+//   );
+// };
 
 export const Heart = () => {
   return (
