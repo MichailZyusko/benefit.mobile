@@ -78,9 +78,11 @@ export default function ModalProductInfo() {
             </Text>
             <Text style={styles.nameText} numberOfLines={3}>
               {product?.bestOffer
-                ? `Адрес: ${selectedOffer?.store.address || product?.bestOffer?.store.address}`
-                : ``
-              }
+                ? `Адрес: ${
+                    selectedOffer?.store.address ||
+                    product?.bestOffer?.store.address
+                  }`
+                : ''}
             </Text>
           </View>
           {/* <View style={styles.buttonsContainer}>
