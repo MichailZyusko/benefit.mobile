@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo } from 'react';
-import { View } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import Reanimated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -10,11 +10,16 @@ import styles, { DOT, DOT_MARGIN } from './styles';
 type Props = {
   children: ReactNode[];
   containerSize: number;
+  dashContainer?: StyleProp<ViewStyle>;
 };
 
-function Swiper({ containerSize, children }: Props) {
+function Swiper({ containerSize, children, dashContainer }: Props) {
   const position = useSharedValue(0);
   const childStyle = useMemo(() => ({ width: containerSize }), [containerSize]);
+  const dashStyle = useMemo(
+    () => [styles.dashContainer, dashContainer],
+    [dashContainer]
+  );
 
   const handler = useAnimatedScrollHandler(
     {
@@ -27,7 +32,7 @@ function Swiper({ containerSize, children }: Props) {
   const active = useAnimatedStyle(
     () => ({
       position: 'absolute',
-      backgroundColor: 'blue',
+      backgroundColor: '#CF93FF',
       marginLeft:
         (DOT + DOT_MARGIN) * Math.round(position.value / containerSize) +
         DOT_MARGIN,
@@ -41,6 +46,7 @@ function Swiper({ containerSize, children }: Props) {
       <Reanimated.ScrollView
         bounces={false}
         decelerationRate="fast"
+        overScrollMode="never"
         horizontal
         onScroll={handler}
         showsHorizontalScrollIndicator={false}
@@ -54,7 +60,7 @@ function Swiper({ containerSize, children }: Props) {
           </View>
         ))}
       </Reanimated.ScrollView>
-      <View style={styles.dashContainer}>
+      <View style={dashStyle}>
         {children.map((_, index) => (
           <View key={index} style={styles.dot} />
         ))}

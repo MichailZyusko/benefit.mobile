@@ -3,10 +3,14 @@ import { Dimensions } from 'react-native';
 import { Intro1, Intro2, Intro3 } from '../../../assets/images';
 import Swiper from '../../components/Swiper';
 import Frame from './components/Frame';
+import styles from './styles';
 
 function Intro() {
   return (
-    <Swiper containerSize={Dimensions.get('window').width}>
+    <Swiper
+      dashContainer={styles.dashes}
+      containerSize={Dimensions.get('window').width}
+    >
       <Frame
         title="Добро пожаловать!"
         description="Наше приложение поможет вам получать максимальную выгоду от покупок продовльственных товаров и мы поможем вам в этом разобраться"

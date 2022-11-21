@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     width: DOT,
     height: DOT,
     marginLeft: DOT_MARGIN,
-    backgroundColor: 'red',
+    backgroundColor: '#9A9A9A',
     borderRadius: DOT / 2,
   },
 });
