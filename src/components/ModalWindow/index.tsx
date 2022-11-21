@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { ImageBackground, Text, View } from 'react-native';
+import {
+  ImageBackground,
+  Pressable,
+  Text,
+  ToastAndroid,
+  View,
+} from 'react-native';
 import { styles } from './styles';
 import Modal from 'react-native-modal';
 import { StoreLogo } from '../StoreLogo';
@@ -54,43 +60,55 @@ export default function ModalProductInfo() {
               style={styles.productImage}
               resizeMode={'contain'}
             />
-            <Text style={styles.nameText} numberOfLines={3}>
-              {product.name}
-            </Text>
-            <Text style={styles.nameText} numberOfLines={3}>
-              {product?.bestOffer
-                ? `${selectedOffer?.price || product?.bestOffer?.price} Br`
-                : 'Раскуплено'}
-            </Text>
-            <Text style={styles.nameText} numberOfLines={3}>
-              {product?.bestOffer
-                ? `Адрес: ${
-                    selectedOffer?.store.address ||
-                    product?.bestOffer?.store.address
-                  }`
-                : ''}
-            </Text>
-            <Text style={styles.nameText} numberOfLines={3}>
-              {product.description}
-            </Text>
-            <Text style={styles.nameText} numberOfLines={3}>
-              {`${product.volume} ${product.measurementUnit}`}
-            </Text>
-            <Text style={styles.nameText} numberOfLines={3}>
-              {product?.bestOffer
-                ? `Адрес: ${
-                    selectedOffer?.store.address ||
-                    product?.bestOffer?.store.address
-                  }`
-                : ''}
-            </Text>
+
+            <View style={styles.productNameContainer}>
+              <Text style={styles.storeAddress} numberOfLines={3}>
+                {product?.bestOffer
+                  ? `Адрес: ${
+                      selectedOffer?.store.address ||
+                      product?.bestOffer?.store.address
+                    }`
+                  : ''}
+              </Text>
+            </View>
+
+            <View style={styles.productNameContainer}>
+              <Text style={styles.productName} numberOfLines={3}>
+                {product.name}
+              </Text>
+              <Text style={styles.productVolume} numberOfLines={3}>
+                {`${product.volume} ${product.measurementUnit}`}
+              </Text>
+            </View>
+
+            <View>
+              <Text style={styles.nameText} numberOfLines={5}>
+                Состав:
+              </Text>
+              <Text style={styles.productDescription} numberOfLines={6}>
+                {product.description.slice(8)}
+              </Text>
+            </View>
           </View>
-          {/* <View style={styles.buttonsContainer}>
-              <Pressable style={styles.addButton}>
-                <Text style={styles.addText}>Добавить</Text>
-              </Pressable>
-              <QuantityEditor product={product} />
-            </View> */}
+
+          <View style={styles.buttonsContainer}>
+            <Pressable
+              style={styles.addButton}
+              onPress={() =>
+                ToastAndroid.show(
+                  'Упс... Эта функция все еще в разработке 🙃',
+                  ToastAndroid.SHORT
+                )
+              }
+            >
+              <Text style={styles.addText}>
+                {product?.bestOffer
+                  ? `${selectedOffer?.price || product?.bestOffer?.price} Br`
+                  : 'Раскуплено'}
+              </Text>
+            </Pressable>
+            {/* <QuantityEditor product={product} /> */}
+          </View>
         </View>
       </Modal>
     </View>
