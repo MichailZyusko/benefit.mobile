@@ -24,12 +24,6 @@ export default function ModalProductInfo() {
   const [selectedOffer, setSelectedOffer] = useState(product?.bestOffer);
   const modalWindowDispatch = useModalWindowDispatch();
 
-  console.log('product', JSON.stringify(product, null, 2));
-
-  if (!product) {
-    return null;
-  }
-
   return (
     <View style={styles.modalContainer}>
       <Modal
