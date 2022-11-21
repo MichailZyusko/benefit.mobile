@@ -9,10 +9,9 @@ export const getProducts = async ({ search = '' }: GetProductsProps) => {
   const { data } = await apiClient.get<Product[]>('/products', {
     params: {
       search,
+      take: 250,
     },
   });
-
-  console.log(123);
 
   return data.map((item: Product) => new ProductDto(item));
 };
