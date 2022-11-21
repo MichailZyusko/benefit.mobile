@@ -1,29 +1,65 @@
-import React, { ReactNode } from 'react';
-import { ScrollView, View } from 'react-native';
+import React, { ReactNode, useMemo } from 'react';
+import { View } from 'react-native';
+import Reanimated, {
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
+import styles, { DOT, DOT_MARGIN } from './styles';
 
 type Props = {
   children: ReactNode[];
   containerSize: number;
 };
 
-function Swiper(props: Props) {
+function Swiper({ containerSize, children }: Props) {
+  const position = useSharedValue(0);
+  const childStyle = useMemo(() => ({ width: containerSize }), [containerSize]);
+
+  const handler = useAnimatedScrollHandler(
+    {
+      onScroll: (e) => {
+        position.value = e.contentOffset.x;
+      },
+    },
+    []
+  );
+  const active = useAnimatedStyle(
+    () => ({
+      position: 'absolute',
+      backgroundColor: 'blue',
+      marginLeft:
+        (DOT + DOT_MARGIN) * Math.round(position.value / containerSize) +
+        DOT_MARGIN,
+    }),
+    [containerSize]
+  );
+  const activeStyle = useMemo(() => [styles.dot, active], []);
+
   return (
     <>
-      <ScrollView
+      <Reanimated.ScrollView
         bounces={false}
         decelerationRate="fast"
         horizontal
+        onScroll={handler}
         showsHorizontalScrollIndicator={false}
         disableIntervalMomentum={true}
         scrollEventThrottle={16}
-        snapToInterval={props.containerSize}
+        snapToInterval={containerSize}
       >
-        {props.children.map((element, index) => (
-          <View style={{ width: props.containerSize }} key={index}>
+        {children.map((element, index) => (
+          <View style={childStyle} key={index}>
             {element}
           </View>
         ))}
-      </ScrollView>
+      </Reanimated.ScrollView>
+      <View style={styles.dashContainer}>
+        {children.map((_, index) => (
+          <View key={index} style={styles.dot} />
+        ))}
+        <Reanimated.View style={activeStyle} />
+      </View>
     </>
   );
 }

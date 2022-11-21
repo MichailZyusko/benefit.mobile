@@ -1,6 +1,6 @@
 import React from 'react';
-import { Image, ImageRequireSource, View } from 'react-native';
-import { Text } from 'react-native-svg';
+import { Image, ImageRequireSource, View, Text } from 'react-native';
+import styles from './styles';
 
 type Props = {
   image: ImageRequireSource;
@@ -10,10 +10,12 @@ type Props = {
 
 function Frame({ title, description, image }: Props) {
   return (
-    <View>
-      <Image source={image} />
-      <Text>{title}</Text>
-      <Text>{description}</Text>
+    <View style={styles.container}>
+      <View style={styles.imageContainer}>
+        <Image style={styles.image} source={image} />
+      </View>
+      <Text style={styles.header}>{title}</Text>
+      <Text style={styles.description}>{description}</Text>
     </View>
   );
 }
