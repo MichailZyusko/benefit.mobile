@@ -1,7 +1,10 @@
 import React, { useCallback } from 'react';
 import ProductCard from '../../components/ProductCard';
 
-import { useHomeScreenSelector } from '../../redux/hooks';
+import {
+  useHomeScreenSelector,
+  useModalWindowSelector,
+} from '../../redux/hooks';
 import { selectHomeScreen } from './slicer';
 import { ListHeaderComponent } from './Components';
 import { View, FlatList } from 'react-native';
@@ -16,11 +19,13 @@ import { useQuery } from '@tanstack/react-query';
 import ProductDto from '../../api/products/product.dto';
 import { NetworkError } from '../../errors';
 import ProductNotFound from '../../errors/PoductNotFound';
+import { selectModalWindow } from '../../components/ModalWindow/slicer';
 
 const Stack = createNativeStackNavigator();
 
 function HomeScreen() {
   const { search } = useHomeScreenSelector(selectHomeScreen);
+  const { product } = useModalWindowSelector(selectModalWindow);
 
   const {
     isFetching,
@@ -70,7 +75,7 @@ function HomeScreen() {
           onEndReachedThreshold={5}
         />
       )}
-      <ModalProductInfo />
+      {product && <ModalProductInfo />}
     </View>
   );
 }

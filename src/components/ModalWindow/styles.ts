@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginTop: '30%',
     margin: 0,
-    padding: 12,
 
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -35,13 +34,47 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
-    marginHorizontal: 50,
+    marginHorizontal: 25,
     marginVertical: 25,
   },
   productImage: {
-    width: 250,
-    height: 250,
+    width: 300,
+    height: 300,
     borderRadius: 10,
+  },
+  productNameContainer: {
+    justifyContent: 'flex-start',
+    width: '100%',
+  },
+  productName: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: 22,
+    lineHeight: 22,
+    color: '#000',
+
+    marginTop: 5,
+  },
+  productVolume: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 20,
+    lineHeight: 23,
+    color: '#9A9A9A',
+
+    marginTop: 5,
+  },
+  productDescription: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 16,
+    lineHeight: 19,
+    color: '#303030',
+
+    marginTop: 5,
+  },
+  storeAddress: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 20,
+    lineHeight: 23,
+    color: '#9A9A9A',
   },
   storoLogo: {
     position: 'absolute',
@@ -61,8 +94,10 @@ export const styles = StyleSheet.create({
   buttonsContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
+
+    marginLeft: 25,
   },
   addButton: {
     backgroundColor: '#CF93FF',
