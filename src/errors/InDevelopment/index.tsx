@@ -8,7 +8,7 @@ export default function InDevelopmentError() {
   return (
     <View style={styles.screenContainer}>
       <Image source={InDevelopmentImg} style={styles.errorImage} />
-      <Text style={styles.errorText}>Эта страница находиться в разработке</Text>
+      <Text style={styles.errorText}>Эта страница находится в разработке</Text>
       <Text style={styles.tipsText}>
         Как только она будет готова, вы узнаете первым!
       </Text>
