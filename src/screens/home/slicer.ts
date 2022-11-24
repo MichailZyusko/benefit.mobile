@@ -52,10 +52,10 @@ export const homeScreenSlice = createSlice({
     },
     setStoreFilter: (state, action) => {
       state.storeIds = state.storeIds.concat(action.payload);
-      state.isListEnd = false;
-      state.products = [];
-      state.page = 0;
-      console.log(state.storeIds);
+      // state.isListEnd = false;
+      // state.products = [];
+      // state.page = 0;
+      // console.log(state.storeIds);
     },
     setCategoryId: (state, action) => {
       state.categoryId = action.payload;
@@ -65,10 +65,10 @@ export const homeScreenSlice = createSlice({
     },
     removeStoreFilter: (state, action) => {
       state.storeIds = state.storeIds.filter((item) => item !== action.payload);
-      state.isListEnd = false;
-      state.products = [];
-      state.page = 0;
-      console.log(state.storeIds);
+      // state.isListEnd = false;
+      // state.products = [];
+      // state.page = 0;
+      // console.log(state.storeIds);
     },
     API_REQUEST: (state) => {
       console.log('API_REQUEST');

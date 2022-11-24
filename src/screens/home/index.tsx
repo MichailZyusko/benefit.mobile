@@ -24,16 +24,16 @@ import { selectModalWindow } from '../../components/ModalWindow/slicer';
 const Stack = createNativeStackNavigator();
 
 function HomeScreen() {
-  const { search } = useHomeScreenSelector(selectHomeScreen);
+  const { search, storeIds } = useHomeScreenSelector(selectHomeScreen);
   const { product } = useModalWindowSelector(selectModalWindow);
 
   const {
     isFetching,
     isError,
     data: products,
-  } = useQuery(['products', search], () => getProducts({ search }));
-
-  console.log([search, isFetching, isError, products?.length]);
+  } = useQuery(['products', search, storeIds], () =>
+    getProducts({ search, storeIds })
+  );
 
   const keyExtractor = useCallback((item: ProductDto) => item.id, []);
   const renderItem = useCallback(
@@ -45,12 +45,9 @@ function HomeScreen() {
     return <NetworkError />;
   }
 
-  console.log(products?.length === 0);
-
   if (products?.length === 0) {
     return (
       <View style={styles.screenContainer}>
-        {/* <SearchTextInput /> */}
         <ProductNotFound />
       </View>
     );

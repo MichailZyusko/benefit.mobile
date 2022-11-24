@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { stores } from '../../components/StoreLogo/constants';
 
 export const styles = StyleSheet.create({
   screenContainer: {
@@ -37,8 +38,18 @@ export const styles = StyleSheet.create({
 
     marginLeft: 16,
   },
+  storeName: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Medium',
+    color: '#fff',
+  },
   carousel: {
     marginVertical: 8,
+    minHeight: 110,
+    maxHeight: 110,
+  },
+  carouselItemLoader: {
+    marginHorizontal: 4,
   },
   scannerIcon: {
     position: 'absolute',
@@ -46,17 +57,29 @@ export const styles = StyleSheet.create({
   },
 });
 
-export const storeStyles = (isToggled: boolean) =>
+export const storeStyles = (isToggled: boolean, storeFranchise: string) =>
   StyleSheet.create({
     store: {
       justifyContent: 'center',
       alignItems: 'center',
 
-      marginHorizontal: 8,
       width: 100,
       height: 100,
 
-      backgroundColor: isToggled ? '#000000' : '#D9D9D9',
+      backgroundColor: stores[storeFranchise]?.color,
+
+      borderColor: '#f5f5f5',
+      borderWidth: 2,
+      borderRadius: 10,
+    },
+    border: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginHorizontal: 2,
+      padding: 3,
+
+      borderColor: isToggled ? stores[storeFranchise]?.color : '#f5f5f5',
+      borderWidth: 2,
       borderRadius: 10,
     },
   });

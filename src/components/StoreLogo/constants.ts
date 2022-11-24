@@ -6,11 +6,11 @@ type Store = {
 export const stores: Record<string, Store> = {
   Белмаркет: {
     color: '#6CC72A',
-    name: 'Emall.by ПВЗ',
+    name: 'Белмаркет',
   },
   Санта: {
     color: '#00A7E1',
-    name: 'Ямигом',
+    name: 'Санта',
   },
   Евроопт: {
     color: '#80C200',
@@ -21,8 +21,8 @@ export const stores: Record<string, Store> = {
     name: 'Соседи',
   },
   Грошик: {
-    color: '#FEF244',
-    name: 'Корона',
+    color: '#F0E400',
+    name: 'Грошик',
   },
   Виталюр: {
     color: '#24348B',
@@ -30,7 +30,7 @@ export const stores: Record<string, Store> = {
   },
   Копеечка: {
     color: '#C5031E',
-    name: 'Гиппо',
+    name: 'Копеечка',
   },
   Грин: {
     color: '#0DA018',
@@ -41,12 +41,12 @@ export const stores: Record<string, Store> = {
     name: 'Е-Доставка',
   },
   Green: {
-    color: '#50A953CC',
-    name: 'Green доставка',
+    color: '#0DA018',
+    name: 'Green',
   },
   Мартин: {
     color: '#153E74',
-    name: '21vek.by',
+    name: 'Мартин',
   },
   'Остров Чистоты': {
     color: '#2976BC',
