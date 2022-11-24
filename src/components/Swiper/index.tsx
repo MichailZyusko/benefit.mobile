@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from 'react';
+import React, { ReactNode, useImperativeHandle, useMemo, useRef } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import Reanimated, {
   useAnimatedScrollHandler,
@@ -13,12 +13,27 @@ type Props = {
   dashContainer?: StyleProp<ViewStyle>;
 };
 
-function Swiper({ containerSize, children, dashContainer }: Props) {
+export type SwiperRef = {
+  scrollToPage: (page: number) => void;
+};
+
+function Swiper({ containerSize, children, dashContainer }: Props, ref) {
   const position = useSharedValue(0);
+  const scrollRef = useRef<Reanimated.ScrollView>(null);
   const childStyle = useMemo(() => ({ width: containerSize }), [containerSize]);
   const dashStyle = useMemo(
     () => [styles.dashContainer, dashContainer],
     [dashContainer]
+  );
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      scrollToPage: (page: number) => {
+        scrollRef.current?.scrollTo?.({ x: page * containerSize });
+      },
+    }),
+    []
   );
 
   const handler = useAnimatedScrollHandler(
@@ -44,6 +59,7 @@ function Swiper({ containerSize, children, dashContainer }: Props) {
   return (
     <>
       <Reanimated.ScrollView
+        ref={scrollRef}
         bounces={false}
         decelerationRate="fast"
         overScrollMode="never"
@@ -70,4 +86,4 @@ function Swiper({ containerSize, children, dashContainer }: Props) {
   );
 }
 
-export default Swiper;
+export default React.forwardRef<SwiperRef, Props>(Swiper);
