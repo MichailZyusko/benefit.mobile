@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageHeart } from '../../../assets/icons';
 import { styles } from './styles';
-import { Image, View } from 'react-native';
+import { Image, Pressable, ToastAndroid } from 'react-native';
 // import {
 //   useCartScreenDispatch,
 //   useHomeScreenDispatch,
@@ -37,8 +37,16 @@ import { Image, View } from 'react-native';
 
 export const Heart = () => {
   return (
-    <View style={styles.heartImageContainer}>
+    <Pressable
+      style={styles.heartImageContainer}
+      onPress={() =>
+        ToastAndroid.show(
+          'Упс... Эта функция все еще в разработке 🙃',
+          ToastAndroid.SHORT
+        )
+      }
+    >
       <Image source={ImageHeart} style={styles.heartImage} />
-    </View>
+    </Pressable>
   );
 };
