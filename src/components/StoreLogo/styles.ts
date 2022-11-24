@@ -5,7 +5,7 @@ export const styles = (storeFranchise: string, isExpand: boolean) =>
   StyleSheet.create({
     storeNameText: {
       fontFamily: 'Roboto-Medium',
-      fontSize: 12,
+      fontSize: 14,
       lineHeight: 14,
       color: '#fff',
     },
@@ -15,8 +15,8 @@ export const styles = (storeFranchise: string, isExpand: boolean) =>
 
       backgroundColor: stores[storeFranchise]?.color,
 
-      paddingVertical: isExpand ? 0 : 2,
-      paddingHorizontal: isExpand ? 0 : 10,
+      paddingVertical: isExpand ? 0 : 4,
+      paddingHorizontal: isExpand ? 0 : 12,
 
       borderRadius: 5,
     },

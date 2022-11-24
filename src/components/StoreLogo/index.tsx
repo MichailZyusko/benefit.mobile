@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import ProductDto from '../../api/products/product.dto';
 import { styles } from './styles';
 
@@ -7,14 +7,35 @@ type Props = {
   product: ProductDto;
   setSelectedOffer: (offer: any) => void;
   style?: any;
+  viewOnly: boolean;
 };
 
-export const StoreLogo = ({ product, setSelectedOffer, style }: Props) => {
+export const StoreLogo = ({
+  product,
+  setSelectedOffer,
+  style,
+  viewOnly = true,
+}: Props) => {
   const [isExpand, setIsExpand] = useState<boolean>(false);
   const [offer, setOffer] = useState<any>(product.bestOffer);
 
   if (!product?.bestOffer?.store.franchise) {
     return null;
+  }
+
+  if (viewOnly) {
+    return (
+      <View
+        style={[
+          styles(offer.store.franchise, isExpand).storeNameContainer,
+          style,
+        ]}
+      >
+        <Text style={styles(offer.store.franchise, isExpand).storeNameText}>
+          {offer.store.franchise}
+        </Text>
+      </View>
+    );
   }
 
   return (

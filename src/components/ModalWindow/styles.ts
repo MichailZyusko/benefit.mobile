@@ -34,8 +34,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
-    marginHorizontal: 25,
     marginVertical: 25,
+
+    width: '100%',
   },
   productImage: {
     width: 300,
@@ -52,7 +53,7 @@ export const styles = StyleSheet.create({
     lineHeight: 22,
     color: '#000',
 
-    marginTop: 5,
+    marginTop: 10,
   },
   productVolume: {
     fontFamily: 'Roboto-Medium',
@@ -60,7 +61,7 @@ export const styles = StyleSheet.create({
     lineHeight: 23,
     color: '#9A9A9A',
 
-    marginTop: 5,
+    marginTop: 7,
   },
   productDescription: {
     fontFamily: 'Roboto-Medium',
@@ -68,17 +69,17 @@ export const styles = StyleSheet.create({
     lineHeight: 19,
     color: '#303030',
 
-    marginTop: 5,
+    marginTop: 7,
   },
   storeAddress: {
     fontFamily: 'Roboto-Regular',
-    fontSize: 20,
+    fontSize: 18,
     lineHeight: 23,
     color: '#9A9A9A',
   },
   storoLogo: {
     position: 'absolute',
-    left: 7,
+    left: 0,
     top: 7,
 
     zIndex: 1,
@@ -104,11 +105,18 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     paddingHorizontal: 50,
     paddingVertical: 16,
+    marginTop: -24,
   },
   addText: {
     fontFamily: 'Roboto-Medium',
     fontSize: 20,
     lineHeight: 20,
     color: '#fff',
+  },
+  container: {
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+
+    width: 350,
   },
 });

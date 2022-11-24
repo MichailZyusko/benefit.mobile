@@ -47,6 +47,7 @@ export default function ModalProductInfo() {
               product={product}
               style={styles.storoLogo}
               setSelectedOffer={setSelectedOffer}
+              viewOnly={false}
             />
             <Heart />
             <ImageBackground
@@ -55,33 +56,35 @@ export default function ModalProductInfo() {
               resizeMode={'contain'}
             />
 
-            <View style={styles.productNameContainer}>
-              <Text style={styles.storeAddress} numberOfLines={3}>
-                {product?.bestOffer
-                  ? `Адрес: ${
-                      selectedOffer?.store.address ||
-                      product?.bestOffer?.store.address
-                    }`
-                  : ''}
-              </Text>
-            </View>
+            <View style={styles.container}>
+              <View style={styles.productNameContainer}>
+                <Text style={styles.storeAddress} numberOfLines={3}>
+                  {product?.bestOffer
+                    ? `Адрес: ${
+                        selectedOffer?.store.address ||
+                        product?.bestOffer?.store.address
+                      }`
+                    : ''}
+                </Text>
+              </View>
 
-            <View style={styles.productNameContainer}>
-              <Text style={styles.productName} numberOfLines={3}>
-                {product.name}
-              </Text>
-              <Text style={styles.productVolume} numberOfLines={3}>
-                {`${product.volume} ${product.measurementUnit}`}
-              </Text>
-            </View>
+              <View style={styles.productNameContainer}>
+                <Text style={styles.productName} numberOfLines={2}>
+                  {product.name}
+                </Text>
+                <Text style={styles.productVolume} numberOfLines={3}>
+                  {`${product.volume} ${product.measurementUnit}`}
+                </Text>
+              </View>
 
-            <View>
-              <Text style={styles.nameText} numberOfLines={5}>
-                Состав:
-              </Text>
-              <Text style={styles.productDescription} numberOfLines={6}>
-                {product.description.slice(8)}
-              </Text>
+              <View>
+                <Text style={styles.nameText} numberOfLines={5}>
+                  Состав:
+                </Text>
+                <Text style={styles.productDescription} numberOfLines={6}>
+                  {product.description.slice(8)}
+                </Text>
+              </View>
             </View>
           </View>
 
