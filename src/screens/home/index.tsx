@@ -55,23 +55,17 @@ function HomeScreen() {
 
   return (
     <View style={styles.screenContainer}>
-      <ListHeaderComponent />
-      {products?.length === 0 && <ProductNotFound />}
-      {isFetching ? (
-        <ProductCardsLoaderList />
-      ) : (
-        <FlatList
-          numColumns={2}
-          data={products}
-          // ListHeaderComponent={ListHeaderComponent}
-          ListFooterComponent={null} // TODO: add footer
-          ListEmptyComponent={null} // TODO: add empty state
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-          // onEndReached={onEndReachedMemoized}
-          onEndReachedThreshold={5}
-        />
-      )}
+      <FlatList
+        numColumns={2}
+        data={isFetching ? [] : products}
+        ListHeaderComponent={ListHeaderComponent}
+        ListFooterComponent={null} // TODO: add footer
+        ListEmptyComponent={isFetching ? <ProductCardsLoaderList /> : null} // TODO: add empty state
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        // onEndReached={onEndReachedMemoized}
+        onEndReachedThreshold={5}
+      />
       {product && <ModalProductInfo />}
     </View>
   );
