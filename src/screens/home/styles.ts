@@ -38,6 +38,11 @@ export const styles = StyleSheet.create({
 
     marginLeft: 16,
   },
+  storeName: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Medium',
+    color: '#fff',
+  },
   carousel: {
     marginVertical: 8,
     minHeight: 110,
