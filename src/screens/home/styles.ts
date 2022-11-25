@@ -38,11 +38,6 @@ export const styles = StyleSheet.create({
 
     marginLeft: 16,
   },
-  storeName: {
-    fontSize: 16,
-    fontFamily: 'Roboto-Medium',
-    color: '#fff',
-  },
   carousel: {
     marginVertical: 8,
     minHeight: 110,
@@ -66,11 +61,16 @@ export const storeStyles = (isToggled: boolean, storeFranchise: string) =>
       width: 100,
       height: 100,
 
-      backgroundColor: stores[storeFranchise]?.color,
+      backgroundColor: stores[storeFranchise]?.backgroundColor,
 
       borderColor: '#f5f5f5',
       borderWidth: 2,
       borderRadius: 10,
+    },
+    storeName: {
+      fontSize: 16,
+      fontFamily: 'Roboto-Bold',
+      color: stores[storeFranchise]?.color,
     },
     border: {
       justifyContent: 'center',
@@ -78,7 +78,9 @@ export const storeStyles = (isToggled: boolean, storeFranchise: string) =>
       marginHorizontal: 2,
       padding: 3,
 
-      borderColor: isToggled ? stores[storeFranchise]?.color : '#f5f5f5',
+      borderColor: isToggled
+        ? stores[storeFranchise]?.backgroundColor
+        : '#f5f5f5',
       borderWidth: 2,
       borderRadius: 10,
     },

@@ -7,13 +7,13 @@ export const styles = (storeFranchise: string, isExpand: boolean) =>
       fontFamily: 'Roboto-Medium',
       fontSize: 14,
       lineHeight: 14,
-      color: '#fff',
+      color: stores[storeFranchise]?.color,
     },
     storeNameContainer: {
       justifyContent: 'center',
       alignItems: 'center',
 
-      backgroundColor: stores[storeFranchise]?.color,
+      backgroundColor: stores[storeFranchise]?.backgroundColor,
 
       paddingVertical: isExpand ? 0 : 4,
       paddingHorizontal: isExpand ? 0 : 12,
@@ -33,7 +33,7 @@ export const styles = (storeFranchise: string, isExpand: boolean) =>
       // borderBottomEndRadius: 10,
       // borderBottomStartRadius: 10,
 
-      backgroundColor: stores[storeFranchise]?.color,
+      backgroundColor: stores[storeFranchise]?.backgroundColor,
 
       paddingVertical: 3,
       paddingHorizontal: 10,

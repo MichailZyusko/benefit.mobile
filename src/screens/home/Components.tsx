@@ -87,7 +87,9 @@ const StoreCard = ({ store }: { store: Store }) => {
             : dispatch(setStoreFilter(store.id));
         }}
       >
-        <Text style={styles.storeName}>{store.franchise}</Text>
+        <Text style={storeStyles(isToggled, store.franchise).storeName}>
+          {store.franchise}
+        </Text>
       </TouchableOpacity>
     </View>
   );
