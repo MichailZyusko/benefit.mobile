@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "npx react-native run-android",
-    "ios": "react-native run-ios",
+    "android": "react-native run-android",
+    "ios": "arch -x86_64 react-native run-ios",
     "start": "npx react-native start",
     "tsc": "tsc",
     "test": "jest",
